@@ -21,7 +21,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
   ProfileFunctionality.associate = function(models) {
-    // associations can be defined here
+    ProfileFunctionality.belongsTo(models.Functionality, {
+      foreignKey: "functionality_ID",
+      targetKey: "functionalityID"
+    });
   };
 
   return ProfileFunctionality;

@@ -10,11 +10,11 @@ module.exports = {
       res.status(400).send({ error: error });
     }
   },
-  async getProfile(decoded) {
+  async getProfile(user) {
     try {
       const userProfile = await UserAccessControl.findOne({
         where: {
-          user_ID: decoded.userID,
+          user_ID: user.userID,
           system_ID: process.env.SYSTEM_ID
         }
       });

@@ -2,6 +2,7 @@ const { User } = require("../models");
 const EmailController = require("./EmailController");
 const UserAccessControl = require("./UserAccessController");
 const pfc = require("./ProfileFunctionalityController");
+const functionalityController = require("./FunctionalityController");
 
 const jwt = require("jsonwebtoken");
 
@@ -73,6 +74,7 @@ module.exports = {
 
       if (decoded) {
         let user = decoded;
+
         user.profile = await UserAccessControl.getProfile(decoded);
         user.functionalities = await pfc.getProfileFunctionality(
           user.profile.profile_ID

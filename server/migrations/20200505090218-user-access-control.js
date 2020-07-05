@@ -18,7 +18,7 @@ module.exports = {
         type: Sequelize.INTEGER
       },
       menuOption: {
-        type: DataTypes.STRING,
+        type: Sequelize.STRING,
         defaultValue: '{"drawer": true, "miniVariant": false, "clipped": false}'
       }
     });

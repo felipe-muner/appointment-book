@@ -1,5 +1,7 @@
 "use strict";
 
+// const ProfileFunctionality = require("./ProfileFunctionality");
+
 module.exports = (sequelize, DataTypes) => {
   const UserAccessControl = sequelize.define(
     "UserAccessControl",
@@ -21,7 +23,9 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
   UserAccessControl.associate = function(models) {
-    // associations can be defined here
+    // UserAccessControl.belongsTo(ProfileFunctionality, {
+    //   foreignKey: "profile_ID"
+    // });
   };
 
   return UserAccessControl;

@@ -1,4 +1,5 @@
 const { ProfileFunctionality } = require("../models");
+const { Functionality } = require("../models");
 
 module.exports = {
   async getAll(req, res) {
@@ -12,9 +13,15 @@ module.exports = {
       res.status(400).send({ error: error });
     }
   },
-  async getProfileFunctionality(req, res) {
+  async getProfileFunctionality(profile_ID) {
     try {
-      return [];
+      const functionalities = await ProfileFunctionality.findAll({
+        where: {
+          profile_ID: profile_ID
+        },
+        include: [Functionality]
+      });
+      return functionalities;
     } catch (error) {
       console.log(error);
       console.log("error ProfileFunctionality getall");
