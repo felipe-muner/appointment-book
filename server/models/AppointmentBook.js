@@ -12,8 +12,8 @@ module.exports = (sequelize, DataTypes) => {
       },
       startDate: DataTypes.DATE,
       endDate: DataTypes.DATE,
-      teacher_id: DataTypes.STRING,
-      school_id: DataTypes.STRING
+      teacher_id: DataTypes.INTEGER,
+      school_id: DataTypes.INTEGER
     },
     {
       timestamps: false,
