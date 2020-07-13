@@ -1,5 +1,6 @@
 <template>
   <v-flex xs12 sm12 md12>
+    {{JSON.stringify($auth.user)}}
     <v-data-table
       dense
       v-model="selected"
@@ -30,18 +31,15 @@
             <td>{{ item.uf.nome }}</td>
             <td>
               <v-container fill-height fluid class="pa-0">
-                <v-row
-                  align="center"
-                  justify="center"
-                  v-for="link in item.link"
-                  :key="link.LinkID"
-                >
+                <v-row align="center" justify="center" v-for="link in item.link" :key="link.LinkID">
                   <v-col class="pa-0" cols="1">
                     <ToggleActive :item="item" :link="link" />
                   </v-col>
-                  <v-col cols="11" align="left" justify="left">{{
+                  <v-col cols="11" align="left" justify="left">
+                    {{
                     link.Link
-                  }}</v-col>
+                    }}
+                  </v-col>
                 </v-row>
               </v-container>
             </td>
