@@ -1,6 +1,5 @@
 <template>
   <v-flex xs12 sm12 md12>
-    {{JSON.stringify($auth.user)}}
     <v-data-table
       dense
       v-model="selected"
@@ -109,9 +108,9 @@ export default {
     };
   },
   mounted() {
-    console.log(this.$router);
-    console.log(this.$store);
-    console.log(this.$i18n);
+    // console.log(this.$router);
+    // console.log(this.$store);
+    // console.log(this.$i18n);
   }
 };
 </script>

@@ -10,12 +10,22 @@
     >
       <v-list>
         <v-list-item
-          v-for="(item, i) in items"
+          v-for="(item, i) in functionalitiesMenu"
           :key="i"
-          :to="item.to"
+          :to="item.Functionality.action"
           router
           exact
         >
+          <v-list-item-action>
+            <v-icon>{{ item.Functionality.icon }}</v-icon>
+          </v-list-item-action>
+          <v-list-item-content>
+            <v-list-item-title v-text="item.Functionality.name" />
+          </v-list-item-content>
+        </v-list-item>
+      </v-list>
+      <v-list>
+        <v-list-item v-for="(item, i) in items" :key="i" :to="item.to" router exact>
           <v-list-item-action>
             <v-icon>{{ item.icon }}</v-icon>
           </v-list-item-action>
@@ -35,12 +45,7 @@
       </v-btn>
       <v-toolbar-title v-text="title" />
       <nuxt-link to="/admin">
-        <v-btn
-          class="ml-5"
-          color="info"
-          v-if="$auth.user && $auth.user.UserID === 1"
-          >Admin Area</v-btn
-        >
+        <v-btn class="ml-5" color="info" v-if="$auth.user && $auth.user.UserID === 1">Admin Area</v-btn>
       </nuxt-link>
       <v-spacer />
       <div v-if="$auth.loggedIn">
@@ -114,6 +119,14 @@ export default {
         }
       ]
     };
+  },
+  computed: {
+    functionalitiesMenu() {
+      return this.$auth.user.functionalities;
+    }
+  },
+  mounted() {
+    console.log("mounted");
   }
 };
 </script>
