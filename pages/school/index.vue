@@ -1,23 +1,33 @@
 <template>
   <div>
     <h1>home page school</h1>
-    {{schools}}
+    {{school}}
+    {{name}}
   </div>
 </template>
 
 <script>
+import { mapGetters, mapActions } from "vuex";
+
 export default {
   data() {
     return {
-      name: "felipe"
+      name: "school"
     };
   },
   computed: {
-    schools() {
+    school() {
       return this.$store.state.school.list;
     }
   },
-  created() {}
+  methods: {
+    ...mapActions({
+      initSchool: "school/getAll"
+    })
+  },
+  created() {
+    this.initSchool({ name: "felipeteacher" });
+  }
 };
 </script>
 

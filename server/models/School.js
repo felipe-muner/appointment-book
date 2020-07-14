@@ -12,7 +12,8 @@ module.exports = (sequelize, DataTypes) => {
       },
       name: DataTypes.STRING,
       address: DataTypes.STRING,
-      neighborhood: DataTypes.STRING
+      neighborhood: DataTypes.STRING,
+      active: DataTypes.BOOLEAN
     },
     {
       timestamps: false,

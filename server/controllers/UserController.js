@@ -2,7 +2,6 @@ const { User } = require("../models");
 const EmailController = require("./EmailController");
 const UserAccessControl = require("./UserAccessController");
 const pfc = require("./ProfileFunctionalityController");
-const functionalityController = require("./FunctionalityController");
 
 const jwt = require("jsonwebtoken");
 

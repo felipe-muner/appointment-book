@@ -4,8 +4,8 @@ class School {
   constructor(server) {
     this.server = server;
   }
-  async getAllSchool() {
-    return axios.get(this.server + "/school");
+  async getAll() {
+    return await axios.get(this.server + "/school");
   }
 }
 

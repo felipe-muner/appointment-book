@@ -16,7 +16,7 @@ export const mutations = {
 export const actions = {
   async getAll({ commit, state }, payload) {
     console.log({ commit, state, payload });
-    const resp = await MyApi.teacher.getAll();
+    const resp = await MyApi.school.getAll();
     commit("getAll", resp.data);
   }
 };

@@ -14,7 +14,8 @@ module.exports = (sequelize, DataTypes) => {
       name: DataTypes.STRING,
       dateOfBirth: DataTypes.DATE,
       phone: DataTypes.STRING,
-      isTeacherAssistant: DataTypes.BOOLEAN
+      isTeacherAssistant: DataTypes.BOOLEAN,
+      active: DataTypes.BOOLEAN
     },
     {
       timestamps: false,

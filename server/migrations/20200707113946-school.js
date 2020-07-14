@@ -16,6 +16,10 @@ module.exports = {
       },
       neighborhood: {
         type: Sequelize.STRING
+      },
+      active: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: true
       }
     });
   },

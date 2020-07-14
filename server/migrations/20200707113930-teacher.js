@@ -22,6 +22,10 @@ module.exports = {
       },
       isTeacherAssistant: {
         type: Sequelize.BOOLEAN
+      },
+      active: {
+        type: Sequelize.BOOLEAN,
+        defaultValue: true
       }
     });
   },
