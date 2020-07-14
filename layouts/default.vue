@@ -98,12 +98,12 @@ export default {
           to: "/"
         },
         {
-          icon: "mdi-chart-bubble",
+          icon: "mdi-card-account-details",
           title: "Inspire",
           to: "/inspire"
         },
         {
-          icon: "mdi-chart-bubble",
+          icon: "mdi-book-open",
           title: "About",
           to: "/about"
         },
