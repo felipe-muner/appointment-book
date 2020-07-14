@@ -9,6 +9,7 @@ const systemRouter = require("./routes/system");
 const functionalityRouter = require("./routes/functionality");
 const profileFunctionalityRouter = require("./routes/profileFunctionality");
 const userAccessControlRouter = require("./routes/userAccessControl");
+const teacherRouter = require("./routes/teacher");
 
 var app = express();
 
@@ -24,6 +25,7 @@ app.use("/system", systemRouter);
 app.use("/functionality", functionalityRouter);
 app.use("/profile-functionality", profileFunctionalityRouter);
 app.use("/user-access-control", userAccessControlRouter);
+app.use("/teacher", teacherRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
