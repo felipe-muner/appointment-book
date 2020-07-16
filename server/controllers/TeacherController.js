@@ -39,7 +39,8 @@ module.exports = {
       }, {
         where: { teacherID: req.body.teacherID }
       });
-      res.send(teacher);
+      const updated = await Teacher.findByPk(req.body.schoolID)
+      res.send(updated);
     } catch (error) {
       console.log(error);
       console.log("error teacher update");
