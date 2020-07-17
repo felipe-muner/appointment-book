@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialog" width="500">
+  <v-dialog v-model="dialog" width="30%">
     <template v-slot:activator="{ on: menu, attrs }">
       <v-tooltip bottom>
         <template v-slot:activator="{ on: tooltip }">
@@ -23,15 +23,10 @@
       <v-card-title class="headline grey lighten-2" primary-title>
         Update Teacher
       </v-card-title>
-
       <v-card-text>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum.
+        <v-container>
+          <UpdateForm :teachers="teachers" />
+        </v-container>
       </v-card-text>
 
       <v-divider></v-divider>
@@ -47,11 +42,25 @@
 </template>
 
 <script>
+import UpdateForm from "@/components/teacher/UpdateForm";
+
 export default {
+  components: {
+    UpdateForm
+  },
   data() {
     return {
       dialog: false
     };
+  },
+  computed: {
+    teachers() {
+      let teacherList = this.$store.state.teacher.list;
+      teacherList.forEach(
+        t => (t.textToDisplay = t.teacherID + " - " + t.name + " - " + t.email)
+      );
+      return teacherList;
+    }
   }
 };
 </script>

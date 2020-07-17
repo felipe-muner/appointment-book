@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialog" width="500">
+  <v-dialog v-model="dialog" width="50%">
     <template v-slot:activator="{ on: menu, attrs }">
       <v-tooltip bottom>
         <template v-slot:activator="{ on: tooltip }">
@@ -12,7 +12,7 @@
             v-bind="attrs"
             v-on="{ ...tooltip, ...menu }"
           >
-            <v-icon dark>mdi-plus-circle-outline</v-icon>
+            <v-icon dark>mdi-plus</v-icon>
           </v-btn>
         </template>
         <span>New Teacher</span>

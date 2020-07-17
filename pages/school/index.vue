@@ -1,8 +1,8 @@
 <template>
   <div>
     <h1>home page school</h1>
-    {{school}}
-    {{name}}
+    {{ school }}
+    {{ name }}
   </div>
 </template>
 
@@ -31,5 +31,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
