@@ -1,6 +1,9 @@
 <template>
   <div>
-    <h1>home page teacher</h1>
+    <h1>Teacher List</h1>
+    <New />
+    <Update />
+
     <template>
       <v-data-table
         v-model="selected"
@@ -16,27 +19,33 @@
 </template>
 
 <script>
-import { mapGetters } from "vuex";
-import { mapActions } from "vuex";
+import { mapGetters, mapActions } from "vuex";
+import New from "@/components/teacher/New";
+import Update from "@/components/teacher/Update";
 
 export default {
+  components: {
+    New,
+    Update
+  },
   data() {
     return {
+      dialog: false,
       name: "teacher",
       selected: [],
       headers: [
-        { text: 'ID', value: 'teacherID' },
-        { text: 'Email', value: 'email' },
+        { text: "ID", value: "teacherID" },
+        { text: "Email", value: "email" },
         {
-          text: 'Name',
-          align: 'start',
-          value: 'name',
+          text: "Name",
+          align: "start",
+          value: "name"
         },
-        { text: 'Birthday', value: 'formatBirthday' },
-        { text: 'Phone', value: 'phone' },
-        { text: 'TA', value: 'isTeacherAssistant' },
-        { text: 'Active', value: 'active' },
-      ],        
+        { text: "Birthday", value: "formatBirthday" },
+        { text: "Phone", value: "phone" },
+        { text: "TA", value: "isTeacherAssistant" },
+        { text: "Active", value: "active" }
+      ]
     };
   },
   computed: {
@@ -55,5 +64,4 @@ export default {
 };
 </script>
 
-<style>
-</style>
+<style></style>
