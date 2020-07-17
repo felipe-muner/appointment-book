@@ -1,9 +1,11 @@
 const { Teacher } = require("../models");
+const utils = require("../utils/utils");
 
 module.exports = {
   async getAll(req, res) {
     try {
-      const teachers = await Teacher.findAll();
+      let teachers = await Teacher.findAll();
+      teachers.forEach(t => t.dataValues.formatBirthday = utils.formatBirthday(t.dateOfBirth))
       res.send(teachers);
     } catch (error) {
       console.log(error);
@@ -11,6 +13,7 @@ module.exports = {
       res.status(400).send({ error: error });
     }
   },
+
   async create(req, res) {
     try {
       const teacher = await Teacher.create({
@@ -27,6 +30,7 @@ module.exports = {
       res.status(400).send({ error: error });
     }
   },
+
   async update(req, res) {
     try {
       const teacher = await Teacher.update({

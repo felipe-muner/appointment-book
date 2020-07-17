@@ -1,6 +1,5 @@
 <template>
   <div>
-    {{selected}}
     <h1>home page teacher</h1>
     <template>
       <v-data-table
@@ -33,7 +32,7 @@ export default {
           align: 'start',
           value: 'name',
         },
-        { text: 'Birthday', value: 'dateOfBirth' },
+        { text: 'Birthday', value: 'formatBirthday' },
         { text: 'Phone', value: 'phone' },
         { text: 'TA', value: 'isTeacherAssistant' },
         { text: 'Active', value: 'active' },
