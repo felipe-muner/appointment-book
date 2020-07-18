@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialog" width="30%">
+  <v-dialog v-model="dialog" width="50%">
     <template v-slot:activator="{ on: menu, attrs }">
       <v-tooltip bottom>
         <template v-slot:activator="{ on: tooltip }">
@@ -12,7 +12,7 @@
             v-bind="attrs"
             v-on="{ ...tooltip, ...menu }"
           >
-            <v-icon dark>mdi-minus</v-icon>
+            <v-icon dark>mdi-pencil</v-icon>
           </v-btn>
         </template>
         <span>Update Teacher</span>
@@ -20,23 +20,28 @@
     </template>
 
     <v-card>
-      <v-card-title class="headline grey lighten-2" primary-title>
-        Update Teacher
-      </v-card-title>
+      <v-card-title class="headline grey lighten-2" primary-title>Update Teacher</v-card-title>
       <v-card-text>
         <v-container>
-          <UpdateForm :teachers="teachers" />
+          <v-row no-gutters>
+            <v-col>
+              <v-autocomplete
+                return-object
+                cache-items
+                v-model="selected"
+                :items="teachers"
+                item-text="textToDisplay"
+                label="Select a teacher"
+                outlined
+                dense
+              ></v-autocomplete>
+            </v-col>
+          </v-row>
+          <UpdateForm :selected="selected" />
         </v-container>
       </v-card-text>
 
       <v-divider></v-divider>
-
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn color="primary" text @click="dialog = false">
-          I accept
-        </v-btn>
-      </v-card-actions>
     </v-card>
   </v-dialog>
 </template>
@@ -50,6 +55,7 @@ export default {
   },
   data() {
     return {
+      selected: {},
       dialog: false
     };
   },

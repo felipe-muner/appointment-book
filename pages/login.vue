@@ -10,8 +10,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
-import { mapMutations } from "vuex";
+import { mapActions, mapMutations } from "vuex";
 import UserAuthForm from "~/components/UserAuthForm.vue";
 
 export default {
