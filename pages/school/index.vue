@@ -1,22 +1,53 @@
 <template>
   <div>
-    <h1>home page school</h1>
-    {{ school }}
-    {{ name }}
+    <h1>School List</h1>
+    <New />
+    <Update />
+
+    <template>
+      <v-data-table
+        v-model="selected"
+        :headers="headers"
+        :items="schools"
+        item-key="schoolID"
+        show-select
+        class="elevation-1"
+      ></v-data-table>
+    </template>
   </div>
 </template>
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import New from "@/components/school/New";
+import Update from "@/components/school/Update";
 
 export default {
+  components: {
+    New,
+    Update
+  },
   data() {
     return {
-      name: "school"
+      dialog: false,
+      name: "school",
+      selected: [],
+      headers: [
+        { text: "ID", value: "schoolID" },
+        { text: "Email", value: "email" },
+        {
+          text: "Name",
+          align: "start",
+          value: "name"
+        },
+        { text: "Birthday", value: "formatBirthday" },
+        { text: "Phone", value: "phone" },
+        { text: "Active", value: "active" }
+      ]
     };
   },
   computed: {
-    school() {
+    schools() {
       return this.$store.state.school.list;
     }
   },
@@ -26,7 +57,7 @@ export default {
     })
   },
   created() {
-    this.initSchool({ name: "felipeteacher" });
+    this.initSchool();
   }
 };
 </script>

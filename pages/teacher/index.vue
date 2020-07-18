@@ -12,8 +12,7 @@
         item-key="teacherID"
         show-select
         class="elevation-1"
-      >
-      </v-data-table>
+      ></v-data-table>
     </template>
   </div>
 </template>
