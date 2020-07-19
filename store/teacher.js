@@ -27,5 +27,6 @@ export const actions = {
     console.log(payload);
     const resp = await MyApi.teacher.update(payload);
     dispatch("getAll");
+    return resp;
   }
 };

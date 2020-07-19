@@ -46,6 +46,17 @@ module.exports = {
 
   async update(req, res) {
     try {
+      const teacherToUpdate = await Teacher.findByPk(req.body.teacherID);
+
+      if (teacherToUpdate.email !== req.body.email) {
+        const isEmailInDB = await Teacher.findOne({
+          where: { email: req.body.email }
+        });
+        if (isEmailInDB) {
+          return res.json({ code: 400, msg: "ERROR: Duplicated e-mail." });
+        }
+      }
+
       const teacher = await Teacher.update(
         {
           email: req.body.email,
@@ -59,12 +70,12 @@ module.exports = {
           where: { teacherID: req.body.teacherID }
         }
       );
-      const updated = await Teacher.findByPk(req.body.schoolID);
-      res.send(updated);
+      const updated = await Teacher.findByPk(req.body.teacherID);
+      res.json({ code: 200, msg: "Teacher updated", data: updated });
     } catch (error) {
       console.log(error);
       console.log("error teacher update");
-      res.status(400).send({ error: error });
+      return res.json({ code: 400, msg: "ERROR: " + error });
     }
   }
 };

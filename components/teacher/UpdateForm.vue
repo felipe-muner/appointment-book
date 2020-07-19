@@ -80,7 +80,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapMutations } from "vuex";
 
 export default {
   props: {
@@ -118,15 +118,18 @@ export default {
     ...mapActions({
       update: "teacher/update"
     }),
+    ...mapMutations({
+      setSnack: "snackbar/setSnack"
+    }),
     logObj() {
       console.log(this.selectedToUpdate);
     },
     save(date) {
       this.$refs.menu.save(date);
     },
-    submitForm() {
+    async submitForm() {
       if (this.$refs.form.validate()) {
-        this.update({
+        const resp = await this.update({
           teacherID: this.selectedToUpdate.teacherID,
           name: this.selectedToUpdate.name,
           email: this.selectedToUpdate.email,
@@ -135,8 +138,11 @@ export default {
           isTeacherAssistant: this.selectedToUpdate.isTeacherAssistant,
           active: this.selectedToUpdate.active
         });
-        this.$emit("close-dialog");
-        // this.$refs.form.reset();
+        this.setSnack(resp.data.msg);
+        console.log("--updated");
+        console.log(resp.data);
+        console.log("--updated");
+        if (resp.data.code === 200) this.$emit("close-dialog");
       }
     }
   }
