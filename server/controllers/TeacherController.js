@@ -6,10 +6,10 @@ module.exports = {
     try {
       let teachers = await Teacher.findAll();
       teachers.forEach(
-        t => (t.dataValues.formatBirthday = utils.formatBirthday(t.dateOfBirth))
+        t => (t.dataValues.formatBirthday = utils.formatBirthday(t.birthday))
       );
       teachers.forEach(
-        t => (t.dataValues.birthdayYYYYMMDD = utils.extractDate(t.dateOfBirth))
+        t => (t.dataValues.birthdayYYYYMMDD = utils.extractDate(t.birthday))
       );
       res.send(teachers);
     } catch (error) {
@@ -24,7 +24,7 @@ module.exports = {
       const teacher = await Teacher.create({
         email: req.body.email,
         name: req.body.name,
-        dateOfBirth: req.body.dateOfBirth,
+        birthday: req.body.birthday,
         phone: req.body.phone,
         isTeacherAssistant: req.body.isTeacherAssistant
       });
@@ -42,7 +42,7 @@ module.exports = {
         {
           email: req.body.email,
           name: req.body.name,
-          dateOfBirth: req.body.dateOfBirth,
+          birthday: req.body.birthday,
           phone: req.body.phone,
           isTeacherAssistant: req.body.isTeacherAssistant,
           active: req.body.active

@@ -8,13 +8,13 @@ module.exports = {
         email: "felipe.muner@gmail.com",
         password: await bcrypt.hash("12345678", 10),
         name: "Felipe Cunha Muner",
-        dateOfBirth: "1990-03-07"
+        birthday: "1990-03-07"
       },
       {
         email: "felipe.muner2@gmail.com",
         password: await bcrypt.hash("12345678", 10),
         name: "Felipe Cunha Muner 2",
-        dateOfBirth: "1990-03-07"
+        birthday: "1990-03-07"
       }
     ]);
   },

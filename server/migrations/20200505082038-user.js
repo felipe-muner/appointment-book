@@ -10,7 +10,7 @@ module.exports = {
       },
       email: {
         type: Sequelize.STRING,
-        unique: true,
+        unique: true
       },
       password: {
         type: Sequelize.STRING
@@ -18,7 +18,7 @@ module.exports = {
       name: {
         type: Sequelize.STRING
       },
-      dateOfBirth: {
+      birthday: {
         type: Sequelize.DATE
       }
     });

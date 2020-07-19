@@ -81,11 +81,8 @@
 
 <script>
 import { mapActions } from "vuex";
-import BirthdayPicker from "@/components/BirthdayPicker";
+
 export default {
-  components: {
-    BirthdayPicker
-  },
   props: {
     selected: {
       type: Object,

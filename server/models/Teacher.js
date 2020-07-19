@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       },
       email: DataTypes.STRING,
       name: DataTypes.STRING,
-      dateOfBirth: DataTypes.DATE,
+      birthday: DataTypes.DATE,
       phone: DataTypes.STRING,
       isTeacherAssistant: DataTypes.BOOLEAN,
       active: DataTypes.BOOLEAN

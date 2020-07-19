@@ -71,7 +71,7 @@
         </v-row>
         <v-row>
           <v-col class="text-right px-0">
-            <v-btn :disabled="!valid" color="success" @click="validate" dense>Validate</v-btn>
+            <v-btn :disabled="!valid" color="success" @click="submitForm">Validate</v-btn>
           </v-col>
         </v-row>
       </v-form>
@@ -81,11 +81,8 @@
 
 <script>
 import { mapActions } from "vuex";
-import BirthdayPicker from "@/components/BirthdayPicker";
+
 export default {
-  components: {
-    BirthdayPicker
-  },
   props: {
     selected: {
       type: Object,
@@ -126,20 +123,12 @@ export default {
       this.$refs.menu.save(date);
     },
     submitForm() {
-      if (this.$refs.form.validate()) {
-        this.saveCostCenter();
-        this.myDialog = false;
-        this.$refs.form.reset();
-      }
-    },
-    validate() {
-      this.$refs.form.validate();
-    },
-    reset() {
-      this.$refs.form.reset();
-    },
-    resetValidation() {
-      this.$refs.form.resetValidation();
+      alert("vou atualizar");
+      // if (this.$refs.form.validate()) {
+      //   this.saveCostCenter();
+      //   this.myDialog = false;
+      //   this.$refs.form.reset();
+      // }
     }
   }
 };

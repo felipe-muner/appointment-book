@@ -20,38 +20,134 @@
     </template>
 
     <v-card>
-      <v-card-title class="headline grey lighten-2" primary-title>
-        New Teacher
-      </v-card-title>
+      <v-card-title class="headline grey lighten-2" primary-title>New Teacher</v-card-title>
 
       <v-card-text>
-        Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod
-        tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim
-        veniam, quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea
-        commodo consequat. Duis aute irure dolor in reprehenderit in voluptate
-        velit esse cillum dolore eu fugiat nulla pariatur. Excepteur sint
-        occaecat cupidatat non proident, sunt in culpa qui officia deserunt
-        mollit anim id est laborum.
+        <v-container>
+          {{teacher}}
+          <v-form ref="form" v-model="valid" lazy-validation>
+            <v-row>
+              <v-col>
+                <v-switch v-model="teacher.isTeacherAssistant" label="TA"></v-switch>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-text-field
+                prepend-icon="mdi-teach"
+                v-model="teacher.name"
+                :rules="nameRules"
+                label="Name"
+                outlined
+                dense
+              />
+            </v-row>
+            <v-row>
+              <v-text-field
+                prepend-icon="mdi-email"
+                v-model="teacher.email"
+                :rules="emailRules"
+                label="E-mail"
+                outlined
+                dense
+              />
+            </v-row>
+            <v-row>
+              <v-text-field
+                prepend-icon="mdi-cellphone-sound"
+                v-model="teacher.phone"
+                :rules="phoneRules"
+                label="Phone"
+                outlined
+                dense
+              />
+            </v-row>
+            <v-row>
+              <v-menu
+                ref="menu"
+                v-model="menu"
+                :close-on-content-click="false"
+                transition="scale-transition"
+                offset-y
+                min-width="290px"
+              >
+                <template v-slot:activator="{ on, attrs }">
+                  <v-text-field
+                    v-model="teacher.birthday"
+                    :rules="birthdayRules"
+                    label="Birthday date"
+                    prepend-icon="mdi-calendar"
+                    readonly
+                    v-bind="attrs"
+                    v-on="on"
+                    outlined
+                    dense
+                  ></v-text-field>
+                </template>
+                <v-date-picker
+                  ref="picker"
+                  v-model="teacher.birthday"
+                  :max="new Date().toISOString().substr(0, 10)"
+                  min="1950-01-01"
+                  @change="save"
+                ></v-date-picker>
+              </v-menu>
+            </v-row>
+            <v-row>
+              <v-col class="text-right px-0">
+                <v-btn :disabled="!valid" color="success" @click="submitForm" dense>Create</v-btn>
+              </v-col>
+            </v-row>
+          </v-form>
+        </v-container>
       </v-card-text>
-
-      <v-divider></v-divider>
-
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn color="primary" text @click="dialog = false">
-          I accept
-        </v-btn>
-      </v-card-actions>
     </v-card>
   </v-dialog>
 </template>
 
 <script>
+import { mapActions } from "vuex";
+
 export default {
   data() {
     return {
-      dialog: false
+      valid: true,
+      dialog: false,
+      menu: false,
+      teacher: {
+        name: "qwe",
+        email: "qwe@qwe.com",
+        phone: "929292",
+        birthday: "1970-10-10"
+      },
+      nameRules: [
+        v => !!v || "Name is required",
+        v => (v && v.length <= 10) || "Name must be less than 10 characters"
+      ],
+      emailRules: [
+        v => !!v || "E-mail is required",
+        v => /.+@.+\..+/.test(v) || "E-mail must be valid"
+      ],
+      phoneRules: [v => !!v || "Phone is required"],
+      birthdayRules: [v => !!v || "Birthday is required"]
     };
+  },
+  methods: {
+    ...mapActions({
+      new: "teacher/new"
+    }),
+    save(date) {
+      this.$refs.menu.save(date);
+    },
+    submitForm() {
+      if (this.$refs.form.validate()) {
+        this.new(this.teacher);
+      }
+    }
+  },
+  watch: {
+    menu(val) {
+      val && setTimeout(() => (this.$refs.picker.activePicker = "YEAR"));
+    }
   }
 };
 </script>
