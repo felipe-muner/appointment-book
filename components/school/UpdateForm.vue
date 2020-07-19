@@ -21,7 +21,6 @@
           <v-text-field
             prepend-icon="mdi-map-marker"
             v-model="selectedToUpdate.address"
-            :rules="emailRules"
             label="Address"
             outlined
             dense

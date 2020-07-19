@@ -22,26 +22,57 @@
     <v-card>
       <v-card-title class="headline grey lighten-2" primary-title>New School</v-card-title>
 
-      <v-card-text>form schools</v-card-text>
-
-      <v-divider></v-divider>
-
-      <v-card-actions>
-        <v-spacer></v-spacer>
-        <v-btn color="primary" text @click="dialog = false">I accept</v-btn>
-      </v-card-actions>
+      <v-card-text>
+        <v-container>
+          <v-form ref="form" v-model="valid" lazy-validation>
+            <v-row>
+              <v-text-field
+                prepend-icon="mdi-home-city"
+                v-model="school.name"
+                label="Name"
+                outlined
+                dense
+                required
+              />
+            </v-row>
+            <v-row>
+              <v-text-field
+                prepend-icon="mdi-map-marker"
+                v-model="school.address"
+                label="Address"
+                outlined
+                dense
+              />
+            </v-row>
+            <v-row>
+              <v-text-field
+                prepend-icon="mdi-city"
+                v-model="school.neighborhood"
+                label="Neighborhood"
+                outlined
+                dense
+              />
+            </v-row>
+            <v-row>
+              <v-col class="text-right px-0">
+                <v-btn :disabled="!valid" color="success" @click="submitForm" dense>Create</v-btn>
+              </v-col>
+            </v-row>
+          </v-form>
+        </v-container>
+      </v-card-text>
     </v-card>
   </v-dialog>
 </template>
 
 <script>
 import { mapActions, mapMutations } from "vuex";
+
 export default {
   data() {
     return {
       valid: true,
       dialog: false,
-      menu: false,
       school: {},
       nameRules: [
         v => !!v || "Name is required",

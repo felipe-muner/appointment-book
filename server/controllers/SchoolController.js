@@ -18,7 +18,7 @@ module.exports = {
         address: req.body.address,
         neighborhood: req.body.neighborhood
       });
-      res.send(school);
+      res.json({ code: 200, msg: "School created", data: school });
     } catch (error) {
       console.log(error);
       console.log("error school create");
