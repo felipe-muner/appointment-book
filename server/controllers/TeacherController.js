@@ -21,6 +21,13 @@ module.exports = {
 
   async create(req, res) {
     try {
+      const isEmailInDB = await Teacher.findOne({
+        where: { email: req.body.email }
+      });
+      if (isEmailInDB) {
+        return res.json({ code: 400, msg: "ERROR: Duplicated e-mail." });
+      }
+
       const teacher = await Teacher.create({
         email: req.body.email,
         name: req.body.name,
@@ -28,11 +35,12 @@ module.exports = {
         phone: req.body.phone,
         isTeacherAssistant: req.body.isTeacherAssistant
       });
-      res.send(teacher);
+      res.json({ code: 200, msg: "Teacher created", data: teacher });
     } catch (error) {
+      console.log("to aq");
       console.log(error);
       console.log("error teacher create");
-      res.status(400).send({ error: error });
+      return res.json({ code: 400, msg: "ERROR: " + error });
     }
   },
 

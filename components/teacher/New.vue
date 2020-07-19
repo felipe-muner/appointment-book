@@ -105,7 +105,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapMutations } from "vuex";
 
 export default {
   data() {
@@ -135,13 +135,17 @@ export default {
     ...mapActions({
       new: "teacher/new"
     }),
+    ...mapMutations({
+      setSnack: "snackbar/setSnack"
+    }),
     save(date) {
       this.$refs.menu.save(date);
     },
     async submitForm() {
       if (this.$refs.form.validate()) {
         const resp = await this.new(this.teacher);
-        console.log("jiii");
+        this.setSnack(resp.data.msg);
+        if (resp.data.code === 200) this.dialog = false;
       }
     }
   },
