@@ -138,9 +138,10 @@ export default {
     save(date) {
       this.$refs.menu.save(date);
     },
-    submitForm() {
+    async submitForm() {
       if (this.$refs.form.validate()) {
-        this.new(this.teacher);
+        const resp = await this.new(this.teacher);
+        console.log("jiii");
       }
     }
   },

@@ -10,6 +10,9 @@ class Teacher {
   async new(payload) {
     return await axios.post(this.server + "/teacher/create", payload);
   }
+  async update(payload) {
+    return await axios.put(this.server + "/teacher/update", payload);
+  }
 }
 
 export default Teacher;

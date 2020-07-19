@@ -71,7 +71,7 @@
         </v-row>
         <v-row>
           <v-col class="text-right px-0">
-            <v-btn :disabled="!valid" color="success" @click="submitForm">Validate</v-btn>
+            <v-btn :disabled="!valid" color="warning" @click="submitForm">Update</v-btn>
           </v-col>
         </v-row>
       </v-form>
@@ -115,20 +115,29 @@ export default {
     }
   },
   methods: {
+    ...mapActions({
+      update: "teacher/update"
+    }),
     logObj() {
       console.log(this.selectedToUpdate);
     },
-    ...mapActions(["saveCostCenter"]),
     save(date) {
       this.$refs.menu.save(date);
     },
     submitForm() {
-      alert("vou atualizar");
-      // if (this.$refs.form.validate()) {
-      //   this.saveCostCenter();
-      //   this.myDialog = false;
-      //   this.$refs.form.reset();
-      // }
+      if (this.$refs.form.validate()) {
+        this.update({
+          teacherID: this.selectedToUpdate.teacherID,
+          name: this.selectedToUpdate.name,
+          email: this.selectedToUpdate.email,
+          phone: this.selectedToUpdate.phone,
+          birthday: this.selectedToUpdate.birthdayYYYYMMDD,
+          isTeacherAssistant: this.selectedToUpdate.isTeacherAssistant,
+          active: this.selectedToUpdate.active
+        });
+        this.$emit("close-dialog");
+        // this.$refs.form.reset();
+      }
     }
   }
 };
