@@ -121,9 +121,6 @@ export default {
     ...mapMutations({
       setSnack: "snackbar/setSnack"
     }),
-    logObj() {
-      console.log(this.selectedToUpdate);
-    },
     save(date) {
       this.$refs.menu.save(date);
     },
@@ -139,9 +136,6 @@ export default {
           active: this.selectedToUpdate.active
         });
         this.setSnack(resp.data.msg);
-        console.log("--updated");
-        console.log(resp.data);
-        console.log("--updated");
         if (resp.data.code === 200) this.$emit("close-dialog");
       }
     }

@@ -16,5 +16,16 @@ export const actions = {
   async getAll({ commit, state }, payload) {
     const resp = await MyApi.school.getAll();
     commit("getAll", resp.data);
+  },
+  async new({ commit, dispatch, state }, payload) {
+    const resp = await MyApi.school.new(payload);
+    dispatch("getAll");
+    return resp;
+  },
+  async update({ commit, dispatch, state }, payload) {
+    console.log(payload);
+    const resp = await MyApi.school.update(payload);
+    dispatch("getAll");
+    return resp;
   }
 };

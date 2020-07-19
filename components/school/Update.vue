@@ -37,7 +37,7 @@
               ></v-autocomplete>
             </v-col>
           </v-row>
-          <UpdateForm :selected="selected" />
+          <UpdateForm :selected="selected" v-on:close-dialog="dialog = false" />
         </v-container>
       </v-card-text>
 

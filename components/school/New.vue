@@ -35,11 +35,37 @@
 </template>
 
 <script>
+import { mapActions, mapMutations } from "vuex";
 export default {
   data() {
     return {
-      dialog: false
+      valid: true,
+      dialog: false,
+      menu: false,
+      school: {},
+      nameRules: [
+        v => !!v || "Name is required",
+        v => (v && v.length <= 10) || "Name must be less than 10 characters"
+      ]
     };
+  },
+  methods: {
+    ...mapActions({
+      new: "school/new"
+    }),
+    ...mapMutations({
+      setSnack: "snackbar/setSnack"
+    }),
+    save(date) {
+      this.$refs.menu.save(date);
+    },
+    async submitForm() {
+      if (this.$refs.form.validate()) {
+        const resp = await this.new(this.school);
+        this.setSnack(resp.data.msg);
+        if (resp.data.code === 200) this.dialog = false;
+      }
+    }
   }
 };
 </script>

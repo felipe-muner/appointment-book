@@ -34,14 +34,13 @@ export default {
       selected: [],
       headers: [
         { text: "ID", value: "schoolID" },
-        { text: "Email", value: "email" },
         {
           text: "Name",
           align: "start",
           value: "name"
         },
-        { text: "Birthday", value: "formatBirthday" },
-        { text: "Phone", value: "phone" },
+        { text: "Neighborhood", value: "neighborhood" },
+        { text: "Address", value: "address" },
         { text: "Active", value: "active" }
       ]
     };
