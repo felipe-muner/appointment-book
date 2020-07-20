@@ -5,14 +5,7 @@
     <Update />
 
     <template>
-      <v-data-table
-        v-model="selected"
-        :headers="headers"
-        :items="teachers"
-        item-key="teacherID"
-        show-select
-        class="elevation-1"
-      ></v-data-table>
+      <v-data-table :headers="headers" :items="teachers" item-key="teacherID" class="elevation-1"></v-data-table>
     </template>
   </div>
 </template>
@@ -31,7 +24,6 @@ export default {
     return {
       dialog: false,
       name: "teacher",
-      selected: [],
       headers: [
         { text: "ID", value: "teacherID" },
         { text: "Email", value: "email" },

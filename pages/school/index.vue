@@ -3,17 +3,35 @@
     <h1>School List</h1>
     <New />
     <Update />
-
-    <template>
-      <v-data-table
-        v-model="selected"
-        :headers="headers"
-        :items="schools"
-        item-key="schoolID"
-        show-select
-        class="elevation-1"
-      ></v-data-table>
-    </template>
+    <v-data-table :headers="headers" :items="schools" item-key="schoolID" class="elevation-1">
+      <template v-slot:body="{ items }">
+        <tbody>
+          <tr v-for="item in items" :key="item.schoolID">
+            <td>{{ item.schoolID }}</td>
+            <td>{{ item.name }}</td>
+            <td>{{ item.neighborhood }}</td>
+            <td>
+              <v-tooltip bottom>
+                <template v-slot:activator="{ on, attrs }">
+                  <v-btn
+                    color="primary"
+                    dark
+                    v-bind="attrs"
+                    v-on="on"
+                    :href="item.address"
+                    target="_blank"
+                  >
+                    <v-icon dark>mdi-map</v-icon>
+                  </v-btn>
+                </template>
+                <span>Tooltip</span>
+              </v-tooltip>
+            </td>
+            <td>{{ item.active }}</td>
+          </tr>
+        </tbody>
+      </template>
+    </v-data-table>
   </div>
 </template>
 
@@ -31,7 +49,6 @@ export default {
     return {
       dialog: false,
       name: "school",
-      selected: [],
       headers: [
         { text: "ID", value: "schoolID" },
         {
