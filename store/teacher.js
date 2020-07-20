@@ -4,7 +4,11 @@ export const state = () => ({
   list: []
 });
 
-export const getters = {};
+export const getters = {
+  getList: state => {
+    return state.list;
+  }
+};
 
 export const mutations = {
   getAll(state, payload) {

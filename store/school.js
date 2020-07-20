@@ -21,6 +21,9 @@ export const state = () => ({
 export const getters = {
   schoolTypes: state => {
     return state.types;
+  },
+  getList: state => {
+    return state.list;
   }
 };
 
