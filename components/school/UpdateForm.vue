@@ -347,7 +347,8 @@ export default {
   },
   methods: {
     ...mapActions({
-      update: "school/update"
+      update: "school/update",
+      initSchool: "school/getAll"
     }),
     ...mapMutations({
       setSnack: "snackbar/setSnack"
@@ -356,7 +357,10 @@ export default {
       if (this.$refs.form.validate()) {
         const resp = await this.update(this.selectedToUpdate);
         this.setSnack(resp.data.msg);
-        if (resp.data.code === 200) this.$emit("close-dialog");
+        if (resp.data.code === 200) {
+          this.initSchool();
+          this.$emit("close-dialog");
+        }
       }
     }
   }
