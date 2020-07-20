@@ -1,6 +1,20 @@
 import MyApi from "../api/MyApi";
 
 export const state = () => ({
+  type: [
+    {
+      id: 1,
+      name: "Kindergarten"
+    },
+    {
+      id: 2,
+      name: "Primary"
+    },
+    {
+      id: 3,
+      name: "Secondary"
+    }
+  ],
   list: []
 });
 
