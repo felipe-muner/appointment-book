@@ -385,7 +385,32 @@ export default {
     return {
       valid: true,
       dialog: false,
-      school: { mondayMorningTime: "", mondayAfternoonTime: "" },
+      school: {
+        mondayMorningTime: "11:11",
+        mondayAfternoonTime: "22:07",
+        mondayMorning: 1,
+        mondayAfternoon: 7,
+        tuesdayMorning: "2",
+        wednesdayMorning: "3",
+        thursdayMorning: "4",
+        fridayMorning: "5",
+        saturdayMorning: "6",
+        tuesdayAfternoon: 8,
+        wednesdayAfternoon: "9",
+        thursdayAfternoon: "10",
+        fridayAfternoon: "11",
+        saturdayAfternoon: "12",
+        tuesdayMorningTime: "11:12",
+        wednesdayMorningTime: "11:13",
+        thursdayMorningTime: "11:14",
+        fridayMorningTime: "11:15",
+        saturdayMorningTime: "11:16",
+        tuesdayAfternoonTime: "22:08",
+        wednesdayAfternoonTime: "22:09",
+        thursdayAfternoonTime: "22:10",
+        fridayAfternoonTime: "22:11",
+        saturdayAfternoonTime: "22:12"
+      },
       nameRules: [
         v => !!v || "Name is required",
         v => (v && v.length <= 10) || "Name must be less than 10 characters"
