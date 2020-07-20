@@ -23,8 +23,8 @@ module.exports = {
       },
       {
         father_id: null,
-        name: "Appointment book",
-        action: "/appointment-book",
+        name: "Schedule",
+        action: "/schedule",
         icon: "mdi-calendar-clock",
         system_id: 1,
         priority: 2,
