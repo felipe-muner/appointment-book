@@ -67,11 +67,16 @@ export default {
   methods: {
     ...mapActions({
       initSchool: "school/getAll",
-      initTeacher: "teacher/getAll"
+      initTeacher: "teacher/getAll",
+      new: "schedule/new"
     }),
     async submitForm() {
       if (this.$refs.form.validate()) {
-        alert("vou cadastrar");
+        this.new({
+          date: this.date,
+          school: this.school,
+          teacher: this.teacher
+        });
       }
     }
   },
