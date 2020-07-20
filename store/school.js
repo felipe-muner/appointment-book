@@ -1,7 +1,7 @@
 import MyApi from "../api/MyApi";
 
 export const state = () => ({
-  type: [
+  types: [
     {
       id: 1,
       name: "Kindergarten"
@@ -18,7 +18,11 @@ export const state = () => ({
   list: []
 });
 
-export const getters = {};
+export const getters = {
+  schoolTypes: state => {
+    return state.types;
+  }
+};
 
 export const mutations = {
   getAll(state, payload) {

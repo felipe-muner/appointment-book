@@ -55,14 +55,16 @@
             </v-row>
             <v-row>
               <v-col class="pa-0">
-                <!-- <v-select
+                <v-select
+                  return-object
+                  item-text="name"
                   prepend-icon="mdi-human-child"
-                  :items="schoolType"
+                  :items="schoolTypes"
                   label="School Type"
                   v-model="school.type"
                   outlined
                   dense
-                ></v-select>-->
+                ></v-select>
               </v-col>
               <v-col class="py-0 pr-0">
                 <v-text-field
@@ -350,7 +352,7 @@
                 </v-simple-table>
               </v-col>
             </v-row>
-            {{school}}
+
             <v-row>
               <v-col class="text-right px-0">
                 <v-btn :disabled="!valid" color="success" @click="submitForm" dense>Create</v-btn>
@@ -364,7 +366,7 @@
 </template>
 
 <script>
-import { mapActions, mapMutations } from "vuex";
+import { mapActions, mapMutations, mapGetters } from "vuex";
 
 export default {
   data() {
@@ -377,6 +379,11 @@ export default {
         v => (v && v.length <= 10) || "Name must be less than 10 characters"
       ]
     };
+  },
+  computed: {
+    ...mapGetters({
+      schoolTypes: "school/schoolTypes"
+    })
   },
   methods: {
     ...mapActions({
