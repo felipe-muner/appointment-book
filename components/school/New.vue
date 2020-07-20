@@ -21,7 +21,6 @@
 
     <v-card>
       <v-card-title class="headline grey lighten-2" primary-title>New School</v-card-title>
-
       <v-card-text>
         <v-container>
           <v-form ref="form" v-model="valid" lazy-validation>
@@ -54,7 +53,7 @@
               />
             </v-row>
             <v-row>
-              <v-col class="pa-0">
+              <v-col cols="6" class="pa-0">
                 <v-select
                   return-object
                   item-text="name"
@@ -66,17 +65,30 @@
                   dense
                 ></v-select>
               </v-col>
-              <v-col class="py-0 pr-0">
+              <v-col cols="3" class="py-0 pr-0">
                 <v-text-field
                   prepend-icon="mdi-alarm"
-                  label="Start At"
-                  v-model="school.startTime"
+                  label="Morning - Start At"
+                  v-model="school.startTimeMorning"
                   outlined
                   dense
                   type="time"
+                  @input="setTimeMorning"
+                />
+              </v-col>
+              <v-col cols="3" class="py-0 pr-0">
+                <v-text-field
+                  prepend-icon="mdi-alarm"
+                  label="Afternoon - Start At"
+                  v-model="school.startTimeAfternoon"
+                  outlined
+                  dense
+                  type="time"
+                  @input="setTimeAfternoon"
                 />
               </v-col>
             </v-row>
+            {{school}}
             <h2>Amount of Classes</h2>
             <v-row>
               <v-col class="px-0">
@@ -373,7 +385,7 @@ export default {
     return {
       valid: true,
       dialog: false,
-      school: {},
+      school: { mondayMorningTime: "", mondayAfternoonTime: "" },
       nameRules: [
         v => !!v || "Name is required",
         v => (v && v.length <= 10) || "Name must be less than 10 characters"
@@ -392,6 +404,12 @@ export default {
     ...mapMutations({
       setSnack: "snackbar/setSnack"
     }),
+    setTimeMorning(val) {
+      this.school.mondayMorningTime = val;
+    },
+    setTimeAfternoon(val) {
+      this.school.mondayAfternoonTime = val;
+    },
     save(date) {
       this.$refs.menu.save(date);
     },
