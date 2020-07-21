@@ -14,36 +14,6 @@ module.exports = (sequelize, DataTypes) => {
       address: DataTypes.STRING,
       neighborhood: DataTypes.STRING,
 
-      mondayMorning: DataTypes.INTEGER,
-      mondayMorningTime: DataTypes.TIME,
-      mondayAfternoon: DataTypes.INTEGER,
-      mondayAfternoonTime: DataTypes.TIME,
-
-      tuesdayMorning: DataTypes.INTEGER,
-      tuesdayMorningTime: DataTypes.TIME,
-      tuesdayAfternoon: DataTypes.INTEGER,
-      tuesdayAfternoonTime: DataTypes.TIME,
-
-      wednesdayMorning: DataTypes.INTEGER,
-      wednesdayMorningTime: DataTypes.TIME,
-      wednesdayAfternoon: DataTypes.INTEGER,
-      wednesdayAfternoonTime: DataTypes.TIME,
-
-      thursdayMorning: DataTypes.INTEGER,
-      thursdayMorningTime: DataTypes.TIME,
-      thursdayAfternoon: DataTypes.INTEGER,
-      thursdayAfternoonTime: DataTypes.TIME,
-
-      fridayMorning: DataTypes.INTEGER,
-      fridayMorningTime: DataTypes.TIME,
-      fridayAfternoon: DataTypes.INTEGER,
-      fridayAfternoonTime: DataTypes.TIME,
-
-      saturdayMorning: DataTypes.INTEGER,
-      saturdayMorningTime: DataTypes.TIME,
-      saturdayAfternoon: DataTypes.INTEGER,
-      saturdayAfternoonTime: DataTypes.TIME,
-
       active: DataTypes.BOOLEAN
     },
     {
