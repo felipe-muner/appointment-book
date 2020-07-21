@@ -21,7 +21,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
   Lesson.associate = function(models) {
-    // associations can be defined here
+    Lesson.belongsTo(models.School, {
+      foreignKey: "school_ID",
+      targetKey: "schoolID"
+    });
   };
   return Lesson;
 };

@@ -22,7 +22,10 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
   School.associate = function(models) {
-    // associations can be defined here
+    School.hasMany(models.Lesson, {
+      foreignKey: "school_ID",
+      sourceKey: "schoolID"
+    });
   };
 
   School.prototype.toJSON = function() {

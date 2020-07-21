@@ -3,7 +3,10 @@ const { School, Lesson } = require("../models");
 module.exports = {
   async getAll(req, res) {
     try {
-      const schools = await School.findAll();
+      const schools = await School.findAll({
+        include: [Lesson]
+      });
+      console.log(schools);
       res.send(schools);
     } catch (error) {
       console.log(error);
