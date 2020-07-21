@@ -10,8 +10,6 @@ module.exports = (sequelize, DataTypes) => {
         primaryKey: true,
         type: DataTypes.INTEGER
       },
-      startDate: DataTypes.DATE,
-      endDate: DataTypes.DATE,
       teacher_id: DataTypes.INTEGER,
       school_id: DataTypes.INTEGER
     },
