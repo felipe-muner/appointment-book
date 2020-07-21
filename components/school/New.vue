@@ -52,311 +52,98 @@
                 dense
               />
             </v-row>
+            <h2>Lessons</h2>
             <v-row>
-              <v-col cols="6" class="pa-0">
-                <v-select
+              <v-col cols="2">
+                <v-autocomplete
                   return-object
                   item-text="name"
-                  prepend-icon="mdi-human-child"
-                  :items="schoolTypes"
-                  label="School Type"
-                  v-model="school.type"
+                  v-model="lesson.day"
+                  :items="days"
+                  label="Day"
                   outlined
                   dense
-                ></v-select>
+                ></v-autocomplete>
               </v-col>
-              <v-col cols="3" class="py-0 pr-0">
-                <v-text-field
-                  prepend-icon="mdi-alarm"
-                  label="Morning - Start At"
-                  v-model="school.startTimeMorning"
+              <v-col cols="2">
+                <v-autocomplete
+                  v-model="lesson.class"
+                  :items="classes"
+                  label="Class"
                   outlined
                   dense
+                ></v-autocomplete>
+              </v-col>
+
+              <v-col cols="2">
+                <v-text-field
+                  prepend-icon="mdi-city"
                   type="time"
-                  @input="setTimeMorning"
+                  v-model="lesson.startTime"
+                  label="Start Time"
+                  outlined
+                  dense
                 />
               </v-col>
-              <v-col cols="3" class="py-0 pr-0">
+              <v-col cols="2">
                 <v-text-field
-                  prepend-icon="mdi-alarm"
-                  label="Afternoon - Start At"
-                  v-model="school.startTimeAfternoon"
+                  prepend-icon="mdi-city"
+                  type="time"
+                  v-model="lesson.endTime"
+                  label="End Time"
                   outlined
                   dense
-                  type="time"
-                  @input="setTimeAfternoon"
                 />
+              </v-col>
+              <v-col>
+                <v-btn color="primary" @click="addLesson">Add lesson</v-btn>
               </v-col>
             </v-row>
             {{school}}
-            <h2>Amount of Classes</h2>
             <v-row>
-              <v-col class="px-0">
-                <v-simple-table>
+              <v-col cols="6">
+                <v-simple-table bordered>
                   <template v-slot:default>
+                    <thead>
+                      <tr>
+                        <th>Day</th>
+                        <th>Class</th>
+                        <th>Start time</th>
+                        <th>End time</th>
+                        <th></th>
+                      </tr>
+                    </thead>
                     <tbody>
-                      <tr>
-                        <td class="px-0" style="width:35%">
-                          <v-text-field
-                            hide-details
-                            label="Monday Morning"
-                            v-model="school.mondayMorning"
-                            outlined
-                            dense
-                            type="number"
-                            min="0"
-                            step="1"
-                          />
-                        </td>
-                        <td style="width:15%">
-                          <v-text-field
-                            hide-details
-                            label="Start at"
-                            v-model="school.mondayMorningTime"
-                            outlined
-                            dense
-                            type="time"
-                          />
-                        </td>
-                        <td class="px-0" style="width:35%">
-                          <v-text-field
-                            hide-details
-                            label="Monday Afternoon"
-                            v-model="school.mondayAfternoon"
-                            outlined
-                            dense
-                            type="number"
-                          />
-                        </td>
-                        <td style="width:15%">
-                          <v-text-field
-                            hide-details
-                            label="Start at"
-                            v-model="school.mondayAfternoonTime"
-                            outlined
-                            dense
-                            type="time"
-                          />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="px-0" style="width:35%">
-                          <v-text-field
-                            hide-details
-                            label="Tuesday Morning"
-                            v-model="school.tuesdayMorning"
-                            outlined
-                            dense
-                            type="number"
-                            min="0"
-                            step="1"
-                          />
-                        </td>
-                        <td style="width:15%">
-                          <v-text-field
-                            hide-details
-                            label="Start at"
-                            v-model="school.tuesdayMorningTime"
-                            outlined
-                            dense
-                            type="time"
-                          />
-                        </td>
-                        <td class="px-0" style="width:35%">
-                          <v-text-field
-                            hide-details
-                            label="Tuesday Afternoon"
-                            v-model="school.tuesdayAfternoon"
-                            outlined
-                            dense
-                            type="number"
-                          />
-                        </td>
-                        <td style="width:15%">
-                          <v-text-field
-                            hide-details
-                            label="Start at"
-                            v-model="school.tuesdayAfternoonTime"
-                            outlined
-                            dense
-                            type="time"
-                          />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="px-0" style="width:35%">
-                          <v-text-field
-                            hide-details
-                            label="Wednesday Morning"
-                            v-model="school.wednesdayMorning"
-                            outlined
-                            dense
-                            type="number"
-                            min="0"
-                            step="1"
-                          />
-                        </td>
-                        <td style="width:15%">
-                          <v-text-field
-                            hide-details
-                            label="Start at"
-                            v-model="school.wednesdayMorningTime"
-                            outlined
-                            dense
-                            type="time"
-                          />
-                        </td>
-                        <td class="px-0" style="width:35%">
-                          <v-text-field
-                            hide-details
-                            label="Wednesday Afternoon"
-                            v-model="school.wednesdayAfternoon"
-                            outlined
-                            dense
-                            type="number"
-                          />
-                        </td>
-                        <td style="width:15%">
-                          <v-text-field
-                            hide-details
-                            label="Start at"
-                            v-model="school.wednesdayAfternoonTime"
-                            outlined
-                            dense
-                            type="time"
-                          />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="px-0" style="width:35%">
-                          <v-text-field
-                            hide-details
-                            label="Thursday Morning"
-                            v-model="school.thursdayMorning"
-                            outlined
-                            dense
-                            type="number"
-                            min="0"
-                            step="1"
-                          />
-                        </td>
-                        <td style="width:15%">
-                          <v-text-field
-                            hide-details
-                            label="Start at"
-                            v-model="school.thursdayMorningTime"
-                            outlined
-                            dense
-                            type="time"
-                          />
-                        </td>
-                        <td class="px-0" style="width:35%">
-                          <v-text-field
-                            hide-details
-                            label="Thursday Afternoon"
-                            v-model="school.thursdayAfternoon"
-                            outlined
-                            dense
-                            type="number"
-                          />
-                        </td>
-                        <td style="width:15%">
-                          <v-text-field
-                            hide-details
-                            label="Start at"
-                            v-model="school.thursdayAfternoonTime"
-                            outlined
-                            dense
-                            type="time"
-                          />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="px-0" style="width:35%">
-                          <v-text-field
-                            hide-details
-                            label="Friday Morning"
-                            v-model="school.fridayMorning"
-                            outlined
-                            dense
-                            type="number"
-                            min="0"
-                            step="1"
-                          />
-                        </td>
-                        <td style="width:15%">
-                          <v-text-field
-                            hide-details
-                            label="Start at"
-                            v-model="school.fridayMorningTime"
-                            outlined
-                            dense
-                            type="time"
-                          />
-                        </td>
-                        <td class="px-0" style="width:35%">
-                          <v-text-field
-                            hide-details
-                            label="Friday Afternoon"
-                            v-model="school.fridayAfternoon"
-                            outlined
-                            dense
-                            type="number"
-                          />
-                        </td>
-                        <td style="width:15%">
-                          <v-text-field
-                            hide-details
-                            label="Start at"
-                            v-model="school.fridayAfternoonTime"
-                            outlined
-                            dense
-                            type="time"
-                          />
-                        </td>
-                      </tr>
-                      <tr>
-                        <td class="px-0" style="width:35%">
-                          <v-text-field
-                            hide-details
-                            label="Saturday Morning"
-                            v-model="school.saturdayMorning"
-                            outlined
-                            dense
-                            type="number"
-                            min="0"
-                            step="1"
-                          />
-                        </td>
-                        <td style="width:15%">
-                          <v-text-field
-                            hide-details
-                            label="Start at"
-                            v-model="school.saturdayMorningTime"
-                            outlined
-                            dense
-                            type="time"
-                          />
-                        </td>
-                        <td class="px-0" style="width:35%">
-                          <v-text-field
-                            hide-details
-                            label="Saturday Afternoon"
-                            v-model="school.saturdayAfternoon"
-                            outlined
-                            dense
-                            type="number"
-                          />
-                        </td>
-                        <td style="width:15%">
-                          <v-text-field
-                            hide-details
-                            label="Start at"
-                            v-model="school.saturdayAfternoonTime"
-                            outlined
-                            dense
-                            type="time"
-                          />
+                      <tr v-for="les in school.lessons" v-bind:key="JSON.stringify(les)">
+                        <td>{{les.day.name}}</td>
+                        <td>{{les.class}}</td>
+                        <td>{{les.startTime}}</td>
+                        <td>{{les.endTime}}</td>
+                        <td>
+                          <v-tooltip bottom>
+                            <template v-slot:activator="{ on, attrs }">
+                              <v-icon
+                                @click="copyLesson(les)"
+                                color="warning"
+                                dark
+                                v-bind="attrs"
+                                v-on="on"
+                              >mdi-content-copy</v-icon>
+                            </template>
+                            <span>copy</span>
+                          </v-tooltip>
+                          <v-tooltip bottom>
+                            <template v-slot:activator="{ on, attrs }">
+                              <v-icon
+                                @click="removeLesson(les)"
+                                color="error"
+                                dark
+                                v-bind="attrs"
+                                v-on="on"
+                              >mdi-delete-empty</v-icon>
+                            </template>
+                            <span>remove</span>
+                          </v-tooltip>
                         </td>
                       </tr>
                     </tbody>
@@ -364,7 +151,6 @@
                 </v-simple-table>
               </v-col>
             </v-row>
-
             <v-row>
               <v-col class="text-right px-0">
                 <v-btn :disabled="!valid" color="success" @click="submitForm" dense>Create</v-btn>
@@ -386,31 +172,12 @@ export default {
       valid: true,
       dialog: false,
       school: {
-        mondayMorningTime: "11:11",
-        mondayAfternoonTime: "22:07",
-        mondayMorning: 1,
-        mondayAfternoon: 7,
-        tuesdayMorning: "2",
-        wednesdayMorning: "3",
-        thursdayMorning: "4",
-        fridayMorning: "5",
-        saturdayMorning: "6",
-        tuesdayAfternoon: 8,
-        wednesdayAfternoon: "9",
-        thursdayAfternoon: "10",
-        fridayAfternoon: "11",
-        saturdayAfternoon: "12",
-        tuesdayMorningTime: "11:12",
-        wednesdayMorningTime: "11:13",
-        thursdayMorningTime: "11:14",
-        fridayMorningTime: "11:15",
-        saturdayMorningTime: "11:16",
-        tuesdayAfternoonTime: "22:08",
-        wednesdayAfternoonTime: "22:09",
-        thursdayAfternoonTime: "22:10",
-        fridayAfternoonTime: "22:11",
-        saturdayAfternoonTime: "22:12"
+        name: "",
+        address: "",
+        neighborhood: "",
+        lessons: []
       },
+      lesson: {},
       nameRules: [
         v => !!v || "Name is required",
         v => (v && v.length <= 10) || "Name must be less than 10 characters"
@@ -419,7 +186,9 @@ export default {
   },
   computed: {
     ...mapGetters({
-      schoolTypes: "school/schoolTypes"
+      schoolTypes: "school/schoolTypes",
+      classes: "lesson/getClasses",
+      days: "lesson/getDays"
     })
   },
   methods: {
@@ -429,6 +198,37 @@ export default {
     ...mapMutations({
       setSnack: "snackbar/setSnack"
     }),
+    copyLesson(les) {
+      les.createdAt = new Date().getTime();
+      this.lesson = les;
+    },
+    removeLesson(lesson) {
+      this.school.lessons = this.school.lessons.filter(
+        le => le.createdAt !== lesson.createdAt
+      );
+    },
+    addLesson() {
+      if (
+        this.lesson.day.id === "" ||
+        this.lesson.class === "" ||
+        this.lesson.startTime === "" ||
+        this.lesson.endTime === ""
+      ) {
+        this.setSnack(
+          "Required fields: fields: day, class, start time and end time"
+        );
+        return false;
+      } else {
+        this.lesson.createdAt = new Date().getTime();
+        this.school.lessons.push(this.lesson);
+        this.lesson = {
+          day: {},
+          class: "",
+          startTime: "",
+          endTime: ""
+        };
+      }
+    },
     setTimeMorning(val) {
       this.school.mondayMorningTime = val;
     },
