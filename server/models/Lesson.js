@@ -3,10 +3,16 @@ module.exports = (sequelize, DataTypes) => {
   const Lesson = sequelize.define(
     "Lesson",
     {
-      lessonID: DataTypes.INTEGER,
+      lessonID: {
+        allowNull: false,
+        autoIncrement: true,
+        primaryKey: true,
+        type: DataTypes.INTEGER
+      },
+      day: DataTypes.STRING,
       grade: DataTypes.STRING,
-      startTime: DataTypes.DATE,
-      endTime: DataTypes.DATE,
+      startTime: DataTypes.TIME,
+      endTime: DataTypes.TIME,
       school_ID: DataTypes.INTEGER
     },
     {

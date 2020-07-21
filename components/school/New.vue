@@ -66,13 +66,7 @@
                 ></v-autocomplete>
               </v-col>
               <v-col cols="2">
-                <v-autocomplete
-                  v-model="lesson.class"
-                  :items="classes"
-                  label="Class"
-                  outlined
-                  dense
-                ></v-autocomplete>
+                <v-autocomplete v-model="lesson.grade" :items="grades" label="Grade" outlined dense></v-autocomplete>
               </v-col>
 
               <v-col cols="2">
@@ -107,7 +101,7 @@
                     <thead>
                       <tr>
                         <th>Day</th>
-                        <th>Class</th>
+                        <th>Grade</th>
                         <th>Start time</th>
                         <th>End time</th>
                         <th></th>
@@ -151,6 +145,7 @@
                 </v-simple-table>
               </v-col>
             </v-row>
+
             <v-row>
               <v-col class="text-right px-0">
                 <v-btn :disabled="!valid" color="success" @click="submitForm" dense>Create</v-btn>
@@ -177,7 +172,7 @@ export default {
         neighborhood: "",
         lessons: []
       },
-      lesson: {},
+      lesson: { day: {}, grade: "", startTime: "", endTime: "" },
       nameRules: [
         v => !!v || "Name is required",
         v => (v && v.length <= 10) || "Name must be less than 10 characters"
@@ -187,7 +182,7 @@ export default {
   computed: {
     ...mapGetters({
       schoolTypes: "school/schoolTypes",
-      classes: "lesson/getClasses",
+      grades: "lesson/getGrades",
       days: "lesson/getDays"
     })
   },
@@ -210,12 +205,12 @@ export default {
     addLesson() {
       if (
         this.lesson.day.id === "" ||
-        this.lesson.class === "" ||
+        this.lesson.grade === "" ||
         this.lesson.startTime === "" ||
         this.lesson.endTime === ""
       ) {
         this.setSnack(
-          "Required fields: fields: day, class, start time and end time"
+          "Required fields: fields: day, grade, start time and end time"
         );
         return false;
       } else {
@@ -223,7 +218,7 @@ export default {
         this.school.lessons.push(this.lesson);
         this.lesson = {
           day: {},
-          class: "",
+          grade: "",
           startTime: "",
           endTime: ""
         };

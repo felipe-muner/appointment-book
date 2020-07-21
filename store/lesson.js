@@ -1,7 +1,7 @@
 import MyApi from "../api/MyApi";
 
 export const state = () => ({
-  classes: ["Kindergarten", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
+  grades: ["Kindergarten", "1", "2", "3", "4", "5", "6", "7", "8", "9"],
   days: [
     { id: 0, name: "Sunday" },
     { id: 1, name: "Monday" },
@@ -14,8 +14,8 @@ export const state = () => ({
 });
 
 export const getters = {
-  getClasses: state => {
-    return state.classes;
+  getGrades: state => {
+    return state.grades;
   },
   getDays: state => {
     return state.days;
