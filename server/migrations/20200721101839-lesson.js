@@ -12,10 +12,10 @@ module.exports = {
         type: Sequelize.STRING
       },
       startTime: {
-        type: Sequelize.TIME
+        type: Sequelize.DATE
       },
       endTime: {
-        type: Sequelize.TIME
+        type: Sequelize.DATE
       },
       school_ID: {
         type: Sequelize.INTEGER

@@ -5,8 +5,8 @@ module.exports = (sequelize, DataTypes) => {
     {
       lessonID: DataTypes.INTEGER,
       grade: DataTypes.STRING,
-      startTime: DataTypes.TIME,
-      endTime: DataTypes.TIME,
+      startTime: DataTypes.DATE,
+      endTime: DataTypes.DATE,
       school_ID: DataTypes.INTEGER
     },
     {
