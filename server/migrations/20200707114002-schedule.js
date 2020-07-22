@@ -1,18 +1,18 @@
 "use strict";
 module.exports = {
   up: (queryInterface, Sequelize) => {
-    return queryInterface.createTable("AppointmentBook", {
-      appointmentBookID: {
+    return queryInterface.createTable("Schedule", {
+      scheduleID: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      startDate: {
+      day: {
         type: Sequelize.DATE
       },
-      endDate: {
-        type: Sequelize.DATE
+      lesson_id: {
+        type: Sequelize.INTEGER
       },
       teacher_id: {
         type: Sequelize.INTEGER
@@ -23,6 +23,6 @@ module.exports = {
     });
   },
   down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable("AppointmentBook");
+    return queryInterface.dropTable("Schedule");
   }
 };

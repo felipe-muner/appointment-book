@@ -2,14 +2,16 @@
 
 module.exports = (sequelize, DataTypes) => {
   const AppointmentBook = sequelize.define(
-    "AppointmentBook",
+    "Schedule",
     {
-      appointmentBookID: {
+      scheduleID: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: DataTypes.INTEGER
       },
+      day: DataTypes.DATE,
+      lesson_id: DataTypes.INTEGER,
       teacher_id: DataTypes.INTEGER,
       school_id: DataTypes.INTEGER
     },

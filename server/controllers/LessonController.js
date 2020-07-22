@@ -4,6 +4,9 @@ module.exports = {
   async getAll(req, res) {
     try {
       const lessons = await Lesson.findAll();
+      lessons.forEach(l =>
+        l.setDataValue("timeRange", l.startTime + " - " + l.endTime)
+      );
       res.send(lessons);
     } catch (error) {
       console.log(error);
