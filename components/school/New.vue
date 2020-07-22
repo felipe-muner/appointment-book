@@ -110,7 +110,7 @@
                     <tbody>
                       <tr v-for="les in school.lessons" v-bind:key="JSON.stringify(les)">
                         <td>{{les.day.name}}</td>
-                        <td>{{les.class}}</td>
+                        <td>{{les.grade}}</td>
                         <td>{{les.startTime}}</td>
                         <td>{{les.endTime}}</td>
                         <td>
