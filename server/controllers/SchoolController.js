@@ -7,6 +7,7 @@ module.exports = {
         include: [Lesson]
       });
       console.log(schools);
+
       res.send(schools);
     } catch (error) {
       console.log(error);
