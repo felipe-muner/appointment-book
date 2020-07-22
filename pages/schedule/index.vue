@@ -29,6 +29,18 @@
           <v-autocomplete
             :rules="requiredRules"
             return-object
+            v-model="grade"
+            :items="school.Lessons"
+            item-text="day"
+            label="Grade"
+            outlined
+            dense
+          ></v-autocomplete>
+        </v-col>
+        <v-col>
+          <v-autocomplete
+            :rules="requiredRules"
+            return-object
             v-model="teacher"
             :items="teachers"
             item-text="name"
