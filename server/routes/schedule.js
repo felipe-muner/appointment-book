@@ -4,7 +4,8 @@ var router = express.Router();
 const scheduleController = require("../controllers/ScheduleController");
 
 router
-  .get("/", scheduleController.getAll)
+.get("/", scheduleController.getAll)
+.get("/fetch-lessons", scheduleController.fetchLessons)
   .post(
     "/create",
     scheduleController.checkAvailability,

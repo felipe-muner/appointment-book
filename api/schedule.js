@@ -7,6 +7,13 @@ class Schedule {
   async getAll() {
     return await axios.get(this.server + "/schedule");
   }
+  async fetchLessons(payload) {
+    return await axios.get(this.server + "/schedule/fetch-lessons",{
+      params: {
+        ...payload
+      }
+    });
+  }
   async new(payload) {
     return await axios.post(this.server + "/schedule/create", payload);
   }

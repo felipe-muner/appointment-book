@@ -1,5 +1,6 @@
 <template>
   <div>
+    {{lessonMatchDay}}
     <h1>Schedule</h1>
     {{new Date(date).getDay()}}
     {{ days.find(d=> d.id === new Date(this.date).getDay()).name }}
@@ -33,7 +34,7 @@
             return-object
             v-model="grade"
             :items="lessonMatchDay"
-            item-text="startTime"
+            item-text="textToDisplay"
             label="Grade"
             outlined
             dense
@@ -87,11 +88,25 @@ export default {
       return this.school.Lessons.filter(l => l.day === this.days.find(d=> d.id === new Date(this.date).getDay()).name)
     }
   },
+  watch: {
+    school: function(val){
+      alert('vou call')
+      this.fetchLessons({
+        date: this.date,
+        school: this.school,
+      });
+    }
+    ,
+    lessonMatchDay: function (val) {
+      val.forEach(v => v.textToDisplay = v.grade + ' --- ' + v.startTime +  ' - ' + v.endTime)
+    }
+  },
   methods: {
     ...mapActions({
       initSchool: "school/getAll",
       initTeacher: "teacher/getAll",
-      new: "schedule/new"
+      new: "schedule/new",
+      fetchLessons: "schedule/fetchLessons"
     }),
     async submitForm() {
       if (this.$refs.form.validate()) {
