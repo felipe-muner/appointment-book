@@ -59,6 +59,7 @@
         </v-col>
       </v-row>
     </v-form>
+    <div></div>
   </div>
 </template>
 
@@ -94,11 +95,25 @@ export default {
     },
   },
   watch: {
-    school: function (val) {
-      this.fetchLessons({
-        date: this.date,
-        school: this.school,
-      });
+    school: async function (val) {
+      const fetchLessons = (
+        await this.fetchLessons({
+          date: this.date,
+          school: this.school,
+        })
+      ).data;
+      console.log(fetchLessons);
+    },
+    date: async function (val) {
+      if (this.school.schoolID) {
+        const fetchLessons = (
+          await this.fetchLessons({
+            date: this.date,
+            school: this.school,
+          })
+        ).data;
+        console.log(fetchLessons);
+      }
     },
     lessonMatchDay: function (val) {
       val.forEach(
