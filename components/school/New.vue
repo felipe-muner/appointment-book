@@ -96,7 +96,7 @@
             {{school}}
             <v-row>
               <v-col cols="6">
-                <v-simple-table bordered>
+                <v-simple-table>
                   <template v-slot:default>
                     <thead>
                       <tr>
@@ -170,28 +170,28 @@ export default {
         name: "",
         address: "",
         neighborhood: "",
-        lessons: []
+        lessons: [],
       },
       lesson: { day: {}, grade: "", startTime: "", endTime: "" },
       nameRules: [
-        v => !!v || "Name is required",
-        v => (v && v.length <= 10) || "Name must be less than 10 characters"
-      ]
+        (v) => !!v || "Name is required",
+        (v) => (v && v.length <= 10) || "Name must be less than 10 characters",
+      ],
     };
   },
   computed: {
     ...mapGetters({
       schoolTypes: "school/schoolTypes",
       grades: "lesson/getGrades",
-      days: "lesson/getDays"
-    })
+      days: "lesson/getDays",
+    }),
   },
   methods: {
     ...mapActions({
-      new: "school/new"
+      new: "school/new",
     }),
     ...mapMutations({
-      setSnack: "snackbar/setSnack"
+      setSnack: "snackbar/setSnack",
     }),
     copyLesson(les) {
       les.createdAt = new Date().getTime();
@@ -199,7 +199,7 @@ export default {
     },
     removeLesson(lesson) {
       this.school.lessons = this.school.lessons.filter(
-        le => le.createdAt !== lesson.createdAt
+        (le) => le.createdAt !== lesson.createdAt
       );
     },
     addLesson() {
@@ -220,7 +220,7 @@ export default {
           day: {},
           grade: "",
           startTime: "",
-          endTime: ""
+          endTime: "",
         };
       }
     },
@@ -239,8 +239,8 @@ export default {
         this.setSnack(resp.data.msg);
         if (resp.data.code === 200) this.dialog = false;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 

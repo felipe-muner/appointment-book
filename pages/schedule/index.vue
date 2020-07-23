@@ -59,7 +59,56 @@
         </v-col>
       </v-row>
     </v-form>
-    <div>{{lessonsByDaySchool}}</div>
+    <div>
+      {{lessonsByDaySchool}}
+      <v-simple-table>
+        <template v-slot:default>
+          <thead>
+            <tr>
+              <th>Teacher</th>
+              <th>Grade</th>
+              <th>Start time</th>
+              <th>End time</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr v-for="les in lessonsByDaySchool" v-bind:key="JSON.stringify(les)">
+              <td>{{les.teacher_id}}</td>
+              <td>{{les.lesson_id}}</td>
+              <td>{{les.startTime}}</td>
+              <td>{{les.endTime}}</td>
+              <td>
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-icon
+                      @click="copyLesson(les)"
+                      color="warning"
+                      dark
+                      v-bind="attrs"
+                      v-on="on"
+                    >mdi-content-copy</v-icon>
+                  </template>
+                  <span>copy</span>
+                </v-tooltip>
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-icon
+                      @click="removeLesson(les)"
+                      color="error"
+                      dark
+                      v-bind="attrs"
+                      v-on="on"
+                    >mdi-delete-empty</v-icon>
+                  </template>
+                  <span>remove</span>
+                </v-tooltip>
+              </td>
+            </tr>
+          </tbody>
+        </template>
+      </v-simple-table>
+    </div>
   </div>
 </template>
 
