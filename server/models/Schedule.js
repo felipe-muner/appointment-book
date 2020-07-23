@@ -1,7 +1,7 @@
 "use strict";
 
 module.exports = (sequelize, DataTypes) => {
-  const AppointmentBook = sequelize.define(
+  const Schedule = sequelize.define(
     "Schedule",
     {
       scheduleID: {
@@ -20,14 +20,25 @@ module.exports = (sequelize, DataTypes) => {
       freezeTableName: true
     }
   );
-  AppointmentBook.associate = function(models) {
-    // associations can be defined here
+  Schedule.associate = function(models) {
+    Schedule.belongsTo(models.School, {
+      foreignKey: "school_id",
+      sourceKey: "schoolID"
+    });
+    Schedule.belongsTo(models.Teacher, {
+      foreignKey: "teacher_id",
+      targetKey: "teacherID"
+    });
+    Schedule.belongsTo(models.Lesson, {
+      foreignKey: "lesson_id",
+      targetKey: "lessonID"
+    });
   };
 
-  AppointmentBook.prototype.toJSON = function() {
+  Schedule.prototype.toJSON = function() {
     var values = Object.assign({}, this.get());
     return values;
   };
 
-  return AppointmentBook;
+  return Schedule;
 };

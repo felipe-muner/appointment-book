@@ -82,18 +82,6 @@
                 <v-tooltip bottom>
                   <template v-slot:activator="{ on, attrs }">
                     <v-icon
-                      @click="copyLesson(les)"
-                      color="warning"
-                      dark
-                      v-bind="attrs"
-                      v-on="on"
-                    >mdi-content-copy</v-icon>
-                  </template>
-                  <span>copy</span>
-                </v-tooltip>
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-icon
                       @click="removeLesson(les)"
                       color="error"
                       dark

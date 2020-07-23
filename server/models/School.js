@@ -26,6 +26,10 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: "school_ID",
       sourceKey: "schoolID"
     });
+    School.hasMany(models.Schedule, {
+      foreignKey: "school_id",
+      sourceKey: "schoolID"
+    });
   };
 
   School.prototype.toJSON = function() {

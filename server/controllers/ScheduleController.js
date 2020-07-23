@@ -1,4 +1,4 @@
-const { Schedule } = require("../models");
+const { Schedule, Lesson, Teacher } = require("../models");
 
 module.exports = {
   async getAll(req, res) {
@@ -20,7 +20,8 @@ module.exports = {
         where: {
           day: new Date(date),
           school_id: id
-        }
+        },
+        include: [Teacher, Lesson]
       });
 
       res.json({

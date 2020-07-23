@@ -25,6 +25,10 @@ module.exports = (sequelize, DataTypes) => {
       foreignKey: "school_ID",
       targetKey: "schoolID"
     });
+    Lesson.hasMany(models.Schedule, {
+      foreignKey: "lesson_id",
+      sourceKey: "lessonID"
+    });
   };
   return Lesson;
 };
