@@ -1,6 +1,7 @@
 <template>
   <div>
     {{lessonMatchDay}}
+    {{date}}
     <h1>Schedule</h1>
     {{new Date(date).getDay()}}
     {{ days.find(d=> d.id === new Date(this.date).getDay()).name }}
@@ -38,7 +39,7 @@
             label="Grade"
             outlined
             dense
-            :disabled=isDisabled
+            :disabled="isDisabled"
           ></v-autocomplete>
         </v-col>
         <v-col>
@@ -67,46 +68,52 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
     return {
-      date: new Date().toISOString().slice(0,10),
-      grade:"",
-      school: {Lessons:[]},
+      date: new Date().toISOString().slice(0, 10),
+      grade: "",
+      school: { Lessons: [] },
       teacher: "",
       valid: true,
-      requiredRules: [v => !!v || "Field is required"]
+      requiredRules: [(v) => !!v || "Field is required"],
     };
   },
   computed: {
     ...mapGetters({
       schools: "school/getList",
       teachers: "teacher/getList",
-      days: "lesson/getDays"
+      days: "lesson/getDays",
     }),
-    isDisabled(){
-      return !this.school
+    isDisabled() {
+      return !this.school;
     },
-    lessonMatchDay(){
-      return this.school.Lessons.filter(l => l.day === this.days.find(d=> d.id === new Date(this.date).getDay()).name)
-    }
+    lessonMatchDay() {
+      return this.school.Lessons.filter(
+        (l) =>
+          l.day ===
+          this.days.find((d) => d.id === new Date(this.date).getDay()).name
+      );
+    },
   },
   watch: {
-    school: function(val){
-      alert('vou call')
+    school: function (val) {
       this.fetchLessons({
         date: this.date,
         school: this.school,
       });
-    }
-    ,
+    },
     lessonMatchDay: function (val) {
-      val.forEach(v => v.textToDisplay = v.grade + ' --- ' + v.startTime +  ' - ' + v.endTime)
-    }
+      val.forEach(
+        (v) =>
+          (v.textToDisplay =
+            v.grade + " --- " + v.startTime + " - " + v.endTime)
+      );
+    },
   },
   methods: {
     ...mapActions({
       initSchool: "school/getAll",
       initTeacher: "teacher/getAll",
       new: "schedule/new",
-      fetchLessons: "schedule/fetchLessons"
+      fetchLessons: "schedule/fetchLessons",
     }),
     async submitForm() {
       if (this.$refs.form.validate()) {
@@ -114,15 +121,15 @@ export default {
           date: this.date,
           school: this.school,
           grade: this.grade,
-          teacher: this.teacher
+          teacher: this.teacher,
         });
       }
-    }
+    },
   },
   created() {
     this.initSchool();
     this.initTeacher();
-  }
+  },
 };
 </script>
 

@@ -1,4 +1,4 @@
-// const { Schedule } = require("../models");
+const { Schedule } = require("../models");
 
 module.exports = {
   async getAll(req, res) {
@@ -13,20 +13,27 @@ module.exports = {
   },
   async fetchLessons(req, res) {
     try {
-      const {school} = req.query
-      console.log(JSON.parse(school).schoolID)
+      const { date, school } = req.query;
+      const id = JSON.parse(school).schoolID;
 
-      console.log('fetchLessons');
-      console.log(req.query);
-      console.log(typeof req.query.school);
-      console.log('fetchLessons');
-      res.json({ code: 200, msg: "fetch lessons", data: JSON.stringify(req.body) });
+      const scheduleList = await Schedule.findAll({
+        where: {
+          day: new Date(date),
+          school_id: id
+        }
+      });
+
+      res.json({
+        code: 200,
+        msg: "fetch lessons",
+        data: scheduleList
+      });
     } catch (error) {
       console.log(error);
       console.log("error schedule getall");
       res.status(400).send({ error: error });
     }
-  },  
+  },
   async create(req, res) {
     try {
       console.log(req.body);

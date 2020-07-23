@@ -14,7 +14,6 @@ export const actions = {
     return resp;
   },
   async fetchLessons({ commit, dispatch, state }, payload) {
-    alert('fetchLessons')
     const resp = await MyApi.schedule.fetchLessons(payload);
     return resp;
   }  
