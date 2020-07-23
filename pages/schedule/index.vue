@@ -1,6 +1,8 @@
 <template>
   <div>
     <h1>Schedule</h1>
+    {{new Date(date).getDay()}}
+    {{ days.find(d=> d.id === new Date(this.date).getDay()).name }}
     <v-form ref="form" v-model="valid" lazy-validation>
       <v-row>
         <v-col>
@@ -63,7 +65,8 @@ import { mapGetters, mapActions } from "vuex";
 export default {
   data() {
     return {
-      date: "",
+      date: new Date().toISOString().slice(0,10),
+      grade:"",
       school: "",
       teacher: "",
       valid: true,
@@ -73,7 +76,8 @@ export default {
   computed: {
     ...mapGetters({
       schools: "school/getList",
-      teachers: "teacher/getList"
+      teachers: "teacher/getList",
+      days: "lesson/getDays"
     })
   },
   methods: {
@@ -93,6 +97,7 @@ export default {
     }
   },
   created() {
+    // this.date = new Date()
     this.initSchool();
     this.initTeacher();
   }
