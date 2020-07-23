@@ -59,7 +59,7 @@
         </v-col>
       </v-row>
     </v-form>
-    <div></div>
+    <div>{{lessonsByDaySchool}}</div>
   </div>
 </template>
 
@@ -73,6 +73,7 @@ export default {
       grade: "",
       school: { Lessons: [] },
       teacher: "",
+      lessonsByDaySchool: "",
       valid: true,
       requiredRules: [(v) => !!v || "Field is required"],
     };
@@ -102,7 +103,7 @@ export default {
           school: this.school,
         })
       ).data;
-      console.log(fetchLessons);
+      this.lessonsByDaySchool = fetchLessons.data;
     },
     date: async function (val) {
       if (this.school.schoolID) {
@@ -112,7 +113,7 @@ export default {
             school: this.school,
           })
         ).data;
-        console.log(fetchLessons);
+        this.lessonsByDaySchool = fetchLessons.data;
       }
     },
     lessonMatchDay: function (val) {
