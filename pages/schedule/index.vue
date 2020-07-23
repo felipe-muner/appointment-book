@@ -32,11 +32,12 @@
             :rules="requiredRules"
             return-object
             v-model="grade"
-            :items="school.Lessons"
-            item-text="day"
+            :items="lessonMatchDay"
+            item-text="startTime"
             label="Grade"
             outlined
             dense
+            :disabled=isDisabled
           ></v-autocomplete>
         </v-col>
         <v-col>
@@ -67,7 +68,7 @@ export default {
     return {
       date: new Date().toISOString().slice(0,10),
       grade:"",
-      school: "",
+      school: {Lessons:[]},
       teacher: "",
       valid: true,
       requiredRules: [v => !!v || "Field is required"]
@@ -78,7 +79,13 @@ export default {
       schools: "school/getList",
       teachers: "teacher/getList",
       days: "lesson/getDays"
-    })
+    }),
+    isDisabled(){
+      return !this.school
+    },
+    lessonMatchDay(){
+      return this.school.Lessons.filter(l => l.day === this.days.find(d=> d.id === new Date(this.date).getDay()).name)
+    }
   },
   methods: {
     ...mapActions({
@@ -91,13 +98,13 @@ export default {
         this.new({
           date: this.date,
           school: this.school,
+          grade: this.grade,
           teacher: this.teacher
         });
       }
     }
   },
   created() {
-    // this.date = new Date()
     this.initSchool();
     this.initTeacher();
   }
