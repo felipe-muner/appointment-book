@@ -16,5 +16,10 @@ export const actions = {
   async fetchLessons({ commit, dispatch, state }, payload) {
     const resp = await MyApi.schedule.fetchLessons(payload);
     return resp;
-  }  
+  },
+  async deleteLesson({ commit, dispatch, state }, payload) {
+    console.log("store deletelesson");
+    const resp = await MyApi.schedule.deleteLesson(payload);
+    return resp;
+  }
 };

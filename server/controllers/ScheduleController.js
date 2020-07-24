@@ -14,6 +14,20 @@ module.exports = {
       res.status(400).send({ error: error });
     }
   },
+  async deleteLesson(req, res) {
+    try {
+      // const scheduleList = await Schedule.findAll();
+      res.json({
+        code: 200,
+        msg: "delete lesson",
+        data: "de202020lete lesson"
+      });
+    } catch (error) {
+      console.log(error);
+      console.log("error schedule delete lesson");
+      res.status(400).send({ error: error });
+    }
+  },
   async fetchLessons(req, res) {
     try {
       const { date, school } = req.query;

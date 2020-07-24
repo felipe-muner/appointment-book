@@ -1,10 +1,10 @@
 <template>
   <div>
-    {{lessonMatchDay}}
-    {{date}}
+    {{ lessonMatchDay }}
+    {{ date }}
     <h1>Schedule</h1>
-    {{new Date(date).getDay()}}
-    {{ days.find(d=> d.id === new Date(this.date).getDay()).name }}
+    {{ new Date(date).getDay() }}
+    {{ days.find(d => d.id === new Date(this.date).getDay()).name }}
     <v-form ref="form" v-model="valid" lazy-validation>
       <v-row>
         <v-col>
@@ -55,12 +55,14 @@
           ></v-autocomplete>
         </v-col>
         <v-col>
-          <v-btn :disabled="!valid" color="success" @click="submitForm" dense>Add</v-btn>
+          <v-btn :disabled="!valid" color="success" @click="submitForm" dense
+            >Add</v-btn
+          >
         </v-col>
       </v-row>
     </v-form>
     <div>
-      {{lessonsByDaySchool}}
+      {{ lessonsByDaySchool }}
       <v-simple-table>
         <template v-slot:default>
           <thead>
@@ -69,26 +71,31 @@
               <th>Grade</th>
               <th>Start time</th>
               <th>End time</th>
+              <th>Time</th>
               <th></th>
             </tr>
           </thead>
           <tbody>
-            <tr v-for="les in lessonsByDaySchool" v-bind:key="JSON.stringify(les)">
-              <td>{{les.Teacher.name}}</td>
-              <td>{{les.grade}}</td>
-              <td>{{les.start}}</td>
-              <td>{{les.end}}</td>
-              <td>{{les.lessonTime}}</td>
+            <tr
+              v-for="les in lessonsByDaySchool"
+              v-bind:key="JSON.stringify(les)"
+            >
+              <td>{{ les.Teacher.name }}</td>
+              <td>{{ les.grade }}</td>
+              <td>{{ les.start }}</td>
+              <td>{{ les.end }}</td>
+              <td>{{ les.lessonTime }}</td>
               <td>
                 <v-tooltip bottom>
                   <template v-slot:activator="{ on, attrs }">
                     <v-icon
-                      @click="removeLesson(les)"
+                      @click="removeLesson(les.scheduleID)"
                       color="error"
                       dark
                       v-bind="attrs"
                       v-on="on"
-                    >mdi-delete-empty</v-icon>
+                      >mdi-delete-empty</v-icon
+                    >
                   </template>
                   <span>remove</span>
                 </v-tooltip>
@@ -113,54 +120,54 @@ export default {
       teacher: "",
       lessonsByDaySchool: "",
       valid: true,
-      requiredRules: [(v) => !!v || "Field is required"],
+      requiredRules: [v => !!v || "Field is required"]
     };
   },
   computed: {
     ...mapGetters({
       schools: "school/getList",
       teachers: "teacher/getList",
-      days: "lesson/getDays",
+      days: "lesson/getDays"
     }),
     isDisabled() {
       return !this.school;
     },
     lessonMatchDay() {
       return this.school.Lessons.filter(
-        (l) =>
+        l =>
           l.day ===
-          this.days.find((d) => d.id === new Date(this.date).getDay()).name
+          this.days.find(d => d.id === new Date(this.date).getDay()).name
       );
-    },
+    }
   },
   watch: {
-    school: async function (val) {
+    school: async function(val) {
       const fetchLessons = (
         await this.fetchLessons({
           date: this.date,
-          school: this.school,
+          school: this.school
         })
       ).data;
       this.lessonsByDaySchool = fetchLessons.data;
     },
-    date: async function (val) {
+    date: async function(val) {
       if (this.school.schoolID) {
         const fetchLessons = (
           await this.fetchLessons({
             date: this.date,
-            school: this.school,
+            school: this.school
           })
         ).data;
         this.lessonsByDaySchool = fetchLessons.data;
       }
     },
-    lessonMatchDay: function (val) {
+    lessonMatchDay: function(val) {
       val.forEach(
-        (v) =>
+        v =>
           (v.textToDisplay =
             v.grade + " --- " + v.startTime + " - " + v.endTime)
       );
-    },
+    }
   },
   methods: {
     ...mapActions({
@@ -168,24 +175,27 @@ export default {
       initTeacher: "teacher/getAll",
       new: "schedule/new",
       fetchLessons: "schedule/fetchLessons",
+      deleteLesson: "schedule/deleteLesson"
     }),
+    async removeLesson(scheduleID) {
+      this.deleteLesson(scheduleID);
+    },
     async submitForm() {
       if (this.$refs.form.validate()) {
         this.new({
           date: this.date,
           school: this.school,
           grade: this.grade,
-          teacher: this.teacher,
+          teacher: this.teacher
         });
       }
-    },
+    }
   },
   created() {
     this.initSchool();
     this.initTeacher();
-  },
+  }
 };
 </script>
 
-<style>
-</style>
+<style></style>

@@ -8,10 +8,16 @@ class Schedule {
     return await axios.get(this.server + "/schedule");
   }
   async fetchLessons(payload) {
-    return await axios.get(this.server + "/schedule/fetch-lessons",{
+    return await axios.get(this.server + "/schedule/fetch-lessons", {
       params: {
         ...payload
       }
+    });
+  }
+  async deleteLesson(payload) {
+    console.log("123deleteLessons");
+    return await axios.delete(this.server + "/schedule/lesson", {
+      data: { foo: "bar" }
     });
   }
   async new(payload) {
