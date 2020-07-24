@@ -16,12 +16,12 @@ module.exports = {
   },
   async deleteLesson(req, res) {
     try {
-      // const scheduleList = await Schedule.findAll();
-      res.json({
-        code: 200,
-        msg: "delete lesson",
-        data: "de202020lete lesson"
+      const { scheduleID } = req.body;
+      const result = await Schedule.destroy({
+        where: { scheduleID }
       });
+
+      res.json({ code: 200, msg: "delete lesson", data: result });
     } catch (error) {
       console.log(error);
       console.log("error schedule delete lesson");

@@ -178,11 +178,18 @@ export default {
       deleteLesson: "schedule/deleteLesson"
     }),
     async removeLesson(scheduleID) {
-      this.deleteLesson(scheduleID);
+      await this.deleteLesson(scheduleID);
+      const fetchLessons = (
+        await this.fetchLessons({
+          date: this.date,
+          school: this.school
+        })
+      ).data;
+      this.lessonsByDaySchool = fetchLessons.data;
     },
     async submitForm() {
       if (this.$refs.form.validate()) {
-        this.new({
+        await this.new({
           date: this.date,
           school: this.school,
           grade: this.grade,

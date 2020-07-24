@@ -15,9 +15,8 @@ class Schedule {
     });
   }
   async deleteLesson(payload) {
-    console.log("123deleteLessons");
     return await axios.delete(this.server + "/schedule/lesson", {
-      data: { foo: "bar" }
+      data: { scheduleID: payload }
     });
   }
   async new(payload) {
