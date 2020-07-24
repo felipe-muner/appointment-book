@@ -8,8 +8,14 @@ module.exports = {
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      day: {
+      start: {
         type: Sequelize.DATE
+      },
+      end: {
+        type: Sequelize.DATE
+      },
+      grade: {
+        type: Sequelize.STRING
       },
       lesson_id: {
         type: Sequelize.INTEGER

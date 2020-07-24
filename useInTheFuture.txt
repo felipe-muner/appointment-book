@@ -1,0 +1,1 @@
+whereOpt = sequelize.where(sequelize.fn('DATE',sequelize.col('MaintenanceRequest.CreatedAt')),{$between: [req.body.StartDate, req.body.EndDate]})

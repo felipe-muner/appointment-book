@@ -1,3 +1,5 @@
+const sequelize = require("sequelize");
+const { Op } = require("sequelize");
 const { Schedule, Lesson, Teacher } = require("../models");
 
 module.exports = {
@@ -17,9 +19,16 @@ module.exports = {
       const id = JSON.parse(school).schoolID;
 
       const scheduleList = await Schedule.findAll({
+        // where: sequelize.where(sequelize.fn('date', sequelize.col('Schedule.start')), '=', date),
         where: {
-          day: new Date(date),
-          school_id: id
+          [Op.and]: [
+            { school_id: id },
+            sequelize.where(
+              sequelize.fn("date", sequelize.col("Schedule.start")),
+              "=",
+              date
+            )
+          ]
         },
         include: [Teacher, Lesson]
       });
