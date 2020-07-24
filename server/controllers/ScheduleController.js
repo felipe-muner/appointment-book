@@ -1,6 +1,7 @@
 const sequelize = require("sequelize");
 const { Op } = require("sequelize");
 const { Schedule, Lesson, Teacher } = require("../models");
+const utils = require("../utils/utils");
 
 module.exports = {
   async getAll(req, res) {
@@ -31,6 +32,13 @@ module.exports = {
           ]
         },
         include: [Teacher, Lesson]
+      });
+
+      scheduleList.forEach(ev => {
+        ev.setDataValue(
+          "lessonTime",
+          utils.extractTime(ev.start) + " - " + utils.extractTime(ev.end)
+        );
       });
 
       res.json({

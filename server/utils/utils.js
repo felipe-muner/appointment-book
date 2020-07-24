@@ -6,5 +6,8 @@ module.exports = {
   },
   extractDate: dt => {
     return moment(dt).format("YYYY-MM-DD");
+  },
+  extractTime: dt => {
+    return moment(dt).format("HH:mm");
   }
 };

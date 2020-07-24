@@ -74,10 +74,11 @@
           </thead>
           <tbody>
             <tr v-for="les in lessonsByDaySchool" v-bind:key="JSON.stringify(les)">
-              <td>{{les.teacher_id}}</td>
-              <td>{{les.lesson_id}}</td>
-              <td>{{les.startTime}}</td>
-              <td>{{les.endTime}}</td>
+              <td>{{les.Teacher.name}}</td>
+              <td>{{les.grade}}</td>
+              <td>{{les.start}}</td>
+              <td>{{les.end}}</td>
+              <td>{{les.lessonTime}}</td>
               <td>
                 <v-tooltip bottom>
                   <template v-slot:activator="{ on, attrs }">
