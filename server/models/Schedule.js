@@ -11,7 +11,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.INTEGER
       },
       start: DataTypes.DATE,
-      start: DataTypes.DATE,
+      end: DataTypes.DATE,
       grade: DataTypes.STRING,
       lesson_id: DataTypes.INTEGER,
       teacher_id: DataTypes.INTEGER,
