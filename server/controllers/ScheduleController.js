@@ -68,8 +68,19 @@ module.exports = {
   },
   async create(req, res) {
     try {
-      console.log(req.body);
-      res.json({ code: 200, msg: "New class created", data: "new" });
+      let { date, school, grade, teacher } = req.body;
+      const item = {
+        start: date + " " + grade.startTime,
+        end: date + " " + grade.endTime,
+        grade: grade.grade,
+        lesson_id: grade.lessonID,
+        teacher_id: teacher.teacherID,
+        school_id: school.schoolID
+      };
+
+      const schedule = await Schedule.create(item);
+
+      res.json({ code: 200, msg: "New schedule created", data: schedule });
     } catch (error) {
       console.log(error);
       console.log("error schedule create");
@@ -78,7 +89,7 @@ module.exports = {
   },
   async checkAvailability(req, res, next) {
     try {
-      console.log(req.body);
+      // console.log(req.body);
       next();
     } catch (error) {
       console.log(error);

@@ -142,23 +142,11 @@ export default {
   },
   watch: {
     school: async function(val) {
-      const fetchLessons = (
-        await this.fetchLessons({
-          date: this.date,
-          school: this.school
-        })
-      ).data;
-      this.lessonsByDaySchool = fetchLessons.data;
+      await this.handleFetchLessons();
     },
     date: async function(val) {
       if (this.school.schoolID) {
-        const fetchLessons = (
-          await this.fetchLessons({
-            date: this.date,
-            school: this.school
-          })
-        ).data;
-        this.lessonsByDaySchool = fetchLessons.data;
+        await this.handleFetchLessons();
       }
     },
     lessonMatchDay: function(val) {
@@ -177,8 +165,7 @@ export default {
       fetchLessons: "schedule/fetchLessons",
       deleteLesson: "schedule/deleteLesson"
     }),
-    async removeLesson(scheduleID) {
-      await this.deleteLesson(scheduleID);
+    async handleFetchLessons() {
       const fetchLessons = (
         await this.fetchLessons({
           date: this.date,
@@ -186,6 +173,10 @@ export default {
         })
       ).data;
       this.lessonsByDaySchool = fetchLessons.data;
+    },
+    async removeLesson(scheduleID) {
+      await this.deleteLesson(scheduleID);
+      await this.handleFetchLessons();
     },
     async submitForm() {
       if (this.$refs.form.validate()) {
@@ -195,6 +186,7 @@ export default {
           grade: this.grade,
           teacher: this.teacher
         });
+        await this.handleFetchLessons();
       }
     }
   },
