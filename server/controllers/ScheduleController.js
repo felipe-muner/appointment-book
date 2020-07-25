@@ -41,9 +41,16 @@ module.exports = {
         include: [Teacher, Lesson]
       });
 
-      if (school) {
-        const id = JSON.parse(school).schoolID;
+      console.log("------school");
+      console.log(school);
+
+      const id = school ? JSON.parse(school).schoolID : false;
+
+      if (id) {
+        console.log("meu id segue: " + id);
         scheduleList = scheduleList.filter(item => item.school_id === id);
+      } else {
+        console.log("n tem ");
       }
 
       scheduleList.forEach(ev => {
