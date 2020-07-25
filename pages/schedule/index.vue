@@ -1,10 +1,10 @@
 <template>
   <div>
-    <!-- {{ lessonMatchDay }}
-    {{ date }} -->
+    {{ lessonMatchDay }}
+    {{ date }}
     <h1>Schedule</h1>
-    <!-- {{ new Date(date).getDay() }}
-    {{ days.find(d => d.id === new Date(this.date).getDay()).name }} -->
+    {{ new Date(date).getDay() }}
+    {{ days.find(d => d.id === new Date(this.date).getDay()).name }}
     <v-form ref="form" v-model="valid" lazy-validation>
       <v-row>
         <v-col>
@@ -17,8 +17,10 @@
             type="date"
           />
         </v-col>
+
         <v-col>
           <v-autocomplete
+            clearable
             :rules="requiredRules"
             return-object
             v-model="school"
@@ -133,6 +135,7 @@ export default {
       return !this.school;
     },
     lessonMatchDay() {
+      if (!this.school) return [];
       return this.school.Lessons.filter(
         l =>
           l.day ===
@@ -145,9 +148,7 @@ export default {
       await this.handleFetchLessons();
     },
     date: async function(val) {
-      if (this.school.schoolID) {
-        await this.handleFetchLessons();
-      }
+      await this.handleFetchLessons();
     },
     lessonMatchDay: function(val) {
       val.forEach(
@@ -193,6 +194,7 @@ export default {
   created() {
     this.initSchool();
     this.initTeacher();
+    this.handleFetchLessons();
   }
 };
 </script>

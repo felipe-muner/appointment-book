@@ -58,6 +58,34 @@ module.exports = {
         startTime: "10:16:00",
         endTime: "11:01:00",
         school_ID: "1"
+      },
+      {
+        day: "Tuesday",
+        grade: "6-A",
+        startTime: "07:16:00",
+        endTime: "08:01:00",
+        school_ID: "2"
+      },
+      {
+        day: "Tuesday",
+        grade: "6-B",
+        startTime: "08:01:00",
+        endTime: "08:46:00",
+        school_ID: "2"
+      },
+      {
+        day: "Tuesday",
+        grade: "6-C",
+        startTime: "09:16:00",
+        endTime: "09:46:00",
+        school_ID: "2"
+      },
+      {
+        day: "Tuesday",
+        grade: "6-D",
+        startTime: "10:16:00",
+        endTime: "11:01:00",
+        school_ID: "2"
       }
     ]);
   },

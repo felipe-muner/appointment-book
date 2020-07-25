@@ -31,22 +31,20 @@ module.exports = {
   async fetchLessons(req, res) {
     try {
       const { date, school } = req.query;
-      const id = JSON.parse(school).schoolID;
 
-      const scheduleList = await Schedule.findAll({
-        // where: sequelize.where(sequelize.fn('date', sequelize.col('Schedule.start')), '=', date),
-        where: {
-          [Op.and]: [
-            { school_id: id },
-            sequelize.where(
-              sequelize.fn("date", sequelize.col("Schedule.start")),
-              "=",
-              date
-            )
-          ]
-        },
+      let scheduleList = await Schedule.findAll({
+        where: sequelize.where(
+          sequelize.fn("date", sequelize.col("Schedule.start")),
+          "=",
+          date
+        ),
         include: [Teacher, Lesson]
       });
+
+      if (school) {
+        const id = JSON.parse(school).schoolID;
+        scheduleList = scheduleList.filter(item => item.school_id === id);
+      }
 
       scheduleList.forEach(ev => {
         ev.setDataValue(
