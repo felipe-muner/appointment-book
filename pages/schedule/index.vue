@@ -69,10 +69,9 @@
         <template v-slot:default>
           <thead>
             <tr>
+              <th>School</th>
               <th>Teacher</th>
               <th>Grade</th>
-              <th>Start time</th>
-              <th>End time</th>
               <th>Time</th>
               <th></th>
             </tr>
@@ -82,10 +81,9 @@
               v-for="les in lessonsByDaySchool"
               v-bind:key="JSON.stringify(les)"
             >
+              <td>{{ les.School.name }}</td>
               <td>{{ les.Teacher.name }}</td>
               <td>{{ les.grade }}</td>
-              <td>{{ les.start }}</td>
-              <td>{{ les.end }}</td>
               <td>{{ les.lessonTime }}</td>
               <td>
                 <v-tooltip bottom>

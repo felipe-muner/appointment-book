@@ -1,6 +1,6 @@
 const sequelize = require("sequelize");
 const { Op } = require("sequelize");
-const { Schedule, Lesson, Teacher } = require("../models");
+const { Schedule, School, Lesson, Teacher } = require("../models");
 const utils = require("../utils/utils");
 
 module.exports = {
@@ -38,19 +38,13 @@ module.exports = {
           "=",
           date
         ),
-        include: [Teacher, Lesson]
+        include: [Teacher, Lesson, School]
       });
-
-      console.log("------school");
-      console.log(school);
 
       const id = school ? JSON.parse(school).schoolID : false;
 
       if (id) {
-        console.log("meu id segue: " + id);
         scheduleList = scheduleList.filter(item => item.school_id === id);
-      } else {
-        console.log("n tem ");
       }
 
       scheduleList.forEach(ev => {
