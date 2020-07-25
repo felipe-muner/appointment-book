@@ -1,8 +1,11 @@
 <template>
   <div>
+    {{typeof date}}
     {{ lessonMatchDay }}
     {{ date }}
     <h1>Schedule</h1>
+    <CopySchedule :date="date" :school="school" />
+    <br />
     {{ new Date(date).getDay() }}
     {{ days.find(d => d.id === new Date(this.date).getDay()).name }}
     <v-form ref="form" v-model="valid" lazy-validation>
@@ -57,9 +60,7 @@
           ></v-autocomplete>
         </v-col>
         <v-col>
-          <v-btn :disabled="!valid" color="success" @click="submitForm" dense
-            >Add</v-btn
-          >
+          <v-btn :disabled="!valid" color="success" @click="submitForm" dense>Add</v-btn>
         </v-col>
       </v-row>
     </v-form>
@@ -77,10 +78,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr
-              v-for="les in lessonsByDaySchool"
-              v-bind:key="JSON.stringify(les)"
-            >
+            <tr v-for="les in lessonsByDaySchool" v-bind:key="JSON.stringify(les)">
               <td>{{ les.School.name }}</td>
               <td>{{ les.Teacher.name }}</td>
               <td>{{ les.grade }}</td>
@@ -94,8 +92,7 @@
                       dark
                       v-bind="attrs"
                       v-on="on"
-                      >mdi-delete-empty</v-icon
-                    >
+                    >mdi-delete-empty</v-icon>
                   </template>
                   <span>remove</span>
                 </v-tooltip>
@@ -110,8 +107,12 @@
 
 <script>
 import { mapGetters, mapActions } from "vuex";
+import CopySchedule from "@/components/schedule/CopySchedule";
 
 export default {
+  components: {
+    CopySchedule,
+  },
   data() {
     return {
       date: new Date().toISOString().slice(0, 10),
@@ -120,14 +121,14 @@ export default {
       teacher: "",
       lessonsByDaySchool: "",
       valid: true,
-      requiredRules: [v => !!v || "Field is required"]
+      requiredRules: [(v) => !!v || "Field is required"],
     };
   },
   computed: {
     ...mapGetters({
       schools: "school/getList",
       teachers: "teacher/getList",
-      days: "lesson/getDays"
+      days: "lesson/getDays",
     }),
     isDisabled() {
       return !this.school;
@@ -135,26 +136,26 @@ export default {
     lessonMatchDay() {
       if (!this.school) return [];
       return this.school.Lessons.filter(
-        l =>
+        (l) =>
           l.day ===
-          this.days.find(d => d.id === new Date(this.date).getDay()).name
+          this.days.find((d) => d.id === new Date(this.date).getDay()).name
       );
-    }
+    },
   },
   watch: {
-    school: async function(val) {
+    school: async function (val) {
       await this.handleFetchLessons();
     },
-    date: async function(val) {
+    date: async function (val) {
       await this.handleFetchLessons();
     },
-    lessonMatchDay: function(val) {
+    lessonMatchDay: function (val) {
       val.forEach(
-        v =>
+        (v) =>
           (v.textToDisplay =
             v.grade + " --- " + v.startTime + " - " + v.endTime)
       );
-    }
+    },
   },
   methods: {
     ...mapActions({
@@ -162,13 +163,13 @@ export default {
       initTeacher: "teacher/getAll",
       new: "schedule/new",
       fetchLessons: "schedule/fetchLessons",
-      deleteLesson: "schedule/deleteLesson"
+      deleteLesson: "schedule/deleteLesson",
     }),
     async handleFetchLessons() {
       const fetchLessons = (
         await this.fetchLessons({
           date: this.date,
-          school: this.school
+          school: this.school,
         })
       ).data;
       this.lessonsByDaySchool = fetchLessons.data;
@@ -183,17 +184,17 @@ export default {
           date: this.date,
           school: this.school,
           grade: this.grade,
-          teacher: this.teacher
+          teacher: this.teacher,
         });
         await this.handleFetchLessons();
       }
-    }
+    },
   },
   created() {
     this.initSchool();
     this.initTeacher();
     this.handleFetchLessons();
-  }
+  },
 };
 </script>
 
