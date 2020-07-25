@@ -183,7 +183,7 @@ export default {
         neighborhood: "",
         lessons: []
       },
-      lesson: { day: {}, grade: "", startTime: "", endTime: "" },
+      lesson: { day: {}, grade: "", startTime: "", endTime: "", createdAt: "" },
       nameRules: [
         v => !!v || "Name is required",
         v => (v && v.length <= 10) || "Name must be less than 10 characters"
@@ -204,10 +204,6 @@ export default {
     ...mapMutations({
       setSnack: "snackbar/setSnack"
     }),
-    copyLesson(les) {
-      les.createdAt = new Date().getTime();
-      this.lesson = les;
-    },
     removeLesson(lesson) {
       this.school.lessons = this.school.lessons.filter(
         le => le.createdAt !== lesson.createdAt
@@ -226,13 +222,13 @@ export default {
         return false;
       } else {
         this.lesson.createdAt = new Date().getTime();
-        this.school.lessons.push(this.lesson);
-        this.lesson = {
-          day: {},
-          grade: "",
-          startTime: "",
-          endTime: ""
-        };
+        const newLesson = { ...this.lesson };
+
+        this.school.lessons.push(newLesson);
+
+        this.lesson.grade = "";
+        this.lesson.startTime = "";
+        this.lesson.endTime = "";
       }
     },
     setTimeMorning(val) {
