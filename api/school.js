@@ -13,6 +13,11 @@ class School {
   async update(payload) {
     return await axios.put(this.server + "/school/update", payload);
   }
+  async deleteLesson(payload) {
+    return await axios.delete(this.server + "/school/lesson", {
+      data: { lessonID: payload }
+    });
+  }
 }
 
 export default School;

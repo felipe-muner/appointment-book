@@ -23,6 +23,8 @@ export const getters = {
     return state.types;
   },
   getList: state => {
+    state.list.forEach(t => (t.textToDisplay = t.schoolID + " - " + t.name));
+    console.log(state.list);
     return state.list;
   }
 };
@@ -37,6 +39,7 @@ export const actions = {
   async getAll({ commit, state }, payload) {
     const resp = await MyApi.school.getAll();
     commit("getAll", resp.data);
+    return resp;
   },
   async new({ commit, dispatch, state }, payload) {
     const resp = await MyApi.school.new(payload);

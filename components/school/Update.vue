@@ -23,21 +23,7 @@
       <v-card-title class="headline grey lighten-2" primary-title>Update School</v-card-title>
       <v-card-text>
         <v-container>
-          <v-row no-gutters>
-            <v-col>
-              <v-autocomplete
-                return-object
-                cache-items
-                v-model="selected"
-                :items="schools"
-                item-text="textToDisplay"
-                label="Select a school"
-                outlined
-                dense
-              ></v-autocomplete>
-            </v-col>
-          </v-row>
-          <UpdateForm :selected="selected" v-on:close-dialog="dialog = false" />
+          <UpdateForm v-on:close-dialog="dialog = false" />
         </v-container>
       </v-card-text>
 
@@ -51,21 +37,13 @@ import UpdateForm from "@/components/school/UpdateForm";
 
 export default {
   components: {
-    UpdateForm
+    UpdateForm,
   },
   data() {
     return {
-      selected: {},
-      dialog: false
+      dialog: false,
     };
   },
-  computed: {
-    schools() {
-      let schoolList = this.$store.state.school.list;
-      schoolList.forEach(t => (t.textToDisplay = t.schoolID + " - " + t.name));
-      return schoolList;
-    }
-  }
 };
 </script>
 

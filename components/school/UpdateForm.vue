@@ -1,6 +1,23 @@
 <template>
   <div>
+    {{schools}}
     <v-container>
+      {{selected}}
+      <v-row no-gutters>
+        <v-col>
+          <v-autocomplete
+            return-object
+            cache-items
+            v-model="selected"
+            :items="schools"
+            item-text="textToDisplay"
+            label="Select a school"
+            outlined
+            dense
+          ></v-autocomplete>
+        </v-col>
+      </v-row>
+
       <v-form ref="form" v-model="valid" lazy-validation>
         <v-row>
           <v-col>
@@ -35,274 +52,39 @@
             dense
           />
         </v-row>
-
+        {{selected}}
         <v-row>
-          <v-col class="px-0">
+          <v-col cols="6">
             <v-simple-table>
               <template v-slot:default>
+                <thead>
+                  <tr>
+                    <th>Day</th>
+                    <th>Grade</th>
+                    <th>Start time</th>
+                    <th>End time</th>
+                    <th></th>
+                  </tr>
+                </thead>
                 <tbody>
-                  <tr>
-                    <td class="px-0" style="width:35%">
-                      <v-text-field
-                        hide-details
-                        label="Monday Morning"
-                        v-model="selectedToUpdate.mondayMorning"
-                        outlined
-                        dense
-                        type="number"
-                        min="0"
-                        step="1"
-                      />
-                    </td>
-                    <td style="width:15%">
-                      <v-text-field
-                        hide-details
-                        label="Start at"
-                        v-model="selectedToUpdate.mondayMorningTime"
-                        outlined
-                        dense
-                        type="time"
-                      />
-                    </td>
-                    <td class="px-0" style="width:35%">
-                      <v-text-field
-                        hide-details
-                        label="Monday Afternoon"
-                        v-model="selectedToUpdate.mondayAfternoon"
-                        outlined
-                        dense
-                        type="number"
-                      />
-                    </td>
-                    <td style="width:15%">
-                      <v-text-field
-                        hide-details
-                        label="Start at"
-                        v-model="selectedToUpdate.mondayAfternoonTime"
-                        outlined
-                        dense
-                        type="time"
-                      />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="px-0" style="width:35%">
-                      <v-text-field
-                        hide-details
-                        label="Tuesday Morning"
-                        v-model="selectedToUpdate.tuesdayMorning"
-                        outlined
-                        dense
-                        type="number"
-                        min="0"
-                        step="1"
-                      />
-                    </td>
-                    <td style="width:15%">
-                      <v-text-field
-                        hide-details
-                        label="Start at"
-                        v-model="selectedToUpdate.tuesdayMorningTime"
-                        outlined
-                        dense
-                        type="time"
-                      />
-                    </td>
-                    <td class="px-0" style="width:35%">
-                      <v-text-field
-                        hide-details
-                        label="Tuesday Afternoon"
-                        v-model="selectedToUpdate.tuesdayAfternoon"
-                        outlined
-                        dense
-                        type="number"
-                      />
-                    </td>
-                    <td style="width:15%">
-                      <v-text-field
-                        hide-details
-                        label="Start at"
-                        v-model="selectedToUpdate.tuesdayAfternoonTime"
-                        outlined
-                        dense
-                        type="time"
-                      />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="px-0" style="width:35%">
-                      <v-text-field
-                        hide-details
-                        label="Wednesday Morning"
-                        v-model="selectedToUpdate.wednesdayMorning"
-                        outlined
-                        dense
-                        type="number"
-                        min="0"
-                        step="1"
-                      />
-                    </td>
-                    <td style="width:15%">
-                      <v-text-field
-                        hide-details
-                        label="Start at"
-                        v-model="selectedToUpdate.wednesdayMorningTime"
-                        outlined
-                        dense
-                        type="time"
-                      />
-                    </td>
-                    <td class="px-0" style="width:35%">
-                      <v-text-field
-                        hide-details
-                        label="Wednesday Afternoon"
-                        v-model="selectedToUpdate.wednesdayAfternoon"
-                        outlined
-                        dense
-                        type="number"
-                      />
-                    </td>
-                    <td style="width:15%">
-                      <v-text-field
-                        hide-details
-                        label="Start at"
-                        v-model="selectedToUpdate.wednesdayAfternoonTime"
-                        outlined
-                        dense
-                        type="time"
-                      />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="px-0" style="width:35%">
-                      <v-text-field
-                        hide-details
-                        label="Thursday Morning"
-                        v-model="selectedToUpdate.thursdayMorning"
-                        outlined
-                        dense
-                        type="number"
-                        min="0"
-                        step="1"
-                      />
-                    </td>
-                    <td style="width:15%">
-                      <v-text-field
-                        hide-details
-                        label="Start at"
-                        v-model="selectedToUpdate.thursdayMorningTime"
-                        outlined
-                        dense
-                        type="time"
-                      />
-                    </td>
-                    <td class="px-0" style="width:35%">
-                      <v-text-field
-                        hide-details
-                        label="Thursday Afternoon"
-                        v-model="selectedToUpdate.thursdayAfternoon"
-                        outlined
-                        dense
-                        type="number"
-                      />
-                    </td>
-                    <td style="width:15%">
-                      <v-text-field
-                        hide-details
-                        label="Start at"
-                        v-model="selectedToUpdate.thursdayAfternoonTime"
-                        outlined
-                        dense
-                        type="time"
-                      />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="px-0" style="width:35%">
-                      <v-text-field
-                        hide-details
-                        label="Friday Morning"
-                        v-model="selectedToUpdate.fridayMorning"
-                        outlined
-                        dense
-                        type="number"
-                        min="0"
-                        step="1"
-                      />
-                    </td>
-                    <td style="width:15%">
-                      <v-text-field
-                        hide-details
-                        label="Start at"
-                        v-model="selectedToUpdate.fridayMorningTime"
-                        outlined
-                        dense
-                        type="time"
-                      />
-                    </td>
-                    <td class="px-0" style="width:35%">
-                      <v-text-field
-                        hide-details
-                        label="Friday Afternoon"
-                        v-model="selectedToUpdate.fridayAfternoon"
-                        outlined
-                        dense
-                        type="number"
-                      />
-                    </td>
-                    <td style="width:15%">
-                      <v-text-field
-                        hide-details
-                        label="Start at"
-                        v-model="selectedToUpdate.fridayAfternoonTime"
-                        outlined
-                        dense
-                        type="time"
-                      />
-                    </td>
-                  </tr>
-                  <tr>
-                    <td class="px-0" style="width:35%">
-                      <v-text-field
-                        hide-details
-                        label="Saturday Morning"
-                        v-model="selectedToUpdate.saturdayMorning"
-                        outlined
-                        dense
-                        type="number"
-                        min="0"
-                        step="1"
-                      />
-                    </td>
-                    <td style="width:15%">
-                      <v-text-field
-                        hide-details
-                        label="Start at"
-                        v-model="selectedToUpdate.saturdayMorningTime"
-                        outlined
-                        dense
-                        type="time"
-                      />
-                    </td>
-                    <td class="px-0" style="width:35%">
-                      <v-text-field
-                        hide-details
-                        label="Saturday Afternoon"
-                        v-model="selectedToUpdate.saturdayAfternoon"
-                        outlined
-                        dense
-                        type="number"
-                      />
-                    </td>
-                    <td style="width:15%">
-                      <v-text-field
-                        hide-details
-                        label="Start at"
-                        v-model="selectedToUpdate.saturdayAfternoonTime"
-                        outlined
-                        dense
-                        type="time"
-                      />
+                  <tr v-for="les in selected.Lessons" v-bind:key="JSON.stringify(les)">
+                    <td>{{ les.day }}</td>
+                    <td>{{ les.grade }}</td>
+                    <td>{{ les.startTime }}</td>
+                    <td>{{ les.endTime }}</td>
+                    <td>
+                      <v-tooltip bottom>
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-icon
+                            @click="handleRemoveLesson(les.lessonID)"
+                            color="error"
+                            dark
+                            v-bind="attrs"
+                            v-on="on"
+                          >mdi-delete-empty</v-icon>
+                        </template>
+                        <span>remove</span>
+                      </v-tooltip>
                     </td>
                   </tr>
                 </tbody>
@@ -318,40 +100,40 @@
         </v-row>
       </v-form>
     </v-container>
+    {{selected.Lessons}}
   </div>
 </template>
 
 <script>
-import { mapActions, mapMutations } from "vuex";
-
+import { mapActions, mapMutations, mapGetters } from "vuex";
+import Vue from "vue";
 export default {
-  props: {
-    selected: {
-      type: Object,
-      required: true
-    }
-  },
   data() {
     return {
+      selected: { Lessons: [] },
       valid: true,
       nameRules: [
-        v => !!v || "Name is required",
-        v => (v && v.length <= 10) || "Name must be less than 10 characters"
-      ]
+        (v) => !!v || "Name is required",
+        (v) => (v && v.length <= 10) || "Name must be less than 10 characters",
+      ],
     };
   },
   computed: {
     selectedToUpdate() {
       return JSON.parse(JSON.stringify(this.selected));
-    }
+    },
+    ...mapGetters({
+      schools: "school/getList",
+    }),
   },
   methods: {
     ...mapActions({
       update: "school/update",
-      initSchool: "school/getAll"
+      initSchool: "school/getAll",
+      deleteLesson: "lesson/deleteLesson",
     }),
     ...mapMutations({
-      setSnack: "snackbar/setSnack"
+      setSnack: "snackbar/setSnack",
     }),
     async submitForm() {
       if (this.$refs.form.validate()) {
@@ -362,8 +144,21 @@ export default {
           this.$emit("close-dialog");
         }
       }
-    }
-  }
+    },
+    async handleRemoveLesson(lessonID) {
+      console.log(lessonID);
+      const resp = await this.deleteLesson(lessonID);
+
+      if (1 === resp.data.data) {
+        this.selected.Lessons = this.selected.Lessons.filter(
+          (l) => l.lessonID !== lessonID
+        );
+      }
+    },
+  },
+  async created() {
+    await this.initSchool();
+  },
 };
 </script>
 
