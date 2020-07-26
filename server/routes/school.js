@@ -14,6 +14,7 @@ router
       res.json({ code: 200, msg: "School created", data: req.school });
     }
   )
-  .put("/update", schoolController.update);
+  .put("/update", schoolController.update)
+  .delete("/lesson", lessonController.deleteLesson);
 
 module.exports = router;

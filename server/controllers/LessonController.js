@@ -31,12 +31,8 @@ module.exports = {
           school_ID: req.school.schoolID
         })
       );
-      console.log(bulkLessons);
-      const lessons = await Lesson.bulkCreate(bulkLessons);
 
-      console.log("bulk---");
-      console.log(lessons);
-      console.log("bulk---");
+      const lessons = await Lesson.bulkCreate(bulkLessons);
 
       next();
     } catch (error) {
@@ -66,5 +62,19 @@ module.exports = {
     //   console.log("error school update");
     //   res.status(400).send({ error: error });
     // }
+  },
+
+  async deleteLesson(req, res) {
+    try {
+      const { lessonID } = req.body;
+      const result = await Lesson.destroy({
+        where: { lessonID }
+      });
+      res.json({ code: 200, msg: "delete lesson", data: result });
+    } catch (error) {
+      console.log(error);
+      console.log("error schedule delete lesson");
+      res.status(400).send({ error: error });
+    }
   }
 };

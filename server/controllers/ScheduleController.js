@@ -20,7 +20,6 @@ module.exports = {
       const result = await Schedule.destroy({
         where: { scheduleID }
       });
-
       res.json({ code: 200, msg: "delete lesson", data: result });
     } catch (error) {
       console.log(error);
