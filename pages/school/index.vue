@@ -1,6 +1,7 @@
 <template>
   <div>
     <h1>School List</h1>
+    {{schools[0].Lessons}}
     <New />
     <v-data-table :headers="headers" :items="schools" item-key="schoolID" class="elevation-1">
       <template v-slot:body="{ items }">
@@ -27,10 +28,7 @@
               </v-tooltip>
             </td>
             <td>
-              <Update
-                :school="JSON.parse(JSON.stringify(item))"
-                :lessons="JSON.parse(JSON.stringify(item.Lessons))"
-              />
+              <Update :school="JSON.parse(JSON.stringify(item))" :lessons="item.Lessons" />
             </td>
             <td>{{ item.active }}</td>
           </tr>

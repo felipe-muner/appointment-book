@@ -52,7 +52,7 @@
             dense
           />
         </v-row>
-        {{selected}}
+
         <v-row>
           <v-col cols="6">
             <v-simple-table>
@@ -143,7 +143,6 @@ export default {
       }
     },
     async handleRemoveLesson(lessonID) {
-      console.log(lessonID);
       const resp = await this.deleteLesson(lessonID);
 
       if (1 === resp.data.data) {

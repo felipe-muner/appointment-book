@@ -57,7 +57,45 @@
                 dense
               />
             </v-row>
-
+            <v-row>
+              <v-col cols="6">
+                <v-simple-table>
+                  <template v-slot:default>
+                    <thead>
+                      <tr>
+                        <th>Day</th>
+                        <th>Grade</th>
+                        <th>Start time</th>
+                        <th>End time</th>
+                        <th></th>
+                      </tr>
+                    </thead>
+                    <tbody>
+                      <tr v-for="les in mutableLessons" v-bind:key="JSON.stringify(les)">
+                        <td>{{ les.day }}</td>
+                        <td>{{ les.grade }}</td>
+                        <td>{{ les.startTime }}</td>
+                        <td>{{ les.endTime }}</td>
+                        <td>
+                          <v-tooltip bottom>
+                            <template v-slot:activator="{ on, attrs }">
+                              <v-icon
+                                @click="handleRemoveLesson(les.lessonID)"
+                                color="error"
+                                dark
+                                v-bind="attrs"
+                                v-on="on"
+                              >mdi-delete-empty</v-icon>
+                            </template>
+                            <span>remove</span>
+                          </v-tooltip>
+                        </td>
+                      </tr>
+                    </tbody>
+                  </template>
+                </v-simple-table>
+              </v-col>
+            </v-row>
             <v-row>
               <v-col class="text-right px-0">
                 <v-btn :disabled="!valid" color="warning" @click="submitForm" dense>Update</v-btn>
@@ -66,7 +104,8 @@
           </v-form>
         </v-container>
       </v-card-text>
-
+      {{mutableLessons}}
+      <hr />
       <v-divider></v-divider>
     </v-card>
   </v-dialog>
@@ -87,6 +126,7 @@ export default {
   },
   data() {
     return {
+      mutableLessons: this.lessons,
       dialog: false,
       valid: true,
       nameRules: [
@@ -98,6 +138,8 @@ export default {
   methods: {
     ...mapActions({
       update: "school/update",
+      deleteLesson: "lesson/deleteLesson",
+      getLessons: "lesson/deleteLesson",
     }),
     ...mapMutations({
       setSnack: "snackbar/setSnack",
@@ -109,6 +151,15 @@ export default {
         if (resp.data.code === 200) {
           this.dialog = false;
         }
+      }
+    },
+    async handleRemoveLesson(lessonID) {
+      const resp = await this.deleteLesson(lessonID);
+
+      if (1 === resp.data.data) {
+        this.mutableLessons = this.mutableLessons.filter(
+          (les) => les.lessonID !== lessonID
+        );
       }
     },
   },
