@@ -18,6 +18,9 @@ class School {
       data: { lessonID: payload }
     });
   }
+  async addLesson(payload) {
+    return await axios.post(this.server + "/school/lesson", payload);
+  }
 }
 
 export default School;

@@ -2,7 +2,6 @@
   <div>
     <h1>School List</h1>
     <New />
-    <Update />
     <v-data-table :headers="headers" :items="schools" item-key="schoolID" class="elevation-1">
       <template v-slot:body="{ items }">
         <tbody>
@@ -27,6 +26,12 @@
                 <span>Tooltip</span>
               </v-tooltip>
             </td>
+            <td>
+              <Update
+                :school="JSON.parse(JSON.stringify(item))"
+                :lessons="JSON.parse(JSON.stringify(item.Lessons))"
+              />
+            </td>
             <td>{{ item.active }}</td>
           </tr>
         </tbody>
@@ -43,7 +48,7 @@ import Update from "@/components/school/Update";
 export default {
   components: {
     New,
-    Update
+    Update,
   },
   data() {
     return {
@@ -54,27 +59,28 @@ export default {
         {
           text: "Name",
           align: "start",
-          value: "name"
+          value: "name",
         },
         { text: "Neighborhood", value: "neighborhood" },
         { text: "Address", value: "address" },
-        { text: "Active", value: "active" }
-      ]
+        { text: "", value: "" },
+        { text: "Active", value: "active" },
+      ],
     };
   },
   computed: {
     schools() {
       return this.$store.state.school.list;
-    }
+    },
   },
   methods: {
     ...mapActions({
-      initSchool: "school/getAll"
-    })
+      initSchool: "school/getAll",
+    }),
   },
   created() {
     this.initSchool();
-  }
+  },
 };
 </script>
 

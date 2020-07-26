@@ -10,7 +10,7 @@
             cache-items
             v-model="selected"
             :items="schools"
-            item-text="textToDisplay"
+            item-text="name"
             label="Select a school"
             outlined
             dense
@@ -21,13 +21,13 @@
       <v-form ref="form" v-model="valid" lazy-validation>
         <v-row>
           <v-col>
-            <v-switch v-model="selectedToUpdate.active" label="Active"></v-switch>
+            <v-switch v-model="selected.active" label="Active"></v-switch>
           </v-col>
         </v-row>
         <v-row>
           <v-text-field
             prepend-icon="mdi-home-city"
-            v-model="selectedToUpdate.name"
+            v-model="selected.name"
             label="Name"
             outlined
             dense
@@ -37,7 +37,7 @@
         <v-row>
           <v-text-field
             prepend-icon="mdi-map-marker"
-            v-model="selectedToUpdate.address"
+            v-model="selected.address"
             label="Address"
             outlined
             dense
@@ -46,7 +46,7 @@
         <v-row>
           <v-text-field
             prepend-icon="mdi-city"
-            v-model="selectedToUpdate.neighborhood"
+            v-model="selected.neighborhood"
             label="Neighborhood"
             outlined
             dense
@@ -100,7 +100,6 @@
         </v-row>
       </v-form>
     </v-container>
-    {{selected.Lessons}}
   </div>
 </template>
 
@@ -119,9 +118,6 @@ export default {
     };
   },
   computed: {
-    selectedToUpdate() {
-      return JSON.parse(JSON.stringify(this.selected));
-    },
     ...mapGetters({
       schools: "school/getList",
     }),
@@ -137,10 +133,11 @@ export default {
     }),
     async submitForm() {
       if (this.$refs.form.validate()) {
-        const resp = await this.update(this.selectedToUpdate);
+        const resp = await this.update(this.selected);
         this.setSnack(resp.data.msg);
         if (resp.data.code === 200) {
-          this.initSchool();
+          this.selected = { Lessons: [] };
+          await this.initSchool();
           this.$emit("close-dialog");
         }
       }
@@ -155,9 +152,6 @@ export default {
         );
       }
     },
-  },
-  async created() {
-    await this.initSchool();
   },
 };
 </script>

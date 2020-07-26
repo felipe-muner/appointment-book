@@ -23,7 +23,47 @@
       <v-card-title class="headline grey lighten-2" primary-title>Update School</v-card-title>
       <v-card-text>
         <v-container>
-          <UpdateForm v-on:close-dialog="dialog = false" />
+          <v-form ref="form" v-model="valid" lazy-validation>
+            <v-row>
+              <v-col>
+                <v-switch v-model="school.active" label="Active"></v-switch>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-text-field
+                prepend-icon="mdi-home-city"
+                v-model="school.name"
+                label="Name"
+                outlined
+                dense
+                required
+              />
+            </v-row>
+            <v-row>
+              <v-text-field
+                prepend-icon="mdi-map-marker"
+                v-model="school.address"
+                label="Address"
+                outlined
+                dense
+              />
+            </v-row>
+            <v-row>
+              <v-text-field
+                prepend-icon="mdi-city"
+                v-model="school.neighborhood"
+                label="Neighborhood"
+                outlined
+                dense
+              />
+            </v-row>
+
+            <v-row>
+              <v-col class="text-right px-0">
+                <v-btn :disabled="!valid" color="warning" @click="submitForm" dense>Update</v-btn>
+              </v-col>
+            </v-row>
+          </v-form>
         </v-container>
       </v-card-text>
 
@@ -33,16 +73,44 @@
 </template>
 
 <script>
-import UpdateForm from "@/components/school/UpdateForm";
-
+import { mapActions, mapMutations } from "vuex";
 export default {
-  components: {
-    UpdateForm,
+  props: {
+    school: {
+      type: Object,
+      required: true,
+    },
+    lessons: {
+      type: Array,
+      required: true,
+    },
   },
   data() {
     return {
       dialog: false,
+      valid: true,
+      nameRules: [
+        (v) => !!v || "Name is required",
+        (v) => (v && v.length <= 10) || "Name must be less than 10 characters",
+      ],
     };
+  },
+  methods: {
+    ...mapActions({
+      update: "school/update",
+    }),
+    ...mapMutations({
+      setSnack: "snackbar/setSnack",
+    }),
+    async submitForm() {
+      if (this.$refs.form.validate()) {
+        const resp = await this.update(this.school);
+        this.setSnack(resp.data.msg);
+        if (resp.data.code === 200) {
+          this.dialog = false;
+        }
+      }
+    },
   },
 };
 </script>
