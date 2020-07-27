@@ -26,8 +26,8 @@ module.exports = {
         bulkLessons.push({
           day: les.day.name,
           grade: les.grade,
-          startTime: "10:10",
-          endTime: "10:45",
+          startTime: les.startTime,
+          endTime: les.endTime,
           school_ID: req.school.schoolID
         })
       );

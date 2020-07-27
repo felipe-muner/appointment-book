@@ -22,10 +22,8 @@
     <v-card>
       <v-card-title class="headline grey lighten-2" primary-title>Update School</v-card-title>
       <v-card-text>
-        {{school}}
         <hr />
         <br />
-        {{mutableSchool}}
         <v-container>
           <v-form ref="form" v-model="valid" lazy-validation>
             <v-row>
@@ -173,7 +171,7 @@ export default {
   data() {
     return {
       mutableSchool: { ...this.school }, // copy object without reference
-      mutableLessons: this.lessons.slice(0), // copy array without reference
+      mutableLessons: this.lessons.slice(0),
       dialog: false,
       valid: true,
       nameRules: [
@@ -228,6 +226,7 @@ export default {
         console.log(newLesson);
         console.log("to aqui");
         const resp = await this.addLesson(newLesson);
+        console.log(resp.data);
 
         newLesson.lessonID = resp.data.data.lessonID;
         this.mutableLessons.push(newLesson);
@@ -248,7 +247,6 @@ export default {
     },
     async handleRemoveLesson(lessonID) {
       const resp = await this.deleteLesson(lessonID);
-
       if (1 === resp.data.data) {
         this.mutableLessons = this.mutableLessons.filter(
           (les) => les.lessonID !== lessonID

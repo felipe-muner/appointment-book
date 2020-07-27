@@ -8,6 +8,13 @@ module.exports = {
       });
       console.log(schools);
 
+      schools.forEach(s =>
+        s.Lessons.forEach(les => {
+          les.setDataValue("startTime", les.startTime.slice(0, -3));
+          les.setDataValue("endTime", les.endTime.slice(0, -3));
+        })
+      );
+
       res.send(schools);
     } catch (error) {
       console.log(error);
