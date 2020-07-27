@@ -26,13 +26,13 @@
           <v-form ref="form" v-model="valid" lazy-validation>
             <v-row>
               <v-col>
-                <v-switch v-model="school.active" label="Active"></v-switch>
+                <!-- <v-switch v-model="mutableSchool.active" label="Active"></v-switch> -->
               </v-col>
             </v-row>
             <v-row>
               <v-text-field
                 prepend-icon="mdi-home-city"
-                v-model="school.name"
+                v-model="mutableSchool.name"
                 label="Name"
                 outlined
                 dense
@@ -42,7 +42,7 @@
             <v-row>
               <v-text-field
                 prepend-icon="mdi-map-marker"
-                v-model="school.address"
+                v-model="mutableSchool.address"
                 label="Address"
                 outlined
                 dense
@@ -51,7 +51,7 @@
             <v-row>
               <v-text-field
                 prepend-icon="mdi-city"
-                v-model="school.neighborhood"
+                v-model="mutableSchool.neighborhood"
                 label="Neighborhood"
                 outlined
                 dense
@@ -126,6 +126,7 @@ export default {
   },
   data() {
     return {
+      mutableSchool: { ...this.school },
       mutableLessons: this.lessons,
       dialog: false,
       valid: true,
@@ -146,7 +147,7 @@ export default {
     }),
     async submitForm() {
       if (this.$refs.form.validate()) {
-        const resp = await this.update(this.school);
+        const resp = await this.update(this.mutableSchool);
         this.setSnack(resp.data.msg);
         if (resp.data.code === 200) {
           this.dialog = false;
