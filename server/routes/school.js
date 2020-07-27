@@ -14,6 +14,7 @@ router
       res.json({ code: 200, msg: "School created", data: req.school });
     }
   )
+  .post("/lesson", lessonController.addLesson)
   .put("/update", schoolController.update)
   .delete("/lesson", lessonController.deleteLesson);
 

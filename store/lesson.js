@@ -74,5 +74,9 @@ export const actions = {
   async deleteLesson({ commit, dispatch, state }, payload) {
     const resp = await MyApi.school.deleteLesson(payload);
     return resp;
+  },
+  async addLesson({ commit, dispatch, state }, payload) {
+    const resp = await MyApi.school.addLesson(payload);
+    return resp;
   }
 };

@@ -19,6 +19,9 @@ class Schedule {
       data: { scheduleID: payload }
     });
   }
+  async addLesson(payload) {
+    return await axios.post(this.server + "/schedule/lesson", payload);
+  }
   async new(payload) {
     return await axios.post(this.server + "/schedule/create", payload);
   }

@@ -76,5 +76,22 @@ module.exports = {
       console.log("error schedule delete lesson");
       res.status(400).send({ error: error });
     }
+  },
+
+  async addLesson(req, res) {
+    try {
+      const lesson = await Lesson.create({
+        day: req.body.day,
+        grade: req.body.grade,
+        startTime: req.body.startTime,
+        endTime: req.body.endTime,
+        school_ID: req.body.school_ID
+      });
+      res.json({ code: 200, msg: "add lesson", data: lesson });
+    } catch (error) {
+      console.log(error);
+      console.log("error school add lesson");
+      res.status(400).send({ error: error });
+    }
   }
 };

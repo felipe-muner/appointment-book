@@ -22,11 +22,15 @@
     <v-card>
       <v-card-title class="headline grey lighten-2" primary-title>Update School</v-card-title>
       <v-card-text>
+        {{school}}
+        <hr />
+        <br />
+        {{mutableSchool}}
         <v-container>
           <v-form ref="form" v-model="valid" lazy-validation>
             <v-row>
               <v-col>
-                <!-- <v-switch v-model="mutableSchool.active" label="Active"></v-switch> -->
+                <v-switch v-model="mutableSchool.active" label="Active"></v-switch>
               </v-col>
             </v-row>
             <v-row>
@@ -57,6 +61,48 @@
                 dense
               />
             </v-row>
+            <h2>Lessons</h2>
+            <v-row>
+              <v-col cols="2">
+                <v-autocomplete
+                  item-value="name"
+                  item-text="name"
+                  v-model="lesson.day"
+                  :items="days"
+                  label="Day"
+                  outlined
+                  dense
+                ></v-autocomplete>
+              </v-col>
+              <v-col cols="2">
+                <v-autocomplete v-model="lesson.grade" :items="grades" label="Grade" outlined dense></v-autocomplete>
+              </v-col>
+
+              <v-col cols="2">
+                <v-text-field
+                  prepend-icon="mdi-city"
+                  type="time"
+                  v-model="lesson.startTime"
+                  label="Start Time"
+                  outlined
+                  dense
+                />
+              </v-col>
+              <v-col cols="2">
+                <v-text-field
+                  prepend-icon="mdi-city"
+                  type="time"
+                  v-model="lesson.endTime"
+                  label="End Time"
+                  outlined
+                  dense
+                />
+              </v-col>
+              <v-col>
+                <v-btn color="primary" @click="handleAddLesson">Add lesson</v-btn>
+              </v-col>
+            </v-row>
+
             <v-row>
               <v-col cols="6">
                 <v-simple-table>
@@ -112,7 +158,7 @@
 </template>
 
 <script>
-import { mapActions, mapMutations } from "vuex";
+import { mapActions, mapMutations, mapGetters } from "vuex";
 export default {
   props: {
     school: {
@@ -126,25 +172,71 @@ export default {
   },
   data() {
     return {
-      mutableSchool: { ...this.school },
-      mutableLessons: this.lessons,
+      mutableSchool: { ...this.school }, // copy object without reference
+      mutableLessons: this.lessons.slice(0), // copy array without reference
       dialog: false,
       valid: true,
       nameRules: [
         (v) => !!v || "Name is required",
         (v) => (v && v.length <= 10) || "Name must be less than 10 characters",
       ],
+      lesson: { day: "", grade: "", startTime: "", endTime: "", createdAt: "" },
     };
+  },
+  watch: {
+    mutableSchool: {
+      // the callback will be called immediately after the start of the observation
+      deep: true,
+      handler(newVal, oldVal) {
+        console.log("--watch school");
+        console.log(newVal);
+        console.log(oldVal);
+        console.log("--watch");
+      },
+    },
+  },
+  computed: {
+    ...mapGetters({
+      schoolTypes: "school/schoolTypes",
+      grades: "lesson/getGrades",
+      days: "lesson/getDays",
+    }),
   },
   methods: {
     ...mapActions({
       update: "school/update",
       deleteLesson: "lesson/deleteLesson",
-      getLessons: "lesson/deleteLesson",
+      addLesson: "lesson/addLesson",
     }),
     ...mapMutations({
       setSnack: "snackbar/setSnack",
     }),
+    async handleAddLesson() {
+      if (
+        this.lesson.day === "" ||
+        this.lesson.grade === "" ||
+        this.lesson.startTime === "" ||
+        this.lesson.endTime === ""
+      ) {
+        this.setSnack(
+          "Required fields: fields: day, grade, start time and end time"
+        );
+        return false;
+      } else {
+        let newLesson = { ...this.lesson };
+        newLesson.school_ID = this.mutableSchool.schoolID;
+        console.log(newLesson);
+        console.log("to aqui");
+        const resp = await this.addLesson(newLesson);
+
+        newLesson.lessonID = resp.data.data.lessonID;
+        this.mutableLessons.push(newLesson);
+
+        this.lesson.grade = "";
+        this.lesson.startTime = "";
+        this.lesson.endTime = "";
+      }
+    },
     async submitForm() {
       if (this.$refs.form.validate()) {
         const resp = await this.update(this.mutableSchool);
