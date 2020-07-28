@@ -16,10 +16,6 @@ module.exports = {
   },
   async create(req, res, next) {
     try {
-      console.log("felipe---");
-      console.log(req.body);
-      console.log("felipe---");
-
       const bulkLessons = [];
 
       req.body.lessons.forEach(les =>

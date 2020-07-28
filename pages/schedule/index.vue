@@ -120,9 +120,9 @@ export default {
   data() {
     return {
       date: new Date().toISOString().slice(0, 10),
-      grade: "",
+      grade: [],
       school: { Lessons: [] },
-      teacher: "",
+      teacher: {},
       lessonsByDaySchool: "",
       valid: true,
       requiredRules: [(v) => !!v || "Field is required"],
@@ -189,6 +189,8 @@ export default {
           grade: this.grade,
           teacher: this.teacher,
         });
+        this.teacher = {};
+        this.grade = [];
         await this.handleFetchLessons();
       }
     },

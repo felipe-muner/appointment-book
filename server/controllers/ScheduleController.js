@@ -67,18 +67,23 @@ module.exports = {
   async create(req, res) {
     try {
       let { date, school, grade, teacher } = req.body;
-      const item = {
-        start: date + " " + grade.startTime,
-        end: date + " " + grade.endTime,
-        grade: grade.grade,
-        lesson_id: grade.lessonID,
-        teacher_id: teacher.teacherID,
-        school_id: school.schoolID
-      };
 
-      const schedule = await Schedule.create(item);
+      const bulkData = [];
 
-      res.json({ code: 200, msg: "New schedule created", data: schedule });
+      grade.forEach(gr =>
+        bulkData.push({
+          start: date + " " + gr.startTime,
+          end: date + " " + gr.endTime,
+          grade: gr.grade,
+          lesson_id: gr.lessonID,
+          teacher_id: teacher.teacherID,
+          school_id: school.schoolID
+        })
+      );
+
+      const schedules = await Schedule.bulkCreate(bulkData);
+
+      res.json({ code: 200, msg: "New schedule created", data: schedules });
     } catch (error) {
       console.log(error);
       console.log("error schedule create");
