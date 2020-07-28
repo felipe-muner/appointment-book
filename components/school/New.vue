@@ -1,10 +1,5 @@
 <template>
-  <v-dialog
-    v-model="dialog"
-    fullscreen
-    hide-overlay
-    transition="dialog-bottom-transition"
-  >
+  <v-dialog v-model="dialog" fullscreen hide-overlay transition="dialog-bottom-transition">
     <template v-slot:activator="{ on: menu, attrs }">
       <v-tooltip bottom>
         <template v-slot:activator="{ on: tooltip }">
@@ -25,9 +20,7 @@
     </template>
 
     <v-card>
-      <v-card-title class="headline grey lighten-2" primary-title
-        >New School</v-card-title
-      >
+      <v-card-title class="headline grey lighten-2" primary-title>New School</v-card-title>
       <v-card-text>
         <v-container>
           <v-form ref="form" v-model="valid" lazy-validation>
@@ -73,13 +66,7 @@
                 ></v-autocomplete>
               </v-col>
               <v-col cols="2">
-                <v-autocomplete
-                  v-model="lesson.grade"
-                  :items="grades"
-                  label="Grade"
-                  outlined
-                  dense
-                ></v-autocomplete>
+                <v-autocomplete v-model="lesson.grade" :items="grades" label="Grade" outlined dense></v-autocomplete>
               </v-col>
 
               <v-col cols="2">
@@ -121,10 +108,7 @@
                       </tr>
                     </thead>
                     <tbody>
-                      <tr
-                        v-for="les in school.lessons"
-                        v-bind:key="JSON.stringify(les)"
-                      >
+                      <tr v-for="les in school.lessons" v-bind:key="JSON.stringify(les)">
                         <td>{{ les.day.name }}</td>
                         <td>{{ les.grade }}</td>
                         <td>{{ les.startTime }}</td>
@@ -138,8 +122,7 @@
                                 dark
                                 v-bind="attrs"
                                 v-on="on"
-                                >mdi-delete-empty</v-icon
-                              >
+                              >mdi-delete-empty</v-icon>
                             </template>
                             <span>remove</span>
                           </v-tooltip>
@@ -153,13 +136,7 @@
 
             <v-row>
               <v-col class="text-right px-0">
-                <v-btn
-                  :disabled="!valid"
-                  color="success"
-                  @click="submitForm"
-                  dense
-                  >Create</v-btn
-                >
+                <v-btn :disabled="!valid" color="success" @click="submitForm" dense>Create</v-btn>
               </v-col>
             </v-row>
           </v-form>
@@ -181,32 +158,32 @@ export default {
         name: "",
         address: "",
         neighborhood: "",
-        lessons: []
+        lessons: [],
       },
-      lesson: { day: {}, grade: "", startTime: "", endTime: "", createdAt: "" },
+      lesson: { day: "", grade: "", startTime: "", endTime: "", createdAt: "" },
       nameRules: [
-        v => !!v || "Name is required",
-        v => (v && v.length <= 10) || "Name must be less than 10 characters"
-      ]
+        (v) => !!v || "Name is required",
+        (v) => (v && v.length <= 10) || "Name must be less than 10 characters",
+      ],
     };
   },
   computed: {
     ...mapGetters({
       schoolTypes: "school/schoolTypes",
       grades: "lesson/getGrades",
-      days: "lesson/getDays"
-    })
+      days: "lesson/getDays",
+    }),
   },
   methods: {
     ...mapActions({
-      new: "school/new"
+      new: "school/new",
     }),
     ...mapMutations({
-      setSnack: "snackbar/setSnack"
+      setSnack: "snackbar/setSnack",
     }),
     removeLesson(lesson) {
       this.school.lessons = this.school.lessons.filter(
-        le => le.createdAt !== lesson.createdAt
+        (le) => le.createdAt !== lesson.createdAt
       );
     },
     addLesson() {
@@ -231,23 +208,14 @@ export default {
         this.lesson.endTime = "";
       }
     },
-    setTimeMorning(val) {
-      this.school.mondayMorningTime = val;
-    },
-    setTimeAfternoon(val) {
-      this.school.mondayAfternoonTime = val;
-    },
-    save(date) {
-      this.$refs.menu.save(date);
-    },
     async submitForm() {
       if (this.$refs.form.validate()) {
         const resp = await this.new(this.school);
         this.setSnack(resp.data.msg);
         if (resp.data.code === 200) this.dialog = false;
       }
-    }
-  }
+    },
+  },
 };
 </script>
 
