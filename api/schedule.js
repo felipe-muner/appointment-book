@@ -22,6 +22,9 @@ class Schedule {
   async addLesson(payload) {
     return await axios.post(this.server + "/schedule/lesson", payload);
   }
+  async newFromCopy(payload) {
+    return await axios.post(this.server + "/schedule/new-from-copy", payload);
+  }
   async new(payload) {
     return await axios.post(this.server + "/schedule/create", payload);
   }

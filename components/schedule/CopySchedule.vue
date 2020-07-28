@@ -23,13 +23,49 @@
       <v-card-text>
         <v-container>
           <v-row>
-            <v-col>
+            <v-col cols="3">
               <v-text-field v-model="oldDate" label="Copy data from:" type="date" outlined dense />
             </v-col>
-            <v-col>
+            <v-col cols="3">
               <v-text-field v-model="newDate" label="to date:" type="date" outlined dense />
             </v-col>
-            <v-col></v-col>
+          </v-row>
+          <v-row no-gutters>
+            <v-simple-table>
+              <template v-slot:default>
+                <thead>
+                  <tr>
+                    <th>School</th>
+                    <th>Teacher</th>
+                    <th>Grade</th>
+                    <th>Time</th>
+                    <th></th>
+                  </tr>
+                </thead>
+                <tbody>
+                  <tr v-for="les in lessonsInSchedule" v-bind:key="JSON.stringify(les)">
+                    <td>{{ les.School.name }}</td>
+                    <td>{{ les.Teacher.name }}</td>
+                    <td>{{ les.grade }}</td>
+                    <td>{{ les.lessonTime }}</td>
+                    <td>
+                      <v-tooltip bottom>
+                        <template v-slot:activator="{ on, attrs }">
+                          <v-icon
+                            @click="handleRemoveLesson(les.scheduleID)"
+                            color="error"
+                            dark
+                            v-bind="attrs"
+                            v-on="on"
+                          >mdi-delete-empty</v-icon>
+                        </template>
+                        <span>remove</span>
+                      </v-tooltip>
+                    </td>
+                  </tr>
+                </tbody>
+              </template>
+            </v-simple-table>
           </v-row>
         </v-container>
       </v-card-text>
@@ -38,6 +74,7 @@
 </template>
 
 <script>
+import { mapActions } from "vuex";
 export default {
   props: {
     date: {
@@ -51,10 +88,25 @@ export default {
   data() {
     return {
       dialog: false,
-      oldDate: "",
+      oldDate: this.date,
       newDate: "",
       mutableSchool: JSON.parse(JSON.stringify(this.school)),
+      lessonsInSchedule: [],
     };
+  },
+  methods: {
+    ...mapActions({
+      fetchLessonsToCopy: "schedule/fetchLessonsToCopy",
+      deleteLesson: "lesson/deleteLesson",
+    }),
+    async handleRemoveLesson(lessonID) {
+      const resp = await this.deleteLesson(lessonID);
+      if (1 === resp.data.data) {
+        this.lessonsInSchedule = this.lessonsInSchedule.filter(
+          (les) => les.lessonID !== lessonID
+        );
+      }
+    },
   },
   watch: {
     dialog(newVal) {
@@ -62,8 +114,13 @@ export default {
         this.mutableSchool = JSON.parse(JSON.stringify(this.school));
       }
     },
-    oldDate(newVal) {
-      if (newVal) console.log(newVal);
+    async oldDate(newVal) {
+      if (newVal) {
+        const resp = await this.fetchLessonsToCopy({
+          date: this.oldDate,
+        });
+        this.lessonsInSchedule = resp.data.data;
+      }
     },
   },
 };

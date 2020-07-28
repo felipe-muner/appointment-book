@@ -27,6 +27,14 @@ export const actions = {
     commit("fetchLessons", resp.data.data);
     return resp;
   },
+  async fetchLessonsToCopy({ commit, dispatch, state }, payload) {
+    const resp = await MyApi.schedule.fetchLessons(payload);
+    return resp;
+  },
+  async newFromCopy({ commit, dispatch, state }, payload) {
+    const resp = await MyApi.schedule.newFromCopy(payload);
+    return resp;
+  },
   async deleteLesson({ commit, dispatch, state }, payload) {
     const resp = await MyApi.schedule.deleteLesson(payload);
     return resp;
