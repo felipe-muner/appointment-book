@@ -79,7 +79,7 @@
 </template>
 
 <script>
-import { mapActions } from "vuex";
+import { mapActions, mapMutations } from "vuex";
 export default {
   props: {
     date: {
@@ -105,6 +105,9 @@ export default {
       fetchLessonsToCopy: "schedule/fetchLessonsToCopy",
       copySchedule: "schedule/copySchedule",
     }),
+    ...mapMutations({
+      setSnack: "snackbar/setSnack",
+    }),
     async handleRemoveLesson(scheduleID) {
       this.lessonsInSchedule = this.lessonsInSchedule.filter(
         (les) => les.scheduleID !== scheduleID
@@ -119,6 +122,8 @@ export default {
           }),
         });
         console.log(resp);
+        this.dialog = false;
+        this.setSnack(resp.data.msg);
         // if (resp.data.code === 200) this.dialog = false;
       }
     },
