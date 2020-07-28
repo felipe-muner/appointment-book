@@ -21,6 +21,7 @@
     <v-card>
       <v-card-title class="headline grey lighten-2" primary-title>Copy schedule</v-card-title>
       <v-card-text>
+        {{lessonsInSchedule.map(les => les.scheduleID)}}
         <v-container>
           <v-row>
             <v-col cols="3">
@@ -97,15 +98,11 @@ export default {
   methods: {
     ...mapActions({
       fetchLessonsToCopy: "schedule/fetchLessonsToCopy",
-      deleteLesson: "lesson/deleteLesson",
     }),
-    async handleRemoveLesson(lessonID) {
-      const resp = await this.deleteLesson(lessonID);
-      if (1 === resp.data.data) {
-        this.lessonsInSchedule = this.lessonsInSchedule.filter(
-          (les) => les.lessonID !== lessonID
-        );
-      }
+    async handleRemoveLesson(scheduleID) {
+      this.lessonsInSchedule = this.lessonsInSchedule.filter(
+        (les) => les.scheduleID !== scheduleID
+      );
     },
   },
   watch: {
