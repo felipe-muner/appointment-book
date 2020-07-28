@@ -18,14 +18,18 @@
         <span>Copy schedule</span>
       </v-tooltip>
     </template>
-
     <v-card>
       <v-card-title class="headline grey lighten-2" primary-title>Copy schedule</v-card-title>
       <v-card-text>
         <v-container>
-          <v-row no-gutters>
-            <v-col>{{school}}</v-col>
-            <v-col>{{date}}</v-col>
+          <v-row>
+            <v-col>
+              <v-text-field v-model="oldDate" label="Copy data from:" type="date" outlined dense />
+            </v-col>
+            <v-col>
+              <v-text-field v-model="newDate" label="to date:" type="date" outlined dense />
+            </v-col>
+            <v-col></v-col>
           </v-row>
         </v-container>
       </v-card-text>
@@ -47,19 +51,20 @@ export default {
   data() {
     return {
       dialog: false,
+      oldDate: "",
+      newDate: "",
+      mutableSchool: JSON.parse(JSON.stringify(this.school)),
     };
   },
   watch: {
-    dialog() {
-      console.log(this.date);
-      console.log(this.school);
+    dialog(newVal) {
+      if (newVal) {
+        this.mutableSchool = JSON.parse(JSON.stringify(this.school));
+      }
     },
-  },
-  computed: {
-    copiedSchool() {
-      return;
+    oldDate(newVal) {
+      if (newVal) console.log(newVal);
     },
-    copiedDate() {},
   },
 };
 </script>

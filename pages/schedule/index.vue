@@ -123,7 +123,6 @@ export default {
       grade: [],
       school: { Lessons: [] },
       teacher: {},
-      lessonsByDaySchool: "",
       valid: true,
       requiredRules: [(v) => !!v || "Field is required"],
     };
@@ -133,6 +132,7 @@ export default {
       schools: "school/getList",
       teachers: "teacher/getList",
       days: "lesson/getDays",
+      lessonsByDaySchool: "schedule/getLessonsByDaySchool",
     }),
     isDisabled() {
       return !this.school;
@@ -169,13 +169,10 @@ export default {
       deleteLesson: "schedule/deleteLesson",
     }),
     async handleFetchLessons() {
-      const fetchLessons = (
-        await this.fetchLessons({
-          date: this.date,
-          school: this.school,
-        })
-      ).data;
-      this.lessonsByDaySchool = fetchLessons.data;
+      await this.fetchLessons({
+        date: this.date,
+        school: this.school,
+      });
     },
     async removeLesson(scheduleID) {
       await this.deleteLesson(scheduleID);

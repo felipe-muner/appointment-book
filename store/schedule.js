@@ -4,9 +4,18 @@ export const state = () => ({
   list: []
 });
 
-export const getters = {};
+export const getters = {
+  getLessonsByDaySchool: state => {
+    return state.list;
+  }
+};
 
-export const mutations = {};
+export const mutations = {
+  fetchLessons(state, payload) {
+    console.log(payload);
+    state.list = payload;
+  }
+};
 
 export const actions = {
   async new({ commit, dispatch, state }, payload) {
@@ -15,10 +24,10 @@ export const actions = {
   },
   async fetchLessons({ commit, dispatch, state }, payload) {
     const resp = await MyApi.schedule.fetchLessons(payload);
+    commit("fetchLessons", resp.data.data);
     return resp;
   },
   async deleteLesson({ commit, dispatch, state }, payload) {
-    console.log("store deletelesson");
     const resp = await MyApi.schedule.deleteLesson(payload);
     return resp;
   }
