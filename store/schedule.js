@@ -31,8 +31,8 @@ export const actions = {
     const resp = await MyApi.schedule.fetchLessons(payload);
     return resp;
   },
-  async newFromCopy({ commit, dispatch, state }, payload) {
-    const resp = await MyApi.schedule.newFromCopy(payload);
+  async copySchedule({ commit, dispatch, state }, payload) {
+    const resp = await MyApi.schedule.copySchedule(payload);
     return resp;
   },
   async deleteLesson({ commit, dispatch, state }, payload) {

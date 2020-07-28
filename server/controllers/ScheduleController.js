@@ -90,6 +90,43 @@ module.exports = {
       res.status(400).send({ error: error });
     }
   },
+  async copySchedule(req, res) {
+    try {
+      console.log(req.body);
+      const { newDate, lessonsInSchedule } = req.body;
+
+      const bulkData = [];
+
+      let formattedStart, formattedEnd;
+      lessonsInSchedule.forEach(lesson => {
+        formattedStart =
+          newDate + " " + new Date(lesson.start).toTimeString().substr(0, 5);
+        formattedEnd =
+          newDate + " " + new Date(lesson.end).toTimeString().substr(0, 5);
+
+        bulkData.push({
+          start: formattedStart,
+          end: formattedEnd,
+          grade: lesson.grade,
+          lesson_id: lesson.lesson_id,
+          teacher_id: lesson.Teacher.teacherID,
+          school_id: lesson.School.schoolID
+        });
+      });
+
+      const schedules = await Schedule.bulkCreate(bulkData);
+
+      res.json({
+        code: 200,
+        msg: "New schedule copied",
+        data: schedules
+      });
+    } catch (error) {
+      console.log(error);
+      console.log("error schedule copy");
+      res.status(400).send({ error: error });
+    }
+  },
   async checkAvailability(req, res, next) {
     try {
       // console.log(req.body);

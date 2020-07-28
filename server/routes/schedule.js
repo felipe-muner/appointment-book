@@ -11,6 +11,7 @@ router
     scheduleController.checkAvailability,
     scheduleController.create
   )
+  .post("/copy-schedule", scheduleController.copySchedule)
   .put("/update", scheduleController.update)
   .delete("/lesson", scheduleController.deleteLesson);
 

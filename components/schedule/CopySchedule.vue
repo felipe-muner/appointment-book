@@ -21,16 +21,20 @@
     <v-card>
       <v-card-title class="headline grey lighten-2" primary-title>Copy schedule</v-card-title>
       <v-card-text>
-        {{lessonsInSchedule.map(les => les.scheduleID)}}
         <v-container>
-          <v-row>
-            <v-col cols="3">
-              <v-text-field v-model="oldDate" label="Copy data from:" type="date" outlined dense />
-            </v-col>
-            <v-col cols="3">
-              <v-text-field v-model="newDate" label="to date:" type="date" outlined dense />
-            </v-col>
-          </v-row>
+          <v-form ref="form" v-model="valid" lazy-validation>
+            <v-row no-gutters>
+              <v-col cols="2" class="mr-3">
+                <v-text-field v-model="oldDate" label="Copy data from:" type="date" outlined dense />
+              </v-col>
+              <v-col cols="2" class="mr-3">
+                <v-text-field v-model="newDate" label="to date:" type="date" outlined dense />
+              </v-col>
+              <v-col>
+                <v-btn :disabled="!valid" color="success" @click="submitForm" dense>Copy New Day</v-btn>
+              </v-col>
+            </v-row>
+          </v-form>
           <v-row no-gutters>
             <v-simple-table>
               <template v-slot:default>
@@ -88,6 +92,7 @@ export default {
   },
   data() {
     return {
+      valid: true,
       dialog: false,
       oldDate: this.date,
       newDate: "",
@@ -98,11 +103,24 @@ export default {
   methods: {
     ...mapActions({
       fetchLessonsToCopy: "schedule/fetchLessonsToCopy",
+      copySchedule: "schedule/copySchedule",
     }),
     async handleRemoveLesson(scheduleID) {
       this.lessonsInSchedule = this.lessonsInSchedule.filter(
         (les) => les.scheduleID !== scheduleID
       );
+    },
+    async submitForm() {
+      if (this.$refs.form.validate()) {
+        const resp = await this.copySchedule({
+          newDate: this.newDate,
+          lessonsInSchedule: this.lessonsInSchedule.map((les) => {
+            return les;
+          }),
+        });
+        console.log(resp);
+        // if (resp.data.code === 200) this.dialog = false;
+      }
     },
   },
   watch: {
