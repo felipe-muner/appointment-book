@@ -1,6 +1,7 @@
 <template>
   <div>
-    {{typeof date}}
+    {{grade}}
+    <hr />
     {{ lessonMatchDay }}
     {{ date }}
     <h1>Schedule</h1>
@@ -43,6 +44,9 @@
             item-text="textToDisplay"
             label="Grade"
             outlined
+            multiple
+            chips
+            deletable-chips
             dense
             :disabled="isDisabled"
           ></v-autocomplete>
@@ -152,8 +156,7 @@ export default {
     lessonMatchDay: function (val) {
       val.forEach(
         (v) =>
-          (v.textToDisplay =
-            v.grade + " --- " + v.startTime + " - " + v.endTime)
+          (v.textToDisplay = v.grade + " -> " + v.startTime + " - " + v.endTime)
       );
     },
   },
