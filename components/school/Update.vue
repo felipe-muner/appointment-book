@@ -22,8 +22,6 @@
     <v-card>
       <v-card-title class="headline grey lighten-2" primary-title>Update School</v-card-title>
       <v-card-text>
-        <hr />
-        <br />
         <v-container>
           <v-form ref="form" v-model="valid" lazy-validation>
             <v-row>
