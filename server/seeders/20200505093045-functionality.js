@@ -32,20 +32,20 @@ module.exports = {
       },
       {
         father_id: null,
-        name: "Action 4",
-        action: "/",
-        icon: "mdi-alert-octagram-outline",
+        name: "Salary Calculator",
+        action: "/salary-calculator",
+        icon: "mdi-calculator",
         system_id: 1,
         priority: 3,
         active: true
       },
       {
         father_id: null,
-        name: "Action 5",
-        action: "/",
-        icon: "mdi-alert-octagram-outline",
+        name: "E-mail central",
+        action: "/email-central",
+        icon: "mdi-email-mark-as-unread",
         system_id: 1,
-        priority: 1,
+        priority: 4,
         active: true
       },
       {
