@@ -1,4 +1,8 @@
 const nodemailer = require("nodemailer");
+const sequelize = require("sequelize");
+const { Op } = require("sequelize");
+
+const { Schedule, Teacher, Lesson, School } = require("../models");
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
@@ -23,6 +27,56 @@ module.exports = {
     try {
     } catch (error) {
       console.log(error);
+    }
+  },
+  async search(req, res, next) {
+    try {
+      console.log(req.body);
+      console.log(req.query);
+      console.log(req.params);
+
+      const where = {
+        [Op.and]: [
+          sequelize.where(
+            sequelize.fn("date", sequelize.col("start")),
+            ">=",
+            req.query.startDate
+          ),
+          sequelize.where(
+            sequelize.fn("date", sequelize.col("end")),
+            "<=",
+            req.query.endDate
+          )
+        ]
+      };
+
+      let searchList = await Schedule.findAll({
+        where: where,
+        include: [Teacher, Lesson, School]
+      });
+
+      console.log(req.body);
+      console.log(req.query);
+      console.log(req.params);
+      req.myData = "email controller search";
+      next();
+    } catch (error) {
+      console.log(error);
+      console.log("error email search");
+      res.status(400).send({ error: error });
+    }
+  },
+  async send(req, res, next) {
+    try {
+      console.log(req.body);
+      console.log(req.query);
+      console.log(req.params);
+      req.myData = "email controller send";
+      next();
+    } catch (error) {
+      console.log(error);
+      console.log("error email send");
+      res.status(400).send({ error: error });
     }
   }
 };

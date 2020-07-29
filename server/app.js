@@ -14,6 +14,9 @@ const teacherRouter = require("./routes/teacher");
 const schoolRouter = require("./routes/school");
 const scheduleRouter = require("./routes/schedule");
 
+const emailRouter = require("./routes/email");
+const calculatorRouter = require("./routes/calculator");
+
 var app = express();
 
 app.use(cors());
@@ -32,6 +35,9 @@ app.use("/user-access-control", userAccessControlRouter);
 app.use("/teacher", teacherRouter);
 app.use("/school", schoolRouter);
 app.use("/schedule", scheduleRouter);
+
+app.use("/email", emailRouter);
+app.use("/calculator", calculatorRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

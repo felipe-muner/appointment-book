@@ -5,10 +5,18 @@ class Schedule {
     this.server = server;
   }
   async search(payload) {
-    return await axios.get(this.server + "/search"), payload;
+    return await axios.get(this.server + "/email/search", {
+      params: {
+        ...payload
+      }
+    });
   }
   async send(payload) {
-    return await axios.get(this.server + "/send", payload);
+    return await axios.get(this.server + "/email/send", {
+      params: {
+        ...payload
+      }
+    });
   }
 }
 

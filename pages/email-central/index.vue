@@ -33,9 +33,9 @@ export default {
   data() {
     return {
       valid: true,
-      startDate: "",
-      endDate: "",
-      selectedList: [],
+      startDate: "2020-10-13",
+      endDate: "2020-10-13",
+      selectedList: ["emails to send", "emails to send2"],
     };
   },
   methods: {
