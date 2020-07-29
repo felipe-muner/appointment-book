@@ -31,10 +31,6 @@ module.exports = {
   },
   async search(req, res, next) {
     try {
-      console.log(req.body);
-      console.log(req.query);
-      console.log(req.params);
-
       const where = {
         [Op.and]: [
           sequelize.where(
@@ -55,10 +51,8 @@ module.exports = {
         include: [Teacher, Lesson, School]
       });
 
-      console.log(req.body);
-      console.log(req.query);
-      console.log(req.params);
       req.myData = "email controller search";
+      req.selectedList = searchList;
       next();
     } catch (error) {
       console.log(error);

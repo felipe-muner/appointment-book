@@ -8,8 +8,13 @@ router
     res.json({ msg: "respond with a email" });
   })
   .get("/search", EmailController.search, function(req, res, next) {
-    console.log(req.myData);
-    res.json({ msg: "respond with a search email route", data: req.myData });
+    res.json({
+      msg: "respond with a search email route",
+      data: {
+        myData: req.myData,
+        selectedList: req.selectedList
+      }
+    });
   })
   .get("/send", EmailController.send, function(req, res, next) {
     console.log(req.myData);
