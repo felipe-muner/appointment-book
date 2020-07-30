@@ -73,6 +73,7 @@ export default {
       startDate: "2020-10-13",
       endDate: "2020-10-13",
       selectedList: [],
+      scheduleBySchool: [],
     };
   },
   computed: {
@@ -94,7 +95,8 @@ export default {
         endDate: this.endDate,
       });
 
-      this.selectedList = resp.data.data.selectedList;
+      // this.selectedList = resp.data.data.selectedList;
+      console.log(resp.data.data.selectedList);
     },
     async handleSendEmail() {
       this.send({ selectedList: this.selectedList });

@@ -31,25 +31,40 @@ module.exports = {
   },
   async search(req, res, next) {
     try {
-      const where = {
+      const { startDate, endDate } = req.query;
+      let where = {
         [Op.and]: [
           sequelize.where(
             sequelize.fn("date", sequelize.col("start")),
             ">=",
-            req.query.startDate
+            startDate
           ),
           sequelize.where(
             sequelize.fn("date", sequelize.col("end")),
             "<=",
-            req.query.endDate
+            endDate
           )
         ]
       };
 
       let searchList = await Schedule.findAll({
+        attributes: ["school_id"],
+        group: ["school_id"],
         where: where,
-        include: [Teacher, Lesson, School]
+        include: [School]
       });
+
+      await Promise.all(
+        searchList.map(async schoolItem => {
+          where.school_id = schoolItem.School.schoolID;
+          schoolItem.setDataValue(
+            "lessonsInSchool",
+            await Schedule.findAll({
+              where: where
+            })
+          );
+        })
+      );
 
       req.myData = "email controller search";
       req.selectedList = searchList;
