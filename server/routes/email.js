@@ -13,7 +13,7 @@ router
       data: {
         myData: req.myData,
         selectedList: req.selectedList,
-        scheduleBySchool: req.scheduleBySchool
+        searchListTeacher: req.searchListTeacher
       }
     });
   })

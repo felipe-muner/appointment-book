@@ -96,7 +96,7 @@ export default {
       });
 
       // this.selectedList = resp.data.data.selectedList;
-      console.log(resp.data.data.selectedList);
+      console.log(resp.data.data);
     },
     async handleSendEmail() {
       this.send({ selectedList: this.selectedList });

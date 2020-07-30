@@ -66,8 +66,30 @@ module.exports = {
         })
       );
 
+      delete where.school_id;
+
+      let searchListTeacher = await Schedule.findAll({
+        attributes: ["teacher_id"],
+        group: ["teacher_id"],
+        where: where,
+        include: [Teacher]
+      });
+
+      await Promise.all(
+        searchListTeacher.map(async searchListTeacher => {
+          where.teacher_id = searchListTeacher.Teacher.teacherID;
+          searchListTeacher.setDataValue(
+            "teacherList",
+            await Schedule.findAll({
+              where: where
+            })
+          );
+        })
+      );
+
       req.myData = "email controller search";
       req.selectedList = searchList;
+      req.searchListTeacher = searchListTeacher;
       next();
     } catch (error) {
       console.log(error);
