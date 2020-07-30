@@ -99,10 +99,38 @@ module.exports = {
   },
   async send(req, res, next) {
     try {
-      console.log(req.body);
-      console.log(req.query);
-      console.log(req.params);
-      req.myData = "email controller send";
+      const { startDate, endDate } = req.query;
+      let where = {
+        [Op.and]: [
+          sequelize.where(
+            sequelize.fn("date", sequelize.col("start")),
+            ">=",
+            startDate
+          ),
+          sequelize.where(
+            sequelize.fn("date", sequelize.col("end")),
+            "<=",
+            endDate
+          )
+        ]
+      };
+
+      let searchList = await School.findAll({
+        where,
+        include: [
+          {
+            model: Schedule,
+            where: {},
+            include: [
+              {
+                model: Teacher
+              }
+            ]
+          }
+        ]
+      });
+
+      req.myData = searchList;
       next();
     } catch (error) {
       console.log(error);

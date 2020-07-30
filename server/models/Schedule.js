@@ -23,17 +23,17 @@ module.exports = (sequelize, DataTypes) => {
     }
   );
   Schedule.associate = function(models) {
-    Schedule.belongsTo(models.School, {
-      foreignKey: "school_id",
-      sourceKey: "schoolID"
+    Schedule.hasMany(models.School, {
+      foreignKey: "schoolID",
+      sourceKey: "school_id"
     });
-    Schedule.belongsTo(models.Teacher, {
-      foreignKey: "teacher_id",
-      targetKey: "teacherID"
+    Schedule.hasMany(models.Teacher, {
+      foreignKey: "teacherID",
+      sourceKey: "teacher_id"
     });
-    Schedule.belongsTo(models.Lesson, {
-      foreignKey: "lesson_id",
-      targetKey: "lessonID"
+    Schedule.hasMany(models.Lesson, {
+      foreignKey: "lessonID",
+      sourceKey: "lesson_id"
     });
   };
 

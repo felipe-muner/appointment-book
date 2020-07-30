@@ -101,6 +101,7 @@ export default {
         endDate: this.endDate,
       });
 
+      console.log(resp.data.data.selectedList);
       this.selectedList = resp.data.data.selectedList;
       this.selectedListTeacher = resp.data.data.searchListTeacher;
     },
