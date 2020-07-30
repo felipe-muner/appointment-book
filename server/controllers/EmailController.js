@@ -47,49 +47,21 @@ module.exports = {
         ]
       };
 
-      let searchList = await Schedule.findAll({
-        attributes: ["school_id"],
-        group: ["school_id"],
-        where: where,
-        include: [School]
+      let searchList = await (false ? School : Teacher).findAll({
+        where,
+        include: [
+          {
+            model: Schedule,
+            include: [
+              {
+                model: false ? Teacher : School
+              }
+            ]
+          }
+        ]
       });
 
-      await Promise.all(
-        searchList.map(async schoolItem => {
-          where.school_id = schoolItem.School.schoolID;
-          schoolItem.setDataValue(
-            "lessonsInSchool",
-            await Schedule.findAll({
-              where: where
-            })
-          );
-        })
-      );
-
-      delete where.school_id;
-
-      let searchListTeacher = await Schedule.findAll({
-        attributes: ["teacher_id"],
-        group: ["teacher_id"],
-        where: where,
-        include: [Teacher]
-      });
-
-      await Promise.all(
-        searchListTeacher.map(async searchListTeacher => {
-          where.teacher_id = searchListTeacher.Teacher.teacherID;
-          searchListTeacher.setDataValue(
-            "teacherList",
-            await Schedule.findAll({
-              where: where
-            })
-          );
-        })
-      );
-
-      req.myData = "email controller search";
       req.selectedList = searchList;
-      req.searchListTeacher = searchListTeacher;
       next();
     } catch (error) {
       console.log(error);
@@ -115,15 +87,14 @@ module.exports = {
         ]
       };
 
-      let searchList = await School.findAll({
+      let searchList = await (false ? School : Teacher).findAll({
         where,
         include: [
           {
             model: Schedule,
-            where: {},
             include: [
               {
-                model: Teacher
+                model: false ? Teacher : School
               }
             ]
           }

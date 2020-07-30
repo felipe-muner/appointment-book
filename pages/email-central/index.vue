@@ -30,41 +30,24 @@
       {{selectedListTeacher}}
     </v-row>
     <v-row no-gutters>
-      <v-simple-table>
-        <template v-slot:default>
-          <thead>
-            <tr>
-              <th>School</th>
-              <th>Teacher</th>
-              <th>Grade</th>
-              <th>Time</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            <tr v-for="les in selectedList" v-bind:key="JSON.stringify(les)">
-              <!-- <td>{{ les.School.name }}</td>
-              <td>{{ les.Teacher.name }}</td>
-              <td>{{ les.grade }}</td>
-              <td>{{ les.lessonTime }}</td>-->
-              <td>
-                <v-tooltip bottom>
-                  <template v-slot:activator="{ on, attrs }">
-                    <v-icon
-                      @click="handleRemoveLesson(les.scheduleID)"
-                      color="error"
-                      dark
-                      v-bind="attrs"
-                      v-on="on"
-                    >mdi-delete-empty</v-icon>
-                  </template>
-                  <span>remove</span>
-                </v-tooltip>
-              </td>
-            </tr>
-          </tbody>
+      <v-data-table
+        :headers="headers"
+        :items="desserts"
+        :expanded.sync="expanded"
+        item-key="name"
+        show-expand
+        class="elevation-1"
+      >
+        <template v-slot:top>
+          <v-toolbar flat>
+            <v-toolbar-title>Expandable Table</v-toolbar-title>
+            <v-spacer></v-spacer>
+          </v-toolbar>
         </template>
-      </v-simple-table>
+        <template v-slot:expanded-item="{ headers, item }">
+          <td :colspan="headers.length">More info about {{ item.name }}</td>
+        </template>
+      </v-data-table>
     </v-row>
   </div>
 </template>
@@ -75,11 +58,30 @@ import { mapActions, mapGetters } from "vuex";
 export default {
   data() {
     return {
+      expanded: [],
+      headers: [
+        {
+          text: "Dessert (100g serving)",
+          align: "start",
+          sortable: false,
+          value: "name",
+        },
+        { text: "Calories", value: "calories" },
+      ],
+      desserts: [
+        {
+          name: "Frozen Yogurt",
+          calories: 159,
+        },
+        {
+          name: "Ice cream sandwich",
+          calories: 237,
+        },
+      ],
       valid: true,
       startDate: "2020-10-13",
       endDate: "2020-10-13",
       selectedList: [],
-      selectedListTeacher: [],
     };
   },
   computed: {
@@ -101,9 +103,7 @@ export default {
         endDate: this.endDate,
       });
 
-      console.log(resp.data.data.selectedList);
       this.selectedList = resp.data.data.selectedList;
-      this.selectedListTeacher = resp.data.data.searchListTeacher;
     },
     async handleSendEmail() {
       this.send({ selectedList: this.selectedList });
