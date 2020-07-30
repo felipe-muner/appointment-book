@@ -31,7 +31,7 @@ module.exports = {
   },
   async search(req, res, next) {
     try {
-      const { startDate, endDate } = req.query;
+      const { startDate, endDate, groupBySearch } = req.query;
       let where = {
         [Op.and]: [
           sequelize.where(
@@ -47,14 +47,17 @@ module.exports = {
         ]
       };
 
-      let searchList = await (false ? School : Teacher).findAll({
+      let searchList = await (groupBySearch === "school"
+        ? School
+        : Teacher
+      ).findAll({
         where,
         include: [
           {
             model: Schedule,
             include: [
               {
-                model: false ? Teacher : School
+                model: groupBySearch === "school" ? Teacher : School
               }
             ]
           }
