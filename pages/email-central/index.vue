@@ -23,6 +23,12 @@
         </v-col>
       </v-row>
     </v-form>
+    <v-row>
+      {{selectedList}}
+      <br />
+      <br />
+      {{selectedListTeacher}}
+    </v-row>
     <v-row no-gutters>
       <v-simple-table>
         <template v-slot:default>
@@ -37,10 +43,10 @@
           </thead>
           <tbody>
             <tr v-for="les in selectedList" v-bind:key="JSON.stringify(les)">
-              <td>{{ les.School.name }}</td>
+              <!-- <td>{{ les.School.name }}</td>
               <td>{{ les.Teacher.name }}</td>
               <td>{{ les.grade }}</td>
-              <td>{{ les.lessonTime }}</td>
+              <td>{{ les.lessonTime }}</td>-->
               <td>
                 <v-tooltip bottom>
                   <template v-slot:activator="{ on, attrs }">
@@ -73,7 +79,7 @@ export default {
       startDate: "2020-10-13",
       endDate: "2020-10-13",
       selectedList: [],
-      scheduleBySchool: [],
+      selectedListTeacher: [],
     };
   },
   computed: {
@@ -95,8 +101,8 @@ export default {
         endDate: this.endDate,
       });
 
-      // this.selectedList = resp.data.data.selectedList;
-      console.log(resp.data.data);
+      this.selectedList = resp.data.data.selectedList;
+      this.selectedListTeacher = resp.data.data.searchListTeacher;
     },
     async handleSendEmail() {
       this.send({ selectedList: this.selectedList });
