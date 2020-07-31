@@ -33,48 +33,28 @@
           </v-col>
         </v-row>
       </v-form>
-      <v-row no-gutters>
-        <v-data-table
-          :headers="headers"
-          :items="selectedList"
-          :expanded.sync="expanded"
-          item-key="schoolID"
-          show-expand
-          class="elevation-1"
-        >
-          <template v-slot:top>
-            <v-toolbar flat>
-              <v-toolbar-title>Report from {{startDate}} to {{endDate}}</v-toolbar-title>
-              <v-spacer></v-spacer>
-            </v-toolbar>
-          </template>
-          <template v-slot:expanded-item="{ headers, item }">
-            <td :colspan="3" class="pa-0">
-              <v-simple-table class="emailTable">
-                <template v-slot:default>
-                  <thead>
-                    <tr>
-                      <th class="text-left">Teacher</th>
-                      <th class="text-left">Grade</th>
-                      <th class="text-left">Start</th>
-                      <th class="text-left">End</th>
-                    </tr>
-                  </thead>
-                  <tbody>
-                    <tr v-for="sched in item.Schedules" v-bind:key="sched.scheduleID">
-                      <td>{{sched.Teachers[0].name}}</td>
-                      <td>{{sched.grade}}</td>
-                      <td>{{sched.start}}</td>
-                      <td>{{sched.end}}</td>
-                    </tr>
-                  </tbody>
-                </template>
-              </v-simple-table>
-            </td>
-          </template>
-        </v-data-table>
-      </v-row>
     </div>
+    {{selected}}
+    <hr />
+    <v-row no-gutters>
+      <v-expansion-panels :multiple="true" v-model="panel">
+        <v-expansion-panel v-for="(item,i) in selectedListFormatted" :key="i">
+          <v-expansion-panel-header
+            class="header-style"
+          >{{item.name}} - {{item.schoolID}} {{item.felipe}}</v-expansion-panel-header>
+          <v-expansion-panel-content>
+            <v-data-table
+              v-model="selected"
+              :headers="headers"
+              :items="item.Schedules"
+              item-key="scheduleID"
+              show-select
+              class="elevation-1"
+            ></v-data-table>
+          </v-expansion-panel-content>
+        </v-expansion-panel>
+      </v-expansion-panels>
+    </v-row>
   </div>
 </template>
 
@@ -84,15 +64,21 @@ import { mapActions, mapGetters } from "vuex";
 export default {
   data() {
     return {
-      expanded: [],
+      singleSelect: false,
+      selected: [],
       headers: [
         {
-          text: "",
+          text: "Teacher",
           align: "start",
           sortable: false,
-          value: "name",
+          value: "Teachers[0].name",
         },
+        { text: "Grade", value: "grade" },
+        { text: "Date", value: "day" },
+        { text: "Start", value: "startFormatted" },
+        { text: "End", value: "endFormatted" },
       ],
+      panel: [],
       valid: true,
       startDate: "2020-10-13",
       endDate: "2020-10-13",
@@ -100,7 +86,31 @@ export default {
       selectedList: [],
     };
   },
-  computed: {},
+  computed: {
+    selectedListFormatted() {
+      const resp = this.selectedList.map((school) => {
+        school.felipe = Math.random() * 10;
+        school.Schedules.map((schedule) => {
+          schedule.day = new Date(schedule.start).toISOString().split("T")[0];
+          schedule.startFormatted = schedule.start.substring(11, 16);
+          schedule.endFormatted = schedule.end.substring(11, 16);
+        });
+        return school;
+      });
+      return resp;
+    },
+    schedulesFormatted() {
+      return;
+    },
+  },
+  watch: {
+    selectedList: {
+      handler: function (val, oldVal) {
+        this.panel = [...Array(this.selectedList.length).keys()];
+      },
+      deep: true,
+    },
+  },
   methods: {
     ...mapActions({
       search: "email/search",
@@ -117,7 +127,6 @@ export default {
       });
 
       this.selectedList = resp.data.data.selectedList;
-      this.expanded = resp.data.data.selectedList;
     },
     async handleSendEmail() {
       this.send({ selectedList: this.selectedList });
@@ -127,12 +136,7 @@ export default {
 </script>
 
 <style>
-.emailTable th {
-  background: grey;
-  font-size: 70px;
-  color: white;
-}
-.felipe {
-  font-size: 50px;
+.header-style {
+  background: #ccc;
 }
 </style>
