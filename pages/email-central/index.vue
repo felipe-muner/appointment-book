@@ -38,22 +38,38 @@
           :headers="headers"
           :items="selectedList"
           :expanded.sync="expanded"
-          item-key="name"
+          item-key="schoolID"
           show-expand
           class="elevation-1"
         >
           <template v-slot:top>
             <v-toolbar flat>
-              <v-toolbar-title>Expandable Table</v-toolbar-title>
+              <v-toolbar-title>Report from {{startDate}} to {{endDate}}</v-toolbar-title>
               <v-spacer></v-spacer>
             </v-toolbar>
           </template>
           <template v-slot:expanded-item="{ headers, item }">
-            <td :colspan="headers.length">
-              <div
-                v-for="sched in item.Schedules"
-                v-bind:key="sched.scheduleID"
-              >{{sched.Teachers[0].name}} - {{sched.grade}} - {{sched.start}} - {{sched.end}}</div>
+            <td :colspan="3" class="pa-0">
+              <v-simple-table class="emailTable">
+                <template v-slot:default>
+                  <thead>
+                    <tr>
+                      <th class="text-left">Teacher</th>
+                      <th class="text-left">Grade</th>
+                      <th class="text-left">Start</th>
+                      <th class="text-left">End</th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="sched in item.Schedules" v-bind:key="sched.scheduleID">
+                      <td>{{sched.Teachers[0].name}}</td>
+                      <td>{{sched.grade}}</td>
+                      <td>{{sched.start}}</td>
+                      <td>{{sched.end}}</td>
+                    </tr>
+                  </tbody>
+                </template>
+              </v-simple-table>
             </td>
           </template>
         </v-data-table>
@@ -71,7 +87,7 @@ export default {
       expanded: [],
       headers: [
         {
-          text: "School Name",
+          text: "",
           align: "start",
           sortable: false,
           value: "name",
@@ -101,6 +117,7 @@ export default {
       });
 
       this.selectedList = resp.data.data.selectedList;
+      this.expanded = resp.data.data.selectedList;
     },
     async handleSendEmail() {
       this.send({ selectedList: this.selectedList });
@@ -109,4 +126,13 @@ export default {
 };
 </script>
 
-<style></style>
+<style>
+.emailTable th {
+  background: grey;
+  font-size: 70px;
+  color: white;
+}
+.felipe {
+  font-size: 50px;
+}
+</style>
