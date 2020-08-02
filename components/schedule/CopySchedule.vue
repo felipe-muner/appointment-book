@@ -24,6 +24,7 @@
         <v-container>
           <v-form ref="form" v-model="valid" lazy-validation>
             <v-row no-gutters>
+              <!-- {{date}} -->
               <v-col cols="2" class="mr-3">
                 <v-text-field v-model="oldDate" label="Copy data from:" type="date" outlined dense />
               </v-col>
@@ -86,17 +87,13 @@ export default {
       type: String,
       required: true,
     },
-    school: {
-      type: Object,
-    },
   },
   data() {
     return {
       valid: true,
       dialog: false,
-      oldDate: this.date,
+      oldDate: "",
       newDate: "",
-      mutableSchool: JSON.parse(JSON.stringify(this.school)),
       lessonsInSchedule: [],
     };
   },
@@ -129,11 +126,6 @@ export default {
     },
   },
   watch: {
-    dialog(newVal) {
-      if (newVal) {
-        this.mutableSchool = JSON.parse(JSON.stringify(this.school));
-      }
-    },
     async oldDate(newVal) {
       if (newVal) {
         const resp = await this.fetchLessonsToCopy({
@@ -142,6 +134,12 @@ export default {
         this.lessonsInSchedule = resp.data.data;
       }
     },
+    date(newVal) {
+      this.oldDate = newVal;
+    },
+  },
+  created() {
+    this.oldDate = this.date;
   },
 };
 </script>

@@ -1,14 +1,14 @@
 <template>
   <div>
-    {{grade}}
+    <!-- {{grade}} -->
     <hr />
-    {{ lessonMatchDay }}
-    {{ date }}
+    <!-- {{ lessonMatchDay }}
+    {{ date }}-->
     <h1>Schedule</h1>
     <CopySchedule :date="date" :school="school" />
     <br />
-    {{ new Date(date).getDay() }}
-    {{ days.find(d => d.id === new Date(this.date).getDay()).name }}
+    <!-- {{ new Date(date).getDay() }}
+    {{ days.find(d => d.id === new Date(this.date).getDay()).name }}-->
     <v-form ref="form" v-model="valid" lazy-validation>
       <v-row>
         <v-col>
