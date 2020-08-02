@@ -69,7 +69,6 @@
       </v-row>
     </v-form>
     <div>
-      <!-- {{ lessonsByDaySchool }} -->
       <v-simple-table>
         <template v-slot:default>
           <thead>
@@ -82,9 +81,9 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="les in lessonsByDaySchool" v-bind:key="JSON.stringify(les)">
-              <td>{{ les.School.name }}</td>
-              <td>{{ les.Teacher.name }}</td>
+            <tr v-for="les in lessonsByDaySchool" v-bind:key="les.ScheduleID">
+              <td>{{ les.Schools[0].name }}</td>
+              <td>{{ les.Teachers[0].name }}</td>
               <td>{{ les.grade }}</td>
               <td>{{ les.lessonTime }}</td>
               <td>
@@ -132,7 +131,7 @@ export default {
       schools: "school/getList",
       teachers: "teacher/getList",
       days: "lesson/getDays",
-      lessonsByDaySchool: "schedule/getLessonsByDaySchool",
+      lessonsByDaySchool: "schedule/getLessons",
     }),
     isDisabled() {
       return !this.school;

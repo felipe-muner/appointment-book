@@ -109,8 +109,8 @@ module.exports = {
           end: formattedEnd,
           grade: lesson.grade,
           lesson_id: lesson.lesson_id,
-          teacher_id: lesson.Teacher.teacherID,
-          school_id: lesson.School.schoolID
+          teacher_id: lesson.Teachers[0].teacherID,
+          school_id: lesson.Schools[0].schoolID
         });
       });
 

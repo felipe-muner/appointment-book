@@ -24,7 +24,7 @@
         <v-container>
           <v-form ref="form" v-model="valid" lazy-validation>
             <v-row no-gutters>
-              <!-- {{date}} -->
+              {{date}}
               <v-col cols="2" class="mr-3">
                 <v-text-field v-model="oldDate" label="Copy data from:" type="date" outlined dense />
               </v-col>
@@ -49,9 +49,9 @@
                   </tr>
                 </thead>
                 <tbody>
-                  <tr v-for="les in lessonsInSchedule" v-bind:key="JSON.stringify(les)">
-                    <td>{{ les.School.name }}</td>
-                    <td>{{ les.Teacher.name }}</td>
+                  <tr v-for="les in lessonsArray" v-bind:key="les.scheduleID">
+                    <td>{{ les.Schools[0].name }}</td>
+                    <td>{{ les.Teachers[0].name }}</td>
                     <td>{{ les.grade }}</td>
                     <td>{{ les.lessonTime }}</td>
                     <td>
@@ -80,7 +80,7 @@
 </template>
 
 <script>
-import { mapActions, mapMutations } from "vuex";
+import { mapActions, mapMutations, mapGetters } from "vuex";
 export default {
   props: {
     date: {
@@ -94,33 +94,29 @@ export default {
       dialog: false,
       oldDate: "",
       newDate: "",
-      lessonsInSchedule: [],
     };
+  },
+  computed: {
+    ...mapGetters({
+      lessonsArray: "schedule/getLessons",
+    }),
   },
   methods: {
     ...mapActions({
-      fetchLessonsToCopy: "schedule/fetchLessonsToCopy",
+      fetchLessons: "schedule/fetchLessons",
       copySchedule: "schedule/copySchedule",
     }),
     ...mapMutations({
       setSnack: "snackbar/setSnack",
     }),
-    async handleRemoveLesson(scheduleID) {
-      this.lessonsInSchedule = this.lessonsInSchedule.filter(
-        (les) => les.scheduleID !== scheduleID
-      );
-    },
+    async handleRemoveLesson(scheduleID) {},
     async submitForm() {
       if (this.$refs.form.validate()) {
         const resp = await this.copySchedule({
           newDate: this.newDate,
-          lessonsInSchedule: this.lessonsInSchedule.map((les) => {
-            return les;
-          }),
         });
-        console.log(resp);
         this.dialog = false;
-        this.setSnack(resp.data.msg);
+        this.setSnack("Created Well");
         // if (resp.data.code === 200) this.dialog = false;
       }
     },
@@ -128,10 +124,9 @@ export default {
   watch: {
     async oldDate(newVal) {
       if (newVal) {
-        const resp = await this.fetchLessonsToCopy({
+        await this.fetchLessons({
           date: this.oldDate,
         });
-        this.lessonsInSchedule = resp.data.data;
       }
     },
     date(newVal) {
