@@ -81,7 +81,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="les in lessonsByDaySchool" v-bind:key="les.ScheduleID">
+            <tr v-for="les in lessonsArray" v-bind:key="les.ScheduleID">
               <td>{{ les.Schools[0].name }}</td>
               <td>{{ les.Teachers[0].name }}</td>
               <td>{{ les.grade }}</td>
@@ -131,13 +131,15 @@ export default {
       schools: "school/getList",
       teachers: "teacher/getList",
       days: "lesson/getDays",
-      lessonsByDaySchool: "schedule/getLessons",
+      lessonsArray: "schedule/getLessons",
     }),
     isDisabled() {
       return !this.school;
     },
     lessonMatchDay() {
-      if (!this.school) return [];
+      if (!this.school.schoolID) {
+        return [];
+      }
       return this.school.Lessons.filter(
         (l) =>
           l.day ===
@@ -175,7 +177,6 @@ export default {
     },
     async removeLesson(scheduleID) {
       await this.deleteLesson(scheduleID);
-      await this.handleFetchLessons();
     },
     async submitForm() {
       if (this.$refs.form.validate()) {
