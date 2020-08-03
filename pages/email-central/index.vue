@@ -34,7 +34,7 @@
         </v-row>
       </v-form>
     </div>
-    <!-- {{selected}} -->
+    {{selected}}
     <hr />
     <!-- {{searchedItems}} -->
     <v-row no-gutters>
@@ -70,7 +70,6 @@ export default {
       startDate: "2020-10-13",
       endDate: "2020-10-13",
       groupBySearch: "school",
-      selected: [],
     };
   },
   computed: {
@@ -94,15 +93,24 @@ export default {
       searchedItems: "email/getList",
       openPanel: "email/openPanel",
     }),
+    selected: {
+      get() {
+        return this.$store.state.email.selected;
+      },
+      set(value) {
+        this.updateSelected(value);
+      },
+    },
   },
   methods: {
     ...mapActions({
       search: "email/search",
       send: "email/send",
-      cleanArray: "email/cleanArray",
+      cleanSearch: "email/cleanSearch",
+      updateSelected: "email/updateSelected",
     }),
     copyInitialDate(el) {
-      this.endDate = this.startDate;
+      if (!this.endDate) this.endDate = this.startDate;
     },
     async handleSearch() {
       const resp = await this.search({
@@ -117,7 +125,7 @@ export default {
   },
   watch: {
     groupBySearch(val) {
-      this.cleanArray();
+      this.cleanSearch();
     },
   },
 };
