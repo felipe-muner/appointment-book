@@ -34,6 +34,9 @@ export const getters = {
 export const mutations = {
   search(state, payload) {
     Vue.set(state, "list", [...payload]);
+  },
+  cleanArray(state, payload) {
+    Vue.set(state, "list", [...[]]);
   }
 };
 
@@ -48,5 +51,8 @@ export const actions = {
     console.log("tp aq send");
     const resp = await MyApi.email.send(payload);
     return resp;
+  },
+  async cleanArray({ commit, dispatch, state }, payload) {
+    commit("cleanArray", []);
   }
 };

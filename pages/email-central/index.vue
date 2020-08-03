@@ -34,15 +34,15 @@
         </v-row>
       </v-form>
     </div>
-    {{selected}}
+    <!-- {{selected}} -->
     <hr />
-    {{searchedItems}}
+    <!-- {{searchedItems}} -->
     <v-row no-gutters>
       <v-expansion-panels :multiple="true" v-model="openPanel">
         <v-expansion-panel v-for="(item, i) in searchedItems" :key="i">
           <v-expansion-panel-header
             class="header-style"
-          >{{item.name}} - {{item.schoolID}} {{item.felipe}}</v-expansion-panel-header>
+          >{{ item.name }} - {{item.schoolID || item.teacherID}}</v-expansion-panel-header>
           <v-expansion-panel-content>
             <v-data-table
               v-model="selected"
@@ -99,6 +99,7 @@ export default {
     ...mapActions({
       search: "email/search",
       send: "email/send",
+      cleanArray: "email/cleanArray",
     }),
     copyInitialDate(el) {
       this.endDate = this.startDate;
@@ -112,6 +113,11 @@ export default {
     },
     async handleSendEmail() {
       this.send({ selectedList: this.selectedList });
+    },
+  },
+  watch: {
+    groupBySearch(val) {
+      this.cleanArray();
     },
   },
 };
