@@ -8,7 +8,6 @@ export const state = () => ({
 
 export const getters = {
   openPanel: state => {
-    console.log("to no getter - " + [...Array(state.list.length).keys()]);
     return [...Array(state.list.length).keys()];
   },
   getList: state => {
@@ -21,14 +20,17 @@ export const getters = {
 
 export const mutations = {
   search(state, payload) {
-    Vue.set(state, "list", [...payload]);
-  },
-  cleanSearch(state, payload) {
-    Vue.set(state, "list", [...[]]);
-    Vue.set(state, "selected", [...[]]);
+    Vue.set(state, "list", payload);
+
+    const finalArray = [];
+    payload.forEach(el => {
+      el.Schedules.forEach(schedule => finalArray.push(schedule));
+    });
+
+    Vue.set(state, "selected", finalArray);
   },
   updateSelected(state, payload) {
-    state.selected = [...payload];
+    Vue.set(state, "selected", payload);
   }
 };
 
@@ -42,9 +44,6 @@ export const actions = {
     console.log("tp aq send");
     const resp = await MyApi.email.send(payload);
     return resp;
-  },
-  async cleanSearch({ commit, dispatch, state }, payload) {
-    commit("cleanSearch", []);
   },
   async updateSelected({ commit, dispatch, state }, payload) {
     commit("updateSelected", payload);

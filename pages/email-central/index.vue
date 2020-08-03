@@ -1,14 +1,6 @@
 <template>
   <div>
     <div>
-      <v-col class="pa-2">
-        <v-radio-group ripple v-model="groupBySearch" row hide-details class="ma-0">
-          <v-radio label="School" value="school"></v-radio>
-          <v-radio label="Teacher" value="teacher"></v-radio>
-        </v-radio-group>
-      </v-col>
-    </div>
-    <div>
       <v-form ref="form" v-model="valid" lazy-validation>
         <v-row no-gutters>
           <v-col class="mr-3" cols="2">
@@ -69,7 +61,7 @@ export default {
       valid: true,
       startDate: "2020-10-13",
       endDate: "2020-10-13",
-      groupBySearch: "school",
+      groupBySearch: "teacher",
     };
   },
   computed: {
@@ -79,10 +71,7 @@ export default {
           text: "school" === this.groupBySearch ? "Teacher" : "School",
           align: "start",
           sortable: false,
-          value:
-            "school" === this.groupBySearch
-              ? "Teachers[0].name"
-              : "Schools[0].name",
+          value: "Schools[0].name",
         },
         { text: "Grade", value: "grade" },
         { text: "Day", value: "day" },
@@ -106,7 +95,6 @@ export default {
     ...mapActions({
       search: "email/search",
       send: "email/send",
-      cleanSearch: "email/cleanSearch",
       updateSelected: "email/updateSelected",
     }),
     copyInitialDate(el) {
@@ -116,16 +104,11 @@ export default {
       const resp = await this.search({
         startDate: this.startDate,
         endDate: this.endDate,
-        groupBySearch: this.groupBySearch,
+        groupBySearch: "teacher",
       });
     },
     async handleSendEmail() {
       this.send({ selectedList: this.selectedList });
-    },
-  },
-  watch: {
-    groupBySearch(val) {
-      this.cleanSearch();
     },
   },
 };
