@@ -34,9 +34,9 @@
         </v-row>
       </v-form>
     </div>
-    {{searchedItems}}
+    {{selected}}
     <hr />
-    <!-- {{searchedItems}}-->
+    {{searchedItems}}
     <v-row no-gutters>
       <v-expansion-panels :multiple="true" v-model="openPanel">
         <v-expansion-panel v-for="(item, i) in searchedItems" :key="i">
@@ -86,8 +86,8 @@ export default {
               : "Schools[0].name",
         },
         { text: "Grade", value: "grade" },
-        { text: "Date", value: "timeRange" },
-        { text: "Time", value: "timeRange" },
+        { text: "Day", value: "day" },
+        { text: "Time", value: "lessonTime" },
       ];
     },
     ...mapGetters({

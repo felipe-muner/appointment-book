@@ -62,7 +62,22 @@ module.exports = {
 
       searchList.forEach(sched => {
         sched.Schedules.forEach(item => {
-          item.setDataValue("timeRange", item.start + " - " + item.end);
+          item.setDataValue(
+            "day",
+            new Date(item.start).toISOString().split("T")[0]
+          );
+          item.setDataValue(
+            "lessonTime",
+            item.start
+              .toTimeString()
+              .split(" ")[0]
+              .substring(0, 5) +
+              " - " +
+              item.end
+                .toTimeString()
+                .split(" ")[0]
+                .substring(0, 5)
+          );
         });
       });
 
