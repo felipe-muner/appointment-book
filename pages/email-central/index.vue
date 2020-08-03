@@ -34,9 +34,9 @@
         </v-row>
       </v-form>
     </div>
-    {{selected}}
-    <hr />
     {{searchedItems}}
+    <hr />
+    <!-- {{searchedItems}}-->
     <v-row no-gutters>
       <v-expansion-panels :multiple="true" v-model="openPanel">
         <v-expansion-panel v-for="(item, i) in searchedItems" :key="i">
@@ -65,7 +65,6 @@ import { mapActions, mapGetters } from "vuex";
 export default {
   data() {
     return {
-      singleSelect: false,
       panel: [],
       valid: true,
       startDate: "2020-10-13",
@@ -87,9 +86,8 @@ export default {
               : "Schools[0].name",
         },
         { text: "Grade", value: "grade" },
-        { text: "Date", value: "day" },
-        { text: "Start", value: "startFormatted" },
-        { text: "End", value: "endFormatted" },
+        { text: "Date", value: "timeRange" },
+        { text: "Time", value: "timeRange" },
       ];
     },
     ...mapGetters({

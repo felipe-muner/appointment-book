@@ -12,8 +12,7 @@ router
       msg: "respond with a search email route",
       data: {
         myData: req.myData,
-        selectedList: req.selectedList,
-        searchListTeacher: req.searchListTeacher
+        selectedList: req.selectedList
       }
     });
   })

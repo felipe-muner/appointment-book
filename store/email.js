@@ -24,16 +24,7 @@ export const getters = {
     return [...Array(state.list.length).keys()];
   },
   getList: state => {
-    const resp = state.list.map(el => {
-      el.formattedSchool = el.Schedules.map(sch => ({
-        ...sch,
-        day: new Date(sch.start).toISOString().split("T")[0],
-        startFormatted: sch.start.substring(11, 16),
-        endFormatted: sch.end.substring(11, 16)
-      }));
-      return { ...el, felipe: 20 };
-    });
-    return resp;
+    return state.list;
   },
   getSelected: state => {
     return state.selected;
