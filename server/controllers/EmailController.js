@@ -47,6 +47,9 @@ module.exports = {
         ]
       };
 
+      let modelsToInclude =
+        groupBySearch === "school" ? [School, Teacher] : [School, Teacher];
+
       let searchList = await (groupBySearch === "school"
         ? School
         : Teacher
@@ -55,11 +58,7 @@ module.exports = {
         include: [
           {
             model: Schedule,
-            include: [
-              {
-                model: groupBySearch === "school" ? Teacher : School
-              }
-            ]
+            include: modelsToInclude
           }
         ]
       });

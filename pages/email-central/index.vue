@@ -36,16 +36,17 @@
     </div>
     {{selected}}
     <hr />
+    {{searchedItems}}
     <v-row no-gutters>
-      <v-expansion-panels :multiple="true" v-model="panel">
-        <v-expansion-panel v-for="(item,i) in selectedListFormatted" :key="i">
+      <v-expansion-panels :multiple="true" v-model="openPanel">
+        <v-expansion-panel v-for="(item, i) in searchedItems" :key="i">
           <v-expansion-panel-header
             class="header-style"
           >{{item.name}} - {{item.schoolID}} {{item.felipe}}</v-expansion-panel-header>
           <v-expansion-panel-content>
             <v-data-table
               v-model="selected"
-              :headers="headers"
+              :headers="setHeader"
               :items="item.Schedules"
               item-key="scheduleID"
               show-select
@@ -65,51 +66,36 @@ export default {
   data() {
     return {
       singleSelect: false,
-      selected: [],
-      headers: [
-        {
-          text: "Teacher",
-          align: "start",
-          sortable: false,
-          value: "Teachers[0].name",
-        },
-        { text: "Grade", value: "grade" },
-        { text: "Date", value: "day" },
-        { text: "Start", value: "startFormatted" },
-        { text: "End", value: "endFormatted" },
-      ],
       panel: [],
       valid: true,
       startDate: "2020-10-13",
       endDate: "2020-10-13",
       groupBySearch: "school",
-      selectedList: [],
+      selected: [],
     };
   },
   computed: {
-    selectedListFormatted() {
-      const resp = this.selectedList.map((school) => {
-        school.felipe = Math.random() * 10;
-        school.Schedules.map((schedule) => {
-          schedule.day = new Date(schedule.start).toISOString().split("T")[0];
-          schedule.startFormatted = schedule.start.substring(11, 16);
-          schedule.endFormatted = schedule.end.substring(11, 16);
-        });
-        return school;
-      });
-      return resp;
+    setHeader() {
+      return [
+        {
+          text: "school" === this.groupBySearch ? "Teacher" : "School",
+          align: "start",
+          sortable: false,
+          value:
+            "school" === this.groupBySearch
+              ? "Teachers[0].name"
+              : "Schools[0].name",
+        },
+        { text: "Grade", value: "grade" },
+        { text: "Date", value: "day" },
+        { text: "Start", value: "startFormatted" },
+        { text: "End", value: "endFormatted" },
+      ];
     },
-    schedulesFormatted() {
-      return;
-    },
-  },
-  watch: {
-    selectedList: {
-      handler: function (val, oldVal) {
-        this.panel = [...Array(this.selectedList.length).keys()];
-      },
-      deep: true,
-    },
+    ...mapGetters({
+      searchedItems: "email/getList",
+      openPanel: "email/openPanel",
+    }),
   },
   methods: {
     ...mapActions({
@@ -125,8 +111,6 @@ export default {
         endDate: this.endDate,
         groupBySearch: this.groupBySearch,
       });
-
-      this.selectedList = resp.data.data.selectedList;
     },
     async handleSendEmail() {
       this.send({ selectedList: this.selectedList });
