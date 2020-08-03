@@ -1,6 +1,7 @@
 const nodemailer = require("nodemailer");
 const sequelize = require("sequelize");
 const { Op } = require("sequelize");
+const utils = require("../utils/utils");
 
 const { Schedule, Teacher, Lesson, School } = require("../models");
 
@@ -68,15 +69,7 @@ module.exports = {
           );
           item.setDataValue(
             "lessonTime",
-            item.start
-              .toTimeString()
-              .split(" ")[0]
-              .substring(0, 5) +
-              " - " +
-              item.end
-                .toTimeString()
-                .split(" ")[0]
-                .substring(0, 5)
+            utils.extractTime(item.start) + " - " + utils.extractTime(item.end)
           );
         });
       });
