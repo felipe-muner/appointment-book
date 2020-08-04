@@ -29,6 +29,7 @@ export const mutations = {
 
     Vue.set(state, "selected", finalArray);
   },
+
   updateSelected(state, payload) {
     Vue.set(state, "selected", payload);
   }
@@ -42,8 +43,9 @@ export const actions = {
   },
   async send({ commit, dispatch, state }, payload) {
     console.log("tp aq send");
+    console.log(state.selected)
+
     const resp = await MyApi.email.send(payload);
-    return resp;
   },
   async updateSelected({ commit, dispatch, state }, payload) {
     commit("updateSelected", payload);

@@ -26,6 +26,7 @@
         </v-row>
       </v-form>
     </div>
+    {{selected.length}}
     {{selected}}
     <hr />
     <!-- {{searchedItems}} -->
@@ -43,6 +44,7 @@
               item-key="scheduleID"
               show-select
               class="elevation-1"
+              disable-pagination
             ></v-data-table>
           </v-expansion-panel-content>
         </v-expansion-panel>
@@ -108,7 +110,7 @@ export default {
       });
     },
     async handleSendEmail() {
-      this.send({ selectedList: this.selectedList });
+      this.send();
     },
   },
 };
