@@ -12,11 +12,7 @@ class Schedule {
     });
   }
   async send(payload) {
-    return await axios.get(this.server + "/email/send", {
-      params: {
-        ...payload
-      }
-    });
+    return await axios.post(this.server + "/email/send", payload)
   }
 }
 

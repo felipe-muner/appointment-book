@@ -70,7 +70,7 @@ export default {
     setHeader() {
       return [
         {
-          text: "school" === this.groupBySearch ? "Teacher" : "School",
+          text: "School",
           align: "start",
           sortable: false,
           value: "Schools[0].name",

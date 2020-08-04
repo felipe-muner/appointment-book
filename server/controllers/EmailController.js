@@ -48,10 +48,7 @@ module.exports = {
         ]
       };
 
-      let searchList = await (groupBySearch === "school"
-        ? School
-        : Teacher
-      ).findAll({
+      let searchList = await Teacher.findAll({
         where,
         include: [
           {
@@ -60,8 +57,9 @@ module.exports = {
           }
         ]
       });
-
+      
       searchList.forEach(sched => {
+        console.log(sched);
         sched.Schedules.forEach(item => {
           item.setDataValue(
             "day",
@@ -84,37 +82,11 @@ module.exports = {
   },
   async send(req, res, next) {
     try {
-      const { startDate, endDate } = req.query;
-      let where = {
-        [Op.and]: [
-          sequelize.where(
-            sequelize.fn("date", sequelize.col("start")),
-            ">=",
-            startDate
-          ),
-          sequelize.where(
-            sequelize.fn("date", sequelize.col("end")),
-            "<=",
-            endDate
-          )
-        ]
-      };
+      
+      console.log(req.body)
+      // const unique = [...new Set(data.map(item => item.age))];
 
-      let searchList = await (false ? School : Teacher).findAll({
-        where,
-        include: [
-          {
-            model: Schedule,
-            include: [
-              {
-                model: false ? Teacher : School
-              }
-            ]
-          }
-        ]
-      });
-
-      req.myData = searchList;
+      
       next();
     } catch (error) {
       console.log(error);

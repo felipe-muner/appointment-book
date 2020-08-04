@@ -16,9 +16,8 @@ router
       }
     });
   })
-  .get("/send", EmailController.send, function(req, res, next) {
-    console.log(req.myData);
-    res.json({ msg: "respond with a send email route", data: req.myData });
+  .post("/send", EmailController.send, function(req, res, next) {
+    res.json({ msg: "respond with a send email route"});
   });
 
 module.exports = router;
