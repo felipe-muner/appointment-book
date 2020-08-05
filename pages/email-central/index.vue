@@ -45,6 +45,7 @@
               show-select
               class="elevation-1"
               disable-pagination
+              hide-default-footer              
             ></v-data-table>
           </v-expansion-panel-content>
         </v-expansion-panel>
