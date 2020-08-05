@@ -2,6 +2,8 @@ const nodemailer = require("nodemailer");
 const sequelize = require("sequelize");
 const { Op } = require("sequelize");
 const utils = require("../utils/utils");
+const cheerio = require("cheerio");
+const fs = require("fs");
 
 const { Schedule, Teacher, Lesson, School } = require("../models");
 
@@ -57,7 +59,7 @@ module.exports = {
           }
         ]
       });
-      
+
       searchList.forEach(sched => {
         console.log(sched);
         sched.Schedules.forEach(item => {
@@ -82,11 +84,31 @@ module.exports = {
   },
   async send(req, res, next) {
     try {
-      
-      console.log(req.body)
-      // const unique = [...new Set(data.map(item => item.age))];
+      // const htmlDiv = `<div><h2>Hi ${name}</h2></div>`;
+      let filename = "utils/templateTeacherEmail.html";
+      let template = fs.readFileSync(process.cwd() + "/" + filename, "utf8");
 
-      
+      const $ = cheerio.load(template);
+
+      req.body.teachers.forEach(teacher => {
+        let { emailLesson, name, email } = teacher;
+        $("#name").text(name);
+        $("#email").text(email);
+
+        $("#tbodyLessons").empty();
+
+        emailLesson.forEach(les => {
+          $("#tbodyLessons").append(
+            `<tr>
+              <td>${les.Schools[0].name}</td>
+              <td>${les.grade}</td>
+              <td>${utils.extractTime(les.start)}</td>
+              <td>${utils.extractTime(les.end)}</td>
+            </tr>`
+          );
+        });
+        sendEmail({ to: email, htmlContent: $.html() });
+      });
       next();
     } catch (error) {
       console.log(error);
@@ -95,3 +117,23 @@ module.exports = {
     }
   }
 };
+
+function sendEmail(infoEmail) {
+  console.log("start");
+  console.log(infoEmail);
+  console.log("end");
+  const mailOptions = {
+    from: "felipe.muner@gmail.com", // sender address
+    to: infoEmail.to, // list of receivers
+    subject: "WorldLink - Schedule", // Subject line
+    html: infoEmail.htmlContent // html content email
+  };
+  transporter.sendMail(mailOptions, function(err, info) {
+    if (err) console.log(err);
+    else console.log(info);
+  });
+  try {
+  } catch (error) {
+    console.log(error);
+  }
+}

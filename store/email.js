@@ -50,7 +50,7 @@ export const actions = {
       );
     });
 
-    const resp = await MyApi.email.send(arraySendEmail);
+    const resp = await MyApi.email.send({ teachers: arraySendEmail });
   },
   async updateSelected({ commit, dispatch, state }, payload) {
     commit("updateSelected", payload);
