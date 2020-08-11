@@ -24,6 +24,9 @@
       <v-card-text>
         <v-container>
           <v-row no-gutters>
+            {{selected}}
+            <hr />
+            {{selectedToUpdate}}
             <v-col>
               <v-autocomplete
                 return-object
@@ -37,7 +40,70 @@
               ></v-autocomplete>
             </v-col>
           </v-row>
-          <UpdateForm :selected="selected" v-on:close-dialog="dialog = false" />
+
+          <v-form ref="form" v-model="valid" lazy-validation>
+            <v-row>
+              <v-col>
+                <v-switch v-model="selectedToUpdate.isTeacherAssistant" label="TA"></v-switch>
+              </v-col>
+              <v-col>
+                <v-switch v-model="selectedToUpdate.active" label="Active"></v-switch>
+              </v-col>
+            </v-row>
+            <v-row>
+              <v-text-field
+                prepend-icon="mdi-teach"
+                v-model="selectedToUpdate.name"
+                label="Name"
+                outlined
+                dense
+                required
+              />
+            </v-row>
+            <v-row>
+              <v-text-field
+                prepend-icon="mdi-email"
+                v-model="selectedToUpdate.email"
+                :rules="emailRules"
+                label="E-mail"
+                outlined
+                dense
+              />
+            </v-row>
+            <v-row>
+              <v-text-field
+                prepend-icon="mdi-cellphone-sound"
+                v-model="selectedToUpdate.phone"
+                label="Phone"
+                outlined
+                dense
+              />
+            </v-row>
+            <v-row>
+              <v-text-field
+                prepend-icon="mdi-currency-usd"
+                v-model.number="selectedToUpdate.salary"
+                label="Salary"
+                outlined
+                dense
+              />
+            </v-row>
+            <v-row>
+              <v-text-field
+                prepend-icon="mdi-calendar"
+                v-model="selectedToUpdate.birthdayYYYYMMDD"
+                label="Birthday"
+                type="date"
+                outlined
+                dense
+              />
+            </v-row>
+            <v-row>
+              <v-col class="text-right px-0">
+                <v-btn :disabled="!valid" color="warning" @click="submitForm">Update</v-btn>
+              </v-col>
+            </v-row>
+          </v-form>
         </v-container>
       </v-card-text>
 
@@ -48,26 +114,57 @@
 
 <script>
 import UpdateForm from "@/components/teacher/UpdateForm";
-
+import { mapGetters, mapActions, mapMutations } from "vuex";
 export default {
   components: {
-    UpdateForm
+    UpdateForm,
   },
   data() {
     return {
       selected: {},
-      dialog: false
+      selectedToUpdate: {},
+      dialog: false,
+      valid: true,
+      nameRules: [
+        (v) => !!v || "Name is required",
+        (v) => (v && v.length <= 10) || "Name must be less than 10 characters",
+      ],
+      emailRules: [
+        (v) => !!v || "E-mail is required",
+        (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
+      ],
     };
   },
+  watch: {
+    selected(newVal) {
+      this.selectedToUpdate = { ...newVal };
+    },
+  },
   computed: {
-    teachers() {
-      let teacherList = this.$store.state.teacher.list;
-      teacherList.forEach(
-        t => (t.textToDisplay = t.teacherID + " - " + t.name + " - " + t.email)
-      );
-      return teacherList;
-    }
-  }
+    ...mapGetters({
+      teachers: "teacher/getList",
+    }),
+  },
+  methods: {
+    ...mapMutations({
+      setSnack: "snackbar/setSnack",
+    }),
+    ...mapActions({
+      update: "teacher/update",
+      initTeacher: "teacher/getAll",
+    }),
+    async submitForm() {
+      if (this.$refs.form.validate()) {
+        const resp = await this.update({ ...this.selectedToUpdate });
+        this.setSnack(resp.data.msg);
+
+        if (resp.data.code === 200) {
+          await this.initTeacher();
+          this.dialog = false;
+        }
+      }
+    },
+  },
 };
 </script>
 

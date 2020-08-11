@@ -34,6 +34,7 @@ export default {
         },
         { text: "Birthday", value: "formatBirthday" },
         { text: "Phone", value: "phone" },
+        { text: "Salary", value: "salary" },
         { text: "TA", value: "isTeacherAssistant" },
         { text: "Active", value: "active" }
       ]
@@ -50,7 +51,7 @@ export default {
     })
   },
   created() {
-    this.initTeacher({ name: "felipeteacher" });
+    this.initTeacher();
   }
 };
 </script>

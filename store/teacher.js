@@ -7,12 +7,14 @@ export const state = () => ({
 export const getters = {
   getList: state => {
     return state.list;
-  }
+  },
 };
 
 export const mutations = {
   getAll(state, payload) {
-    console.log("get all again");
+    payload.forEach(
+      t => (t.textToDisplay = t.teacherID + " - " + t.name + " - " + t.email)
+    );
     state.list = payload;
   }
 };

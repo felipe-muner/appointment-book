@@ -125,7 +125,8 @@ export default {
   },
   methods: {
     ...mapActions({
-      update: "teacher/update"
+      update: "teacher/update",
+      initTeacher: "teacher/getAll"
     }),
     ...mapMutations({
       setSnack: "snackbar/setSnack"
@@ -146,7 +147,11 @@ export default {
           active: this.selectedToUpdate.active
         });
         this.setSnack(resp.data.msg);
-        if (resp.data.code === 200) this.$emit("close-dialog");
+        
+        if (resp.data.code === 200){
+          await this.initTeacher()
+          this.$emit("close-dialog")
+        }
       }
     }
   }

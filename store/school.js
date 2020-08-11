@@ -24,7 +24,6 @@ export const getters = {
   },
   getList: state => {
     state.list.forEach(t => (t.textToDisplay = t.schoolID + " - " + t.name));
-    console.log(state.list);
     return state.list;
   }
 };
