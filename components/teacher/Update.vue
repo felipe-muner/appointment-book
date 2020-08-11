@@ -113,12 +113,8 @@
 </template>
 
 <script>
-import UpdateForm from "@/components/teacher/UpdateForm";
 import { mapGetters, mapActions, mapMutations } from "vuex";
 export default {
-  components: {
-    UpdateForm,
-  },
   data() {
     return {
       selected: {},
