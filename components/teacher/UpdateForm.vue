@@ -40,6 +40,15 @@
           />
         </v-row>
         <v-row>
+          <v-text-field
+            prepend-icon="mdi-currency-usd"
+            v-model.number="selectedToUpdate.salary"
+            label="Salary"
+            outlined
+            dense
+          />
+        </v-row>
+        <v-row>
           <v-menu
             ref="menu"
             v-model="menu"
@@ -131,6 +140,7 @@ export default {
           name: this.selectedToUpdate.name,
           email: this.selectedToUpdate.email,
           phone: this.selectedToUpdate.phone,
+          salary: this.selectedToUpdate.salary,
           birthday: this.selectedToUpdate.birthdayYYYYMMDD,
           isTeacherAssistant: this.selectedToUpdate.isTeacherAssistant,
           active: this.selectedToUpdate.active

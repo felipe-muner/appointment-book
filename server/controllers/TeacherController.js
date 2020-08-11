@@ -69,6 +69,7 @@ module.exports = {
           birthday: req.body.birthday,
           phone: req.body.phone,
           isTeacherAssistant: req.body.isTeacherAssistant,
+          salary: req.body.salary,
           active: req.body.active
         },
         {
