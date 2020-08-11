@@ -62,6 +62,17 @@
               />
             </v-row>
             <v-row>
+              <v-text-field
+                prepend-icon="mdi-currency-usd"
+                v-model.number="teacher.salary"
+                type="number"
+                :rules="salaryRules"
+                label="Salary"
+                outlined
+                dense
+              />
+            </v-row>
+            <v-row>
               <v-menu
                 ref="menu"
                 v-model="menu"
@@ -117,7 +128,9 @@ export default {
         name: "qwe",
         email: "qwe@qwe.com",
         phone: "929292",
-        birthday: "1970-10-10"
+        salary: "",
+        birthday: "1970-10-10",
+        isTeacherAssistant: false,
       },
       nameRules: [
         v => !!v || "Name is required",
@@ -128,7 +141,8 @@ export default {
         v => /.+@.+\..+/.test(v) || "E-mail must be valid"
       ],
       phoneRules: [v => !!v || "Phone is required"],
-      birthdayRules: [v => !!v || "Birthday is required"]
+      salaryRules: [v => !!v || "Salary is required"],
+      birthdayRules: [v => !!v || "Birthday is required"],
     };
   },
   methods: {

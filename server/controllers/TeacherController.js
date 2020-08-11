@@ -27,12 +27,17 @@ module.exports = {
       if (isEmailInDB) {
         return res.json({ code: 400, msg: "ERROR: Duplicated e-mail." });
       }
+      
+      console.log('voucriarprof');
+      console.log(req.body)
+      console.log('voucriarprof');
 
       const teacher = await Teacher.create({
         email: req.body.email,
         name: req.body.name,
         birthday: req.body.birthday,
         phone: req.body.phone,
+        salary: req.body.salary,
         isTeacherAssistant: req.body.isTeacherAssistant
       });
       res.json({ code: 200, msg: "Teacher created", data: teacher });
