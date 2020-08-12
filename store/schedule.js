@@ -1,21 +1,21 @@
 import MyApi from "../api/MyApi";
 
 export const state = () => ({
-  list: []
+  oldDay: []
 });
 
 export const getters = {
   getLessons: state => {
-    return state.list;
+    return state.oldDay;
   }
 };
 
 export const mutations = {
   fetchLessons(state, payload) {
-    state.list = payload;
+    state.oldDay = payload;
   },
   deleteLesson(state, payload) {
-    state.list = state.list.filter(les => les.scheduleID !== payload);
+    state.oldDay = state.oldDay.filter(les => les.scheduleID !== payload);
   }
 };
 
@@ -28,7 +28,7 @@ export const actions = {
     commit("fetchLessons", resp.data.data);
   },
   async copySchedule({ commit, dispatch, state }, payload) {
-    payload.lessonsInSchedule = state.list;
+    payload.lessonsInSchedule = state.oldDay;
     await MyApi.schedule.copySchedule(payload);
     //decide what do do after rest
   },
