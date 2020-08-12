@@ -24,54 +24,95 @@
         <v-container>
           <v-form ref="form" v-model="valid" lazy-validation>
             <v-row no-gutters>
-              {{date}}
-              <v-col cols="2" class="mr-3">
+              <v-col cols="2">
                 <v-text-field v-model="oldDate" label="Copy data from:" type="date" outlined dense />
               </v-col>
-              <v-col cols="2" class="mr-3">
+              <v-col cols="4"></v-col>
+              <v-col cols="2">
                 <v-text-field v-model="newDate" label="to date:" type="date" outlined dense />
               </v-col>
-              <v-col>
+              <v-col class="ml-3">
                 <v-btn :disabled="!valid" color="success" @click="submitForm" dense>Copy New Day</v-btn>
               </v-col>
             </v-row>
           </v-form>
-          <v-row no-gutters>
-            <v-simple-table>
-              <template v-slot:default>
-                <thead>
-                  <tr>
-                    <th>School</th>
-                    <th>Teacher</th>
-                    <th>Grade</th>
-                    <th>Time</th>
-                    <th></th>
-                  </tr>
-                </thead>
-                <tbody>
-                  <tr v-for="les in lessonsArray" v-bind:key="les.scheduleID">
-                    <td>{{ les.Schools[0].name }}</td>
-                    <td>{{ les.Teachers[0].name }}</td>
-                    <td>{{ les.grade }}</td>
-                    <td>{{ les.lessonTime }}</td>
-                    <td>
-                      <v-tooltip bottom>
-                        <template v-slot:activator="{ on, attrs }">
-                          <v-icon
-                            @click="handleRemoveLesson(les.scheduleID)"
-                            color="error"
-                            dark
-                            v-bind="attrs"
-                            v-on="on"
-                          >mdi-delete-empty</v-icon>
-                        </template>
-                        <span>remove</span>
-                      </v-tooltip>
-                    </td>
-                  </tr>
-                </tbody>
-              </template>
-            </v-simple-table>
+
+          <v-row>
+            <v-col cols="6">
+              <v-simple-table>
+                <template v-slot:default>
+                  <thead>
+                    <tr>
+                      <th>School</th>
+                      <th>Teacher</th>
+                      <th>Grade</th>
+                      <th>Time</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="les in lessonsArray('currentList')" v-bind:key="les.scheduleID">
+                      <td>{{ les.Schools[0].name }}</td>
+                      <td>{{ les.Teachers[0].name }}</td>
+                      <td>{{ les.grade }}</td>
+                      <td>{{ les.lessonTime }}</td>
+                      <td>
+                        <v-tooltip bottom>
+                          <template v-slot:activator="{ on, attrs }">
+                            <v-icon
+                              @click="handleRemoveLesson(les.scheduleID)"
+                              color="error"
+                              dark
+                              v-bind="attrs"
+                              v-on="on"
+                            >mdi-delete-empty</v-icon>
+                          </template>
+                          <span>remove</span>
+                        </v-tooltip>
+                      </td>
+                    </tr>
+                  </tbody>
+                </template>
+              </v-simple-table>
+            </v-col>
+
+            <v-col cols="6">
+              <v-simple-table>
+                <template v-slot:default>
+                  <thead>
+                    <tr>
+                      <th>School</th>
+                      <th>Teacher</th>
+                      <th>Grade</th>
+                      <th>Time</th>
+                      <th></th>
+                    </tr>
+                  </thead>
+                  <tbody>
+                    <tr v-for="les in lessonsArray('newList')" v-bind:key="les.scheduleID">
+                      <td>{{ les.Schools[0].name }}</td>
+                      <td>{{ les.Teachers[0].name }}</td>
+                      <td>{{ les.grade }}</td>
+                      <td>{{ les.lessonTime }}</td>
+                      <td>
+                        <v-tooltip bottom>
+                          <template v-slot:activator="{ on, attrs }">
+                            <v-icon
+                              @click="handleRemoveLesson(les.scheduleID)"
+                              color="error"
+                              dark
+                              v-bind="attrs"
+                              v-on="on"
+                            >mdi-delete-empty</v-icon>
+                          </template>
+                          <span>remove</span>
+                        </v-tooltip>
+                      </td>
+                    </tr>
+                  </tbody>
+                </template>
+              </v-simple-table>
+            </v-col>
           </v-row>
         </v-container>
       </v-card-text>
@@ -98,7 +139,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      lessonsArray: "schedule/getLessons",
+      lessonsArray: "schedule/getList",
     }),
   },
   methods: {
@@ -109,7 +150,9 @@ export default {
     ...mapMutations({
       setSnack: "snackbar/setSnack",
     }),
-    async handleRemoveLesson(scheduleID) {},
+    async handleRemoveLesson(scheduleID) {
+      console.log(scheduleID);
+    },
     async submitForm() {
       if (this.$refs.form.validate()) {
         const resp = await this.copySchedule({
@@ -126,6 +169,15 @@ export default {
       if (newVal) {
         await this.fetchLessons({
           date: this.oldDate,
+          list: "currentList",
+        });
+      }
+    },
+    async newDate(newVal) {
+      if (newVal) {
+        await this.fetchLessons({
+          date: this.newDate,
+          list: "newList",
         });
       }
     },
@@ -133,9 +185,9 @@ export default {
       this.oldDate = newVal;
     },
   },
-  created() {
-    this.oldDate = this.date;
-  },
+  // created() {
+  //   this.oldDate = this.date;
+  // },
 };
 </script>
 

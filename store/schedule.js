@@ -1,21 +1,26 @@
 import MyApi from "../api/MyApi";
 
 export const state = () => ({
-  oldDay: []
+  currentList: [],
+  newList: []
 });
 
 export const getters = {
-  getLessons: state => {
-    return state.oldDay;
+  getList: state => list => {
+    return state[list];
   }
 };
 
 export const mutations = {
   fetchLessons(state, payload) {
-    state.oldDay = payload;
+    console.log(payload);
+    state[payload.list] = payload.lessons;
   },
   deleteLesson(state, payload) {
-    state.oldDay = state.oldDay.filter(les => les.scheduleID !== payload);
+    console.log(payload);
+    state[payload.list] = state[payload.list].filter(
+      les => les.scheduleID !== payload.scheduleID
+    );
   }
 };
 
@@ -25,7 +30,8 @@ export const actions = {
   },
   async fetchLessons({ commit, dispatch, state }, payload) {
     const resp = await MyApi.schedule.fetchLessons(payload);
-    commit("fetchLessons", resp.data.data);
+    payload.lessons = resp.data.data;
+    commit("fetchLessons", payload);
   },
   async copySchedule({ commit, dispatch, state }, payload) {
     payload.lessonsInSchedule = state.oldDay;
@@ -33,7 +39,7 @@ export const actions = {
     //decide what do do after rest
   },
   async deleteLesson({ commit, dispatch, state }, payload) {
-    await MyApi.schedule.deleteLesson(payload);
+    await MyApi.schedule.deleteLesson(payload.scheduleID);
     commit("deleteLesson", payload);
   }
 };

@@ -5,7 +5,7 @@
     <!-- {{ lessonMatchDay }}
     {{ date }}-->
     <h1>Schedule</h1>
-    <CopySchedule :date="date" :school="school" />
+    <CopySchedule :date="date" />
     <br />
     {{ new Date(date).getDay() }}
     {{ days.find(d => d.id === new Date(this.date).getDay()).name }}
@@ -81,7 +81,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="les in lessonsArray" v-bind:key="les.ScheduleID">
+            <tr v-for="les in lessonsArray('currentList')" v-bind:key="les.ScheduleID">
               <td>{{ les.Schools[0].name }}</td>
               <td>{{ les.Teachers[0].name }}</td>
               <td>{{ les.grade }}</td>
@@ -131,7 +131,7 @@ export default {
       schools: "school/getList",
       teachers: "teacher/getList",
       days: "lesson/getDays",
-      lessonsArray: "schedule/getLessons",
+      lessonsArray: "schedule/getList",
     }),
     isDisabled() {
       return !this.school;
@@ -149,7 +149,7 @@ export default {
   },
   watch: {
     school: async function (val) {
-      await this.handleFetchLessons();
+      if (val) await this.handleFetchLessons();
     },
     date: async function (val) {
       await this.handleFetchLessons();
@@ -170,13 +170,15 @@ export default {
       deleteLesson: "schedule/deleteLesson",
     }),
     async handleFetchLessons() {
+      console.log("chamei pra handleFetchLessons");
       await this.fetchLessons({
         date: this.date,
         school: this.school,
+        list: "currentList",
       });
     },
     async removeLesson(scheduleID) {
-      await this.deleteLesson(scheduleID);
+      await this.deleteLesson({ scheduleID, list: "currentList" });
     },
     async submitForm() {
       if (this.$refs.form.validate()) {
