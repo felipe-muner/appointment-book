@@ -156,9 +156,14 @@ export default {
     async submitForm() {
       if (this.$refs.form.validate()) {
         const resp = await this.copySchedule({
-          newDate: this.newDate,
+          date: this.newDate,
+          list: "newList",
         });
-        this.setSnack("Created Well");
+
+        // console.log("to aqui voltei na store copyscheduel");
+        // console.log(resp);
+        // console.log("to aqui voltei na store copyscheduel");
+        // this.setSnack("Created Well");
         // if (resp.data.code === 200) this.dialog = false;
       }
     },

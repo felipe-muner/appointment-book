@@ -92,7 +92,7 @@ module.exports = {
   },
   async copySchedule(req, res) {
     try {
-      const { newDate, lessonsInSchedule } = req.body;
+      const { date, lessonsInSchedule } = req.body;
 
       const bulkData = [];
 
@@ -101,9 +101,9 @@ module.exports = {
       await Promise.all(
         lessonsInSchedule.map(async lesson => {
           formattedStart =
-            newDate + " " + new Date(lesson.start).toTimeString().substr(0, 5);
+            date + " " + new Date(lesson.start).toTimeString().substr(0, 5);
           formattedEnd =
-            newDate + " " + new Date(lesson.end).toTimeString().substr(0, 5);
+            date + " " + new Date(lesson.end).toTimeString().substr(0, 5);
 
           newLesson = {
             start: formattedStart,
@@ -128,9 +128,6 @@ module.exports = {
           }
         })
       );
-      console.log("depois foreach ---- vou addd");
-      console.log(bulkData);
-      console.log("depois foreach ---- vou addd");
 
       const schedules = await Schedule.bulkCreate(bulkData);
 

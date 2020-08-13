@@ -36,7 +36,7 @@ export const actions = {
   async copySchedule({ commit, dispatch, state }, payload) {
     payload.lessonsInSchedule = state.currentList;
     await MyApi.schedule.copySchedule(payload);
-    //decide what do do after rest
+    dispatch("fetchLessons", payload);
   },
   async deleteLesson({ commit, dispatch, state }, payload) {
     await MyApi.schedule.deleteLesson(payload.scheduleID);
