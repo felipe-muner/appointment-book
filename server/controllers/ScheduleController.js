@@ -92,34 +92,53 @@ module.exports = {
   },
   async copySchedule(req, res) {
     try {
-      console.log(req.body);
       const { newDate, lessonsInSchedule } = req.body;
 
       const bulkData = [];
 
-      let formattedStart, formattedEnd;
-      lessonsInSchedule.forEach(lesson => {
-        formattedStart =
-          newDate + " " + new Date(lesson.start).toTimeString().substr(0, 5);
-        formattedEnd =
-          newDate + " " + new Date(lesson.end).toTimeString().substr(0, 5);
+      let formattedStart, formattedEnd, newLesson;
 
-        bulkData.push({
-          start: formattedStart,
-          end: formattedEnd,
-          grade: lesson.grade,
-          lesson_id: lesson.lesson_id,
-          teacher_id: lesson.Teachers[0].teacherID,
-          school_id: lesson.Schools[0].schoolID
-        });
-      });
+      await Promise.all(
+        lessonsInSchedule.map(async lesson => {
+          formattedStart =
+            newDate + " " + new Date(lesson.start).toTimeString().substr(0, 5);
+          formattedEnd =
+            newDate + " " + new Date(lesson.end).toTimeString().substr(0, 5);
+
+          newLesson = {
+            start: formattedStart,
+            end: formattedEnd,
+            grade: lesson.grade,
+            lesson_id: lesson.lesson_id,
+            teacher_id: lesson.Teachers[0].teacherID,
+            school_id: lesson.Schools[0].schoolID
+          };
+
+          if (
+            !(await Schedule.findOne({
+              where: {
+                start: newLesson.start,
+                end: newLesson.end,
+                grade: newLesson.grade,
+                school_id: newLesson.school_id
+              }
+            }))
+          ) {
+            bulkData.push(newLesson);
+          }
+        })
+      );
+      console.log("depois foreach ---- vou addd");
+      console.log(bulkData);
+      console.log("depois foreach ---- vou addd");
 
       const schedules = await Schedule.bulkCreate(bulkData);
 
       res.json({
         code: 200,
         msg: "New schedule copied",
-        data: schedules
+        data: schedules,
+        totalAdded: schedules.length
       });
     } catch (error) {
       console.log(error);

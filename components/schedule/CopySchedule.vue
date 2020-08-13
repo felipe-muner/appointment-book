@@ -158,7 +158,6 @@ export default {
         const resp = await this.copySchedule({
           newDate: this.newDate,
         });
-        this.dialog = false;
         this.setSnack("Created Well");
         // if (resp.data.code === 200) this.dialog = false;
       }

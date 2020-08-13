@@ -137,7 +137,6 @@ export default {
       return !this.school;
     },
     lessonMatchDay() {
-      debugger;
       if (!this.school) {
         return [];
       }
