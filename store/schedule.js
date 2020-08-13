@@ -1,3 +1,4 @@
+import Vue from "vue";
 import MyApi from "../api/MyApi";
 
 export const state = () => ({
@@ -17,10 +18,13 @@ export const mutations = {
     state[payload.list] = payload.lessons;
   },
   deleteLesson(state, payload) {
-    console.log(payload);
     state[payload.list] = state[payload.list].filter(
       les => les.scheduleID !== payload.scheduleID
     );
+  },
+  initCopySchedule(state) {
+    Vue.set(state, "currentList", []);
+    Vue.set(state, "newList", []);
   }
 };
 
@@ -41,5 +45,8 @@ export const actions = {
   async deleteLesson({ commit, dispatch, state }, payload) {
     await MyApi.schedule.deleteLesson(payload.scheduleID);
     commit("deleteLesson", payload);
+  },
+  async initCopySchedule({ commit, dispatch, state }, payload) {
+    commit("initCopySchedule");
   }
 };

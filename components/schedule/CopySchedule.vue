@@ -123,12 +123,6 @@
 <script>
 import { mapActions, mapMutations, mapGetters } from "vuex";
 export default {
-  props: {
-    date: {
-      type: String,
-      required: true,
-    },
-  },
   data() {
     return {
       valid: true,
@@ -146,6 +140,7 @@ export default {
     ...mapActions({
       fetchLessons: "schedule/fetchLessons",
       copySchedule: "schedule/copySchedule",
+      initCopySchedule: "schedule/initCopySchedule",
     }),
     ...mapMutations({
       setSnack: "snackbar/setSnack",
@@ -185,13 +180,14 @@ export default {
         });
       }
     },
-    date(newVal) {
-      this.oldDate = newVal;
+    async dialog(newVal) {
+      if (newVal) {
+        this.oldDate = "";
+        this.newDate = "";
+        this.initCopySchedule();
+      }
     },
   },
-  // created() {
-  //   this.oldDate = this.date;
-  // },
 };
 </script>
 
