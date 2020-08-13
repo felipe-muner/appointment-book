@@ -1,5 +1,5 @@
 export default function({ $axios, redirect }) {
-  $axios.setBaseURL("http://192.168.9.100:8081");
+  $axios.setBaseURL("http://localhost:8081");
 
   $axios.onRequest(config => {
     // console.log(config);

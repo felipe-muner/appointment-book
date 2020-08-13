@@ -137,7 +137,8 @@ export default {
       return !this.school;
     },
     lessonMatchDay() {
-      if (!this.school.schoolID) {
+      debugger;
+      if (!this.school) {
         return [];
       }
       return this.school.Lessons.filter(

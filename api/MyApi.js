@@ -3,7 +3,7 @@ import School from "./school";
 import Schedule from "./schedule";
 import Email from "./email";
 
-const server = "http://192.168.9.100:8081";
+const server = "http://localhost:8081";
 
 export default {
   teacher: new Teacher(server),
