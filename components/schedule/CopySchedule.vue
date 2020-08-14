@@ -58,14 +58,29 @@
                       <th>Teacher</th>
                       <th>Grade</th>
                       <th>Time</th>
+                      <th></th>
                     </tr>
                   </thead>
                   <tbody>
-                    <tr v-for="les in lessonsArray('currentList')" v-bind:key="les.scheduleID">
+                    <tr v-for="les in lessonsArray('oldList')" v-bind:key="les.scheduleID">
                       <td>{{ les.Schools[0].name }}</td>
                       <td>{{ les.Teachers[0].name }}</td>
                       <td>{{ les.grade }}</td>
                       <td>{{ les.lessonTime }}</td>
+                      <td>
+                        <v-tooltip bottom>
+                          <template v-slot:activator="{ on, attrs }">
+                            <v-icon
+                              @click="handleRemoveLesson(les.scheduleID)"
+                              color="error"
+                              dark
+                              v-bind="attrs"
+                              v-on="on"
+                            >mdi-delete-empty</v-icon>
+                          </template>
+                          <span>remove</span>
+                        </v-tooltip>
+                      </td>
                     </tr>
                   </tbody>
                 </template>
@@ -129,6 +144,7 @@ export default {
       fetchLessons: "schedule/fetchLessons",
       copySchedule: "schedule/copySchedule",
       initCopySchedule: "schedule/initCopySchedule",
+      deleteLessonToCopy: "schedule/deleteLessonToCopy",
     }),
     ...mapMutations({
       setSnack: "snackbar/setSnack",
@@ -147,13 +163,16 @@ export default {
         }, 5000);
       }
     },
+    handleRemoveLesson(scheduleID) {
+      this.deleteLessonToCopy(scheduleID);
+    },
   },
   watch: {
     async oldDate(newVal) {
       if (newVal) {
         await this.fetchLessons({
           date: this.oldDate,
-          list: "currentList",
+          list: "oldList",
         });
       }
     },

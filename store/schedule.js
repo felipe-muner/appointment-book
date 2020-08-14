@@ -23,8 +23,11 @@ export const mutations = {
       les => les.scheduleID !== payload.scheduleID
     );
   },
+  deleteLessonToCopy(state, payload) {
+    state.oldList = state.oldList.filter(les => les.scheduleID !== payload);
+  },
   initCopySchedule(state) {
-    Vue.set(state, "currentList", []);
+    Vue.set(state, "oldList", []);
     Vue.set(state, "newList", []);
   }
 };
@@ -39,7 +42,7 @@ export const actions = {
     commit("fetchLessons", payload);
   },
   async copySchedule({ commit, dispatch, state }, payload) {
-    payload.lessonsInSchedule = state.currentList;
+    payload.lessonsInSchedule = state.oldList;
     const resp = await MyApi.schedule.copySchedule(payload);
     dispatch("fetchLessons", payload);
     return resp;
@@ -47,6 +50,9 @@ export const actions = {
   async deleteLesson({ commit, dispatch, state }, payload) {
     await MyApi.schedule.deleteLesson(payload.scheduleID);
     commit("deleteLesson", payload);
+  },
+  async deleteLessonToCopy({ commit, dispatch, state }, payload) {
+    commit("deleteLessonToCopy", payload);
   },
   async initCopySchedule({ commit, dispatch, state }, payload) {
     commit("initCopySchedule");
