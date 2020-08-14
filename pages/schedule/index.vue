@@ -190,8 +190,8 @@ export default {
           teacher: this.teacher,
         };
         await this.new(newSchedule);
-        // this.teacher = {};
-        // this.grade = [];
+        this.teacher = {};
+        this.grade = [];
         await this.handleFetchLessons();
       }
     },
