@@ -56,20 +56,6 @@
                       <td>{{ les.Teachers[0].name }}</td>
                       <td>{{ les.grade }}</td>
                       <td>{{ les.lessonTime }}</td>
-                      <td>
-                        <v-tooltip bottom>
-                          <template v-slot:activator="{ on, attrs }">
-                            <v-icon
-                              @click="handleRemoveLesson(les.scheduleID)"
-                              color="error"
-                              dark
-                              v-bind="attrs"
-                              v-on="on"
-                            >mdi-delete-empty</v-icon>
-                          </template>
-                          <span>remove</span>
-                        </v-tooltip>
-                      </td>
                     </tr>
                   </tbody>
                 </template>
@@ -94,20 +80,6 @@
                       <td>{{ les.Teachers[0].name }}</td>
                       <td>{{ les.grade }}</td>
                       <td>{{ les.lessonTime }}</td>
-                      <td>
-                        <v-tooltip bottom>
-                          <template v-slot:activator="{ on, attrs }">
-                            <v-icon
-                              @click="handleRemoveLesson(les.scheduleID)"
-                              color="error"
-                              dark
-                              v-bind="attrs"
-                              v-on="on"
-                            >mdi-delete-empty</v-icon>
-                          </template>
-                          <span>remove</span>
-                        </v-tooltip>
-                      </td>
                     </tr>
                   </tbody>
                 </template>
@@ -145,21 +117,12 @@ export default {
     ...mapMutations({
       setSnack: "snackbar/setSnack",
     }),
-    async handleRemoveLesson(scheduleID) {
-      console.log(scheduleID);
-    },
     async submitForm() {
       if (this.$refs.form.validate()) {
         const resp = await this.copySchedule({
           date: this.newDate,
           list: "newList",
         });
-
-        // console.log("to aqui voltei na store copyscheduel");
-        // console.log(resp);
-        // console.log("to aqui voltei na store copyscheduel");
-        // this.setSnack("Created Well");
-        // if (resp.data.code === 200) this.dialog = false;
       }
     },
   },
