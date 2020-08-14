@@ -95,14 +95,16 @@ module.exports = {
           }
         })
       );
-
-      const schedules = await Schedule.bulkCreate(bulkData);
+      console.log("muner");
+      console.log(bulkData);
+      console.log("muner");
+      // const schedules = await Schedule.bulkCreate(bulkData);
 
       res.json({
         code: 200,
-        msg: "New schedule created",
-        data: schedules,
-        totalAdded: schedules.length
+        msg: "New schedule created"
+        // data: schedules,
+        // totalAdded: schedules.length
       });
     } catch (error) {
       console.log(error);
