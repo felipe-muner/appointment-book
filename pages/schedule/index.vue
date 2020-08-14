@@ -1,9 +1,10 @@
 <template>
   <div>
     <!-- {{grade}} -->
-    <hr />
-    <!-- {{ lessonMatchDay }}
-    {{ date }}-->
+    <!-- {{ grade }} -->
+    <!-- <hr /> -->
+    <!-- {{lessonsArray('currentList')}} -->
+    <!-- {{ date }}-->
     <h1>Schedule</h1>
     <CopySchedule :date="date" />
     <br />
@@ -182,14 +183,15 @@ export default {
     },
     async submitForm() {
       if (this.$refs.form.validate()) {
-        await this.new({
+        let newSchedule = {
           date: this.date,
           school: this.school,
           grade: this.grade,
           teacher: this.teacher,
-        });
-        this.teacher = {};
-        this.grade = [];
+        };
+        await this.new(newSchedule);
+        // this.teacher = {};
+        // this.grade = [];
         await this.handleFetchLessons();
       }
     },
