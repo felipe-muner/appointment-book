@@ -101,7 +101,6 @@ module.exports = {
         $("#tbodyLessons").empty();
 
         emailLesson.forEach(les => {
-          console.log(les.Schools[0]);
           $("#tbodyLessons").append(
             `<tr>
               <td>${les.Schools[0].name}</td>
