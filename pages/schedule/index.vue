@@ -3,7 +3,7 @@
     <!-- {{grade}} -->
     <!-- {{ grade }} -->
     <!-- <hr /> -->
-    <!-- {{lessonsArray('currentList')}} -->
+    <!-- {{lessonsArray('indexList')}} -->
     <!-- {{ date }}-->
     <h1>Schedule</h1>
     <CopySchedule :date="date" />
@@ -82,7 +82,7 @@
             </tr>
           </thead>
           <tbody>
-            <tr v-for="les in lessonsArray('currentList')" v-bind:key="les.ScheduleID">
+            <tr v-for="les in lessonsArray('indexList')" v-bind:key="les.ScheduleID">
               <td>{{ les.Schools[0].name }}</td>
               <td>{{ les.Teachers[0].name }}</td>
               <td>{{ les.grade }}</td>
@@ -175,11 +175,11 @@ export default {
       await this.fetchLessons({
         date: this.date,
         school: this.school,
-        list: "currentList",
+        list: "indexList",
       });
     },
     async removeLesson(scheduleID) {
-      await this.deleteLesson({ scheduleID, list: "currentList" });
+      await this.deleteLesson({ scheduleID, list: "indexList" });
     },
     async submitForm() {
       if (this.$refs.form.validate()) {

@@ -36,7 +36,18 @@
               </v-col>
             </v-row>
           </v-form>
-
+          <v-row>
+            <v-col>
+              <v-alert
+                transition="fade-transition"
+                border="left"
+                dismissible
+                elevation="2"
+                type="info"
+                :value="alert"
+              >{{computedAlertMsg}}</v-alert>
+            </v-col>
+          </v-row>
           <v-row>
             <v-col cols="6">
               <v-simple-table>
@@ -99,12 +110,19 @@ export default {
       dialog: false,
       oldDate: "",
       newDate: "",
+      alert: false,
+      alertMsg: "",
     };
   },
   computed: {
     ...mapGetters({
       lessonsArray: "schedule/getList",
     }),
+    computedAlertMsg() {
+      return (
+        "Total of " + this.alertMsg + " copied." || "No new lessons to add."
+      );
+    },
   },
   methods: {
     ...mapActions({
@@ -121,6 +139,12 @@ export default {
           date: this.newDate,
           list: "newList",
         });
+        this.alert = true;
+        this.alertMsg = resp.data.totalAdded;
+        setTimeout(() => {
+          this.alert = false;
+          this.alertMsg = "";
+        }, 5000);
       }
     },
   },

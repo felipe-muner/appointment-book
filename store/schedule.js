@@ -2,7 +2,8 @@ import Vue from "vue";
 import MyApi from "../api/MyApi";
 
 export const state = () => ({
-  currentList: [],
+  indexList: [],
+  oldList: [],
   newList: []
 });
 
@@ -39,8 +40,9 @@ export const actions = {
   },
   async copySchedule({ commit, dispatch, state }, payload) {
     payload.lessonsInSchedule = state.currentList;
-    await MyApi.schedule.copySchedule(payload);
+    const resp = await MyApi.schedule.copySchedule(payload);
     dispatch("fetchLessons", payload);
+    return resp;
   },
   async deleteLesson({ commit, dispatch, state }, payload) {
     await MyApi.schedule.deleteLesson(payload.scheduleID);
