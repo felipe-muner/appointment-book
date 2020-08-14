@@ -67,13 +67,12 @@ module.exports = {
   async create(req, res) {
     try {
       let { date, school, grade, teacher } = req.body;
-      let newLesson;
 
       let bulkData = [];
 
       await Promise.all(
         grade.map(async gr => {
-          newLesson = {
+          let newLesson = {
             start: date + " " + gr.startTime,
             end: date + " " + gr.endTime,
             grade: gr.grade,
@@ -95,16 +94,14 @@ module.exports = {
           }
         })
       );
-      console.log("muner");
-      console.log(bulkData);
-      console.log("muner");
-      // const schedules = await Schedule.bulkCreate(bulkData);
+
+      const schedules = await Schedule.bulkCreate(bulkData);
 
       res.json({
         code: 200,
-        msg: "New schedule created"
-        // data: schedules,
-        // totalAdded: schedules.length
+        msg: "New schedule created",
+        data: schedules,
+        totalAdded: schedules.length
       });
     } catch (error) {
       console.log(error);
@@ -118,16 +115,14 @@ module.exports = {
 
       let bulkData = [];
 
-      let formattedStart, formattedEnd, newLesson;
-
       await Promise.all(
         lessonsInSchedule.map(async lesson => {
-          formattedStart =
+          let formattedStart =
             date + " " + new Date(lesson.start).toTimeString().substr(0, 5);
-          formattedEnd =
+          let formattedEnd =
             date + " " + new Date(lesson.end).toTimeString().substr(0, 5);
 
-          newLesson = {
+          let newLesson = {
             start: formattedStart,
             end: formattedEnd,
             grade: lesson.grade,
@@ -150,7 +145,9 @@ module.exports = {
           }
         })
       );
-
+      console.log("muner");
+      console.log(bulkData);
+      console.log("muner");
       const schedules = await Schedule.bulkCreate(bulkData);
 
       res.json({
