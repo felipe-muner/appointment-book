@@ -47,7 +47,6 @@
                       <th>Teacher</th>
                       <th>Grade</th>
                       <th>Time</th>
-                      <th></th>
                     </tr>
                   </thead>
                   <tbody>
@@ -71,7 +70,6 @@
                       <th>Teacher</th>
                       <th>Grade</th>
                       <th>Time</th>
-                      <th></th>
                     </tr>
                   </thead>
                   <tbody>
