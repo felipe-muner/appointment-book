@@ -87,7 +87,7 @@ module.exports = {
       // const htmlDiv = `<div><h2>Hi ${name}</h2></div>`;
       let filename = "utils/templateTeacherEmail.html";
       let template = fs.readFileSync(process.cwd() + "/" + filename, "utf8");
-      let mapIcon = 'https://cdn0.iconfinder.com/data/icons/tuts/256/maps.png'
+      let mapIcon = "https://cdn0.iconfinder.com/data/icons/tuts/256/maps.png";
       // let mapIcon = 'https://freeiconshop.com/wp-content/uploads/edd/location-map-flat.png'
 
       const $ = cheerio.load(template);
@@ -101,15 +101,22 @@ module.exports = {
         $("#tbodyLessons").empty();
 
         emailLesson.forEach(les => {
-          console.log(les.Schools[0])
+          console.log(les.Schools[0]);
           $("#tbodyLessons").append(
             `<tr>
               <td>${les.Schools[0].name}</td>
               <td>${les.grade}</td>
-              <td>${utils.extractTime(les.start)}</td>
-              <td>${utils.extractTime(les.end)}</td>
-              <td><a href="${les.Schools[0].address}">Map</a></td>
-              <td><img style="width:20px;height:20px;" src="${mapIcon}"></td>
+              <td>
+                ${utils.formatDDMMYYYY(les.start)}
+              </td>
+              <td>
+                ${utils.extractTime(les.start)} - ${utils.extractTime(les.end)}
+              </td>
+              <td>
+                <a href="${les.Schools[0].address}">
+                  <img style="width:20px;height:20px;" src="${mapIcon}">
+                </a>
+              </td>
             </tr>`
           );
         });

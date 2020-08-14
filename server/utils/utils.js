@@ -1,7 +1,7 @@
 const moment = require("moment");
 
 module.exports = {
-  formatBirthday: dt => {
+  formatDDMMYYYY: dt => {
     return moment(dt).format("DD/MM/YYYY");
   },
   extractDate: dt => {

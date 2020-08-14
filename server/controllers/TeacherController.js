@@ -6,7 +6,7 @@ module.exports = {
     try {
       let teachers = await Teacher.findAll();
       teachers.forEach(
-        t => (t.dataValues.formatBirthday = utils.formatBirthday(t.birthday))
+        t => (t.dataValues.formatBirthday = utils.formatDDMMYYYY(t.birthday))
       );
       teachers.forEach(
         t => (t.dataValues.birthdayYYYYMMDD = utils.extractDate(t.birthday))
