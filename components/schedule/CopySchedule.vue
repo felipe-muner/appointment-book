@@ -12,7 +12,7 @@
             v-bind="attrs"
             v-on="{ ...tooltip, ...menu }"
           >
-            <v-icon dark>mdi-pencil</v-icon>
+            <v-icon dark>mdi-content-copy</v-icon>
           </v-btn>
         </template>
         <span>Copy schedule</span>

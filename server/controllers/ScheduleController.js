@@ -145,9 +145,7 @@ module.exports = {
           }
         })
       );
-      console.log("muner");
-      console.log(bulkData);
-      console.log("muner");
+
       const schedules = await Schedule.bulkCreate(bulkData);
 
       res.json({
