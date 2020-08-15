@@ -1,6 +1,6 @@
 import axios from "axios";
 
-class Schedule {
+class Email {
   constructor(server) {
     this.server = server;
   }
@@ -12,8 +12,8 @@ class Schedule {
     });
   }
   async send(payload) {
-    return await axios.post(this.server + "/email/send", payload)
+    return await axios.post(this.server + "/email/send", payload);
   }
 }
 
-export default Schedule;
+export default Email;
