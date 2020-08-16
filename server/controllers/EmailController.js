@@ -34,7 +34,7 @@ module.exports = {
   },
   async search(req, res, next) {
     try {
-      const { startDate, endDate, groupBySearch } = req.query;
+      const { startDate, endDate } = req.query;
       let where = {
         [Op.and]: [
           sequelize.where(
