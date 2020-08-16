@@ -5,7 +5,7 @@ const utils = require("../utils/utils");
 const cheerio = require("cheerio");
 const fs = require("fs");
 
-const { Schedule, Teacher, Lesson, School } = require("../models");
+const { Schedule, Teacher, School } = require("../models");
 
 const transporter = nodemailer.createTransport({
   service: "gmail",
