@@ -1,17 +1,24 @@
 const sequelize = require("sequelize");
 const { Op } = require("sequelize");
-
+const utils = require("../utils/utils");
 const { Schedule, Teacher, School } = require("../models");
 
 module.exports = {
+  createShifts(req, res, next) {
+    let arrayShift = utils.drawShift(req.firstDay, req.lastDay);
+    req.teachers.forEach(t => t.setDataValue("shiftArray", arrayShift));
+    next();
+  },
+
   async search(req, res, next) {
     try {
       let { monthYear } = req.query;
+
       let year = parseInt(monthYear.split("-")[0]);
       let month = parseInt(monthYear.split("-")[1]) - 1;
 
-      var firstDay = new Date(year, month, 1);
-      var lastDay = new Date(year, month + 1, 0);
+      let firstDay = new Date(year, month, 1);
+      let lastDay = new Date(year, month + 1, 0);
 
       let where = {
         [Op.and]: [
@@ -33,13 +40,15 @@ module.exports = {
         include: [
           {
             model: Schedule,
-            include: [School, Teacher]
+            include: [School]
           }
         ]
       });
 
-      req.myData = "calculator salary controller";
       req.teachers = searchList;
+      req.firstDay = firstDay;
+      req.lastDay = lastDay;
+
       next();
     } catch (error) {
       console.log(error);

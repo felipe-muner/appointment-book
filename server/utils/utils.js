@@ -10,11 +10,22 @@ module.exports = {
   extractTime: dt => {
     return moment(dt).format("HH:mm");
   },
-  getDaysInMonth(firstDay, lastDay) {
+  drawShift(firstDay, lastDay) {
     let allDays = [];
     for (let d = firstDay; d <= lastDay; d.setDate(d.getDate() + 1)) {
-      allDays.push(new Date(d));
+      let morningShift = {
+        day: moment(d).format("YYYY-MM-DD"),
+        shift: "morning",
+        lessons: []
+      };
+      let shiftAfternoon = {
+        day: moment(d).format("YYYY-MM-DD"),
+        shift: "afternoon",
+        lessons: []
+      };
+      allDays.push(morningShift, shiftAfternoon);
     }
+    return allDays;
   },
-  drawArrayShitf() {}
+  setUpLessons() {}
 };
