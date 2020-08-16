@@ -7,7 +7,7 @@ router.get(
   "/",
   CalculatorController.search,
   CalculatorController.createShifts,
-  // CalculatorController.setUpLessons,
+  CalculatorController.setUpLessons,
   function(req, res) {
     res.json({
       msg: "respond with a calculator",

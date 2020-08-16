@@ -6,10 +6,18 @@ const { Schedule, Teacher, School } = require("../models");
 module.exports = {
   createShifts(req, res, next) {
     let arrayShift = utils.drawShift(req.firstDay, req.lastDay);
+    console.log(arrayShift);
     req.teachers.forEach(t => t.setDataValue("shiftArray", arrayShift));
     next();
   },
-
+  setUpLessons(req, res, next) {
+    req.teachers.forEach(teach => {
+      teach.Schedules.forEach(sched => {
+        console.log(sched);
+      });
+    });
+    next();
+  },
   async search(req, res, next) {
     try {
       let { monthYear } = req.query;
