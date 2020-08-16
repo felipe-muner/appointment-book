@@ -10,6 +10,10 @@ module.exports = {
       {
         name: "Teacher Assistant",
         value: "3"
+      },
+      {
+        name: "Default Minutes Shift",
+        value: "140"
       }
     ]);
   },
