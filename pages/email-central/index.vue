@@ -26,16 +26,14 @@
         </v-row>
       </v-form>
     </div>
-    {{selected.length}}
-    {{selected}}
+    <!-- {{selected.length}}
+    {{selected}}-->
     <hr />
-    <!-- {{searchedItems}} -->
+    {{searchedItems}}
     <v-row no-gutters>
       <v-expansion-panels :multiple="true" v-model="openPanel">
         <v-expansion-panel v-for="(item, i) in searchedItems" :key="i">
-          <v-expansion-panel-header
-            class="header-style"
-          >{{ item.name }} - {{item.schoolID || item.teacherID}}</v-expansion-panel-header>
+          <v-expansion-panel-header class="header-style">{{ item.name }}</v-expansion-panel-header>
           <v-expansion-panel-content>
             <v-data-table
               v-model="selected"
@@ -45,7 +43,7 @@
               show-select
               class="elevation-1"
               disable-pagination
-              hide-default-footer              
+              hide-default-footer
             ></v-data-table>
           </v-expansion-panel-content>
         </v-expansion-panel>

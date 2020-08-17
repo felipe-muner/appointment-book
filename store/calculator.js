@@ -6,6 +6,9 @@ export const state = () => ({
 });
 
 export const getters = {
+  openPanel: state => {
+    return [...Array(state.list.length).keys()];
+  },
   getList: state => {
     return state.list;
   }
@@ -21,6 +24,6 @@ export const actions = {
   async search({ commit, dispatch, state }, payload) {
     console.log("to aqui");
     const resp = await MyApi.calculator.search(payload);
-    commit("search", resp.data.data);
+    commit("search", resp.data.teachers);
   }
 };
