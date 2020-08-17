@@ -17,7 +17,6 @@
         </v-col>
       </v-row>
       <v-row no-gutters>
-        {{teachers}}
         <v-expansion-panels :multiple="true" v-model="openPanel">
           <v-expansion-panel v-for="(item, i) in teachers" :key="i">
             <v-expansion-panel-header class="header-style">{{ item.name }}</v-expansion-panel-header>
@@ -63,7 +62,8 @@ export default {
           value: "day",
         },
         { text: "Shift", value: "shift" },
-        { text: "Total minutes", value: "lessons" },
+        { text: "Lessons", value: "lessons" },
+        { text: "Total minutes", value: "totalMinutes" },
       ];
     },
   },

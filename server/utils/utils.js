@@ -16,12 +16,14 @@ module.exports = {
       let morningShift = {
         day: moment(d).format("YYYY-MM-DD"),
         shift: "morning",
-        lessons: []
+        lessons: [],
+        totalMinutes: 0
       };
       let shiftAfternoon = {
         day: moment(d).format("YYYY-MM-DD"),
         shift: "afternoon",
-        lessons: []
+        lessons: [],
+        totalMinutes: 0
       };
       allDays.push(morningShift, shiftAfternoon);
     }

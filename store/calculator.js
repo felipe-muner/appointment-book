@@ -22,8 +22,8 @@ export const mutations = {
 
 export const actions = {
   async search({ commit, dispatch, state }, payload) {
-    console.log("to aqui");
     const resp = await MyApi.calculator.search(payload);
+    console.log(resp.data.teachers);
     commit("search", resp.data.teachers);
   }
 };
