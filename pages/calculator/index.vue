@@ -17,9 +17,9 @@
         </v-col>
       </v-row>
       <v-row no-gutters>
-        {{searchedItems}}
+        {{teachers}}
         <v-expansion-panels :multiple="true" v-model="openPanel">
-          <v-expansion-panel v-for="(item, i) in searchedItems" :key="i">
+          <v-expansion-panel v-for="(item, i) in teachers" :key="i">
             <v-expansion-panel-header class="header-style">{{ item.name }}</v-expansion-panel-header>
             <v-expansion-panel-content>
               <v-data-table
@@ -51,7 +51,7 @@ export default {
   },
   computed: {
     ...mapGetters({
-      searchedItems: "calculator/getList",
+      teachers: "calculator/getList",
       openPanel: "calculator/openPanel",
     }),
     setHeader() {
