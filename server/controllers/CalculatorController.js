@@ -68,47 +68,16 @@ module.exports = {
 
       searchList.forEach(teacher => {
         teacher.Schedules.forEach(lesson => {
-          console.log(lesson.teacher_id);
-          console.log(lesson.start);
           let day = utils.extractDate(lesson.start);
 
           let shiftLesson =
-            lesson.start.getHours() < 13 ? "morning" : "afternoon";
+            lesson.start.getHours() < 13 ? "Morning" : "Afternoon";
 
           teacher.shiftArray
             .find(shifts => shifts.day === day && shifts.shift === shiftLesson)
             .lessons.push(lesson);
-
-          console.log(day);
-          console.log(shiftLesson);
         });
-        // console.log(teacher);
       });
-
-      // let newList = searchList.map(item => {
-      //   let newShift = utils.drawShift(firstDay, lastDay);
-      //   return {
-      //     ...item.dataValues,
-      //     shiftArray: [...newShift]
-      //   };
-      // });
-
-      // console.log(newList);
-
-      // searchList.forEach(teacher => {
-      //   let shiftArray = utils.drawShift(firstDay, lastDay);
-      //   teacher.setDataValue("shiftArray", shiftArray);
-      // });
-
-      // utils.drawShift(firstDay, lastDay)
-      // let newObj = {
-      //   ...t,
-      //   shiftArray: [...utils.drawShift(firstDay, lastDay)]
-      // };
-
-      // searchList[0].dataValues.shiftArray.push({ name: "felipe" });
-
-      // console.log(searchList);
 
       req.teachers = searchList;
       next();

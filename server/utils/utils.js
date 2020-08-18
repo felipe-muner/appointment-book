@@ -21,13 +21,13 @@ module.exports = {
     while (current <= endDate) {
       let morningShift = {
         day: moment(current).format("YYYY-MM-DD"),
-        shift: "morning",
+        shift: "Morning",
         lessons: [],
         totalMinutes: 0
       };
       let afternoonShift = {
         day: moment(current).format("YYYY-MM-DD"),
-        shift: "afternoon",
+        shift: "Afternoon",
         lessons: [],
         totalMinutes: 0
       };
