@@ -10,22 +10,29 @@ module.exports = {
   extractTime: dt => {
     return moment(dt).format("HH:mm");
   },
-  drawShift(firstDay, lastDay) {
+  getTest(id) {
+    console.log(id);
+    return [id];
+  },
+  drawShift(startDate, endDate, teacherID) {
     let allDays = [];
-    for (let d = firstDay; d <= lastDay; d.setDate(d.getDate() + 1)) {
+    //to avoid modifying the original date
+    const current = new Date(startDate);
+    while (current <= endDate) {
       let morningShift = {
-        day: moment(d).format("YYYY-MM-DD"),
+        day: moment(current).format("YYYY-MM-DD"),
         shift: "morning",
         lessons: [],
         totalMinutes: 0
       };
-      let shiftAfternoon = {
-        day: moment(d).format("YYYY-MM-DD"),
+      let afternoonShift = {
+        day: moment(current).format("YYYY-MM-DD"),
         shift: "afternoon",
         lessons: [],
         totalMinutes: 0
       };
-      allDays.push(morningShift, shiftAfternoon);
+      allDays = [...allDays, morningShift, afternoonShift];
+      current.setDate(current.getDate() + 1);
     }
     return allDays;
   },
