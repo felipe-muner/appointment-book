@@ -80,10 +80,14 @@ module.exports = {
         teacher.shiftArray.forEach(shift => {
           console.log("comecei");
           console.log(shift);
-          shift.lessons.forEach(lesson => {
-            shift.totalMinutes += (lesson.end - lesson.start) / 1000 / 60;
-            console.log(lesson.get());
-          });
+          shift.totalMinutes = shift.lessons.reduce(
+            (sum, cur) => sum + (cur.end - cur.start) / 1000 / 60,
+            0
+          );
+          // shift.lessons.forEach(lesson => {
+          //   shift.totalMinutes += (lesson.end - lesson.start) / 1000 / 60;
+          //   console.log(lesson.get());
+          // });
           console.log(shift.totalMinutes);
           console.log("terminei");
           // let total = shift.lessons.reduce((a, b) => ({ x: a.x + b.x }));
