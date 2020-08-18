@@ -41,6 +41,10 @@
 import { mapGetters, mapActions } from "vuex";
 
 export default {
+  watchQuery: true,
+  asyncData({ query, app }) {
+    app.store.dispatch("calculator/initCalculator");
+  },
   data() {
     return {
       monthYear: "2020-09",
@@ -70,6 +74,7 @@ export default {
   methods: {
     ...mapActions({
       search: "calculator/search",
+      initCalculator: "calculator/initCalculator",
     }),
     async handleSearch() {
       if (this.$refs.form.validate()) {

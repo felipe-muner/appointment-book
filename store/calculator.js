@@ -17,6 +17,9 @@ export const getters = {
 export const mutations = {
   search(state, payload) {
     Vue.set(state, "list", payload);
+  },
+  initCalculator(state) {
+    Vue.set(state, "list", []);
   }
 };
 
@@ -25,5 +28,9 @@ export const actions = {
     const resp = await MyApi.calculator.search(payload);
     console.log(resp.data.teachers);
     commit("search", resp.data.teachers);
+  },
+  async initCalculator({ commit, dispatch, state }, payload) {
+    console.log("chamei vuex init calculator");
+    commit("initCalculator");
   }
 };
