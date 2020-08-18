@@ -35,6 +35,5 @@ module.exports = {
       current.setDate(current.getDate() + 1);
     }
     return allDays;
-  },
-  setUpLessons() {}
+  }
 };
