@@ -75,9 +75,9 @@ module.exports = {
           let shiftLesson =
             lesson.start.getHours() < 13 ? "morning" : "afternoon";
 
-          // teacher.shiftArray
-          //   .find(shifts => shifts.day === day && shifts.shift === shiftLesson)
-          //   .lessons.push(lesson);
+          teacher.shiftArray
+            .find(shifts => shifts.day === day && shifts.shift === shiftLesson)
+            .lessons.push(lesson);
 
           console.log(day);
           console.log(shiftLesson);
