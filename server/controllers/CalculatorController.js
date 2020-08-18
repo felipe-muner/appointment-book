@@ -58,7 +58,6 @@ module.exports = {
         ]
       });
 
-      // let shifts = utils.drawShift(firstDay, lastDay);
       searchList = searchList.map(item => {
         return {
           ...item.dataValues,
@@ -77,6 +76,22 @@ module.exports = {
             .find(shifts => shifts.day === day && shifts.shift === shiftLesson)
             .lessons.push(lesson);
         });
+
+        teacher.shiftArray.forEach(shift => {
+          console.log("comecei");
+          console.log(shift);
+          shift.lessons.forEach(lesson => {
+            shift.totalMinutes += (lesson.end - lesson.start) / 1000 / 60;
+            console.log(lesson.get());
+          });
+          console.log(shift.totalMinutes);
+          console.log("terminei");
+          // let total = shift.lessons.reduce((a, b) => ({ x: a.x + b.x }));
+        });
+
+        // console.log("----init");
+        // console.log(teacher.shiftArray);
+        // console.log("----fim");
       });
 
       req.teachers = searchList;

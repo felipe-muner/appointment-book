@@ -74,7 +74,6 @@ export default {
   methods: {
     ...mapActions({
       search: "calculator/search",
-      initCalculator: "calculator/initCalculator",
     }),
     async handleSearch() {
       if (this.$refs.form.validate()) {
