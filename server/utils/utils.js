@@ -16,7 +16,7 @@ module.exports = {
   },
   lessonTextToDisplay(lesson) {
     return (
-      "<span>" +
+      "<div>" +
       lesson.Schools[0].name +
       " - " +
       lesson.grade +
@@ -24,7 +24,7 @@ module.exports = {
       moment(lesson.start).format("HH:mm") +
       " - " +
       moment(lesson.end).format("HH:mm") +
-      "</span><br />"
+      "</div>"
     );
   },
   drawShift(startDate, endDate, teacherID) {
