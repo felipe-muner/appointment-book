@@ -40,7 +40,7 @@
                 </template>
                 <template v-slot:body="{ items }">
                   <tbody>
-                    <tr v-for="item in items" :key="item.name">
+                    <tr v-for="item in items" :key="JSON.stringify(item)">
                       <td>{{ item.day }}</td>
                       <td>{{ item.shift }}</td>
                       <td>
