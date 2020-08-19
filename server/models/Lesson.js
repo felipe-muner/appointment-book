@@ -30,5 +30,6 @@ module.exports = (sequelize, DataTypes) => {
       sourceKey: "lessonID"
     });
   };
+
   return Lesson;
 };

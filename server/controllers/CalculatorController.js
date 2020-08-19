@@ -56,20 +56,20 @@ module.exports = {
           teacher.shiftArray
             .find(shifts => shifts.day === day && shifts.shift === shiftLesson)
             .lessons.push(lesson);
+
+          return lesson;
         });
 
         teacher.shiftArray = teacher.shiftArray.map(shift => {
-          shift.totalMinutes = shift.lessons.reduce(
-            (sum, cur) => sum + (cur.end - cur.start) / 1000 / 60,
-            0
-          );
-          return {
-            ...shift
-          };
+          shift.lessons = shift.lessons.reduce((acc, cur) => {
+            shift.textToDisplay += utils.lessonTextToDisplay(cur);
+            shift.totalMinutes += (cur.end - cur.start) / 1000 / 60;
+            acc.push(cur);
+            return acc;
+          }, []);
+          return shift;
         });
-        return {
-          ...teacher
-        };
+        return teacher;
       });
 
       res.json({

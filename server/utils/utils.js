@@ -14,6 +14,19 @@ module.exports = {
     console.log(id);
     return [id];
   },
+  lessonTextToDisplay(lesson) {
+    return (
+      "<span>" +
+      lesson.Schools[0].name +
+      " - " +
+      lesson.grade +
+      " - " +
+      moment(lesson.start).format("HH:mm") +
+      " - " +
+      moment(lesson.end).format("HH:mm") +
+      "</span><br />"
+    );
+  },
   drawShift(startDate, endDate, teacherID) {
     let allDays = [];
     //to avoid modifying the original date
@@ -23,12 +36,14 @@ module.exports = {
         day: moment(current).format("YYYY-MM-DD"),
         shift: "Morning",
         lessons: [],
+        textToDisplay: "",
         totalMinutes: 0
       };
       let afternoonShift = {
         day: moment(current).format("YYYY-MM-DD"),
         shift: "Afternoon",
         lessons: [],
+        textToDisplay: "",
         totalMinutes: 0
       };
       allDays = [...allDays, morningShift, afternoonShift];

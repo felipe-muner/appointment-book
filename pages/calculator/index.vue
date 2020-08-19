@@ -22,13 +22,35 @@
             <v-expansion-panel-header class="header-style">{{ item.name }}</v-expansion-panel-header>
             <v-expansion-panel-content>
               <v-data-table
-                :headers="setHeader"
                 :items="item.shiftArray"
                 item-key="scheduleID"
                 class="elevation-1"
                 disable-pagination
                 hide-default-footer
-              ></v-data-table>
+              >
+                <template v-slot:header>
+                  <thead>
+                    <tr>
+                      <th>Day</th>
+                      <th>Shift</th>
+                      <th>Lessons</th>
+                      <th>Total Minutes</th>
+                    </tr>
+                  </thead>
+                </template>
+                <template v-slot:body="{ items }">
+                  <tbody>
+                    <tr v-for="item in items" :key="item.name">
+                      <td>{{ item.day }}</td>
+                      <td>{{ item.shift }}</td>
+                      <td>
+                        <div v-html="item.textToDisplay"></div>
+                      </td>
+                      <td>{{ item.totalMinutes }}</td>
+                    </tr>
+                  </tbody>
+                </template>
+              </v-data-table>
             </v-expansion-panel-content>
           </v-expansion-panel>
         </v-expansion-panels>
@@ -66,7 +88,7 @@ export default {
           value: "day",
         },
         { text: "Shift", value: "shift" },
-        { text: "Lessons", value: "lessons" },
+        { text: "Lessons", value: "textToDisplay" },
         { text: "Total minutes", value: "totalMinutes" },
       ];
     },
