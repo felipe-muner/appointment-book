@@ -46,8 +46,8 @@ module.exports = {
         };
       });
 
-      searchList.forEach(teacher => {
-        teacher.Schedules.forEach(lesson => {
+      searchList = searchList.map(teacher => {
+        teacher.Schedules = teacher.Schedules.map(lesson => {
           let day = utils.extractDate(lesson.start);
 
           let shiftLesson =
@@ -57,6 +57,7 @@ module.exports = {
             .find(shifts => shifts.day === day && shifts.shift === shiftLesson)
             .lessons.push(lesson);
         });
+
         teacher.shiftArray = teacher.shiftArray.map(shift => {
           shift.totalMinutes = shift.lessons.reduce(
             (sum, cur) => sum + (cur.end - cur.start) / 1000 / 60,
@@ -66,6 +67,9 @@ module.exports = {
             ...shift
           };
         });
+        return {
+          ...teacher
+        };
       });
 
       res.json({
