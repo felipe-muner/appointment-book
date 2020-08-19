@@ -81,8 +81,11 @@ module.exports = {
         // console.log("----fim");
       });
 
-      req.teachers = searchList;
-      next();
+      res.json({
+        msg: "respond with a calculator",
+        data: "calculatorController",
+        teachers: searchList
+      });
     } catch (error) {
       console.log(error);
       console.log("error calculator send");
