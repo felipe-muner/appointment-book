@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialog" width="50%">
+  <v-dialog v-model="dialog" width="80%">
     <template v-slot:activator="{ on: menu, attrs }">
       <v-tooltip bottom>
         <template v-slot:activator="{ on: tooltip }">
@@ -72,6 +72,64 @@
                 dense
               />
             </v-row>
+            <v-container fluid class="pt-0 pb-5">
+              <v-row>
+                <v-col cols="12" class="pt-0">
+                  <v-row align="center" justify="space-around">
+                    <v-checkbox
+                      v-model="teacher.workDays"
+                      label="Monday"
+                      value="1"
+                      hide-details
+                      class="mt-0"
+                    ></v-checkbox>
+                    <v-checkbox
+                      v-model="teacher.workDays"
+                      label="Tuesday"
+                      value="2"
+                      hide-details
+                      class="mt-0"
+                    ></v-checkbox>
+                    <v-checkbox
+                      v-model="teacher.workDays"
+                      label="Wednesday"
+                      value="3"
+                      hide-details
+                      class="mt-0"
+                    ></v-checkbox>
+                    <v-checkbox
+                      v-model="teacher.workDays"
+                      label="Thursday"
+                      value="4"
+                      hide-details
+                      class="mt-0"
+                    ></v-checkbox>
+                    <v-checkbox
+                      v-model="teacher.workDays"
+                      label="Friday"
+                      value="5"
+                      hide-details
+                      class="mt-0"
+                    ></v-checkbox>
+                    <v-checkbox
+                      v-model="teacher.workDays"
+                      label="Saturday"
+                      value="6"
+                      hide-details
+                      class="mt-0"
+                    ></v-checkbox>
+                    <v-checkbox
+                      v-model="teacher.workDays"
+                      label="Sunday"
+                      value="0"
+                      hide-details
+                      class="mt-0"
+                    ></v-checkbox>
+                  </v-row>
+                </v-col>
+              </v-row>
+            </v-container>
+
             <v-row>
               <v-menu
                 ref="menu"
@@ -129,28 +187,29 @@ export default {
         email: "qwe@qwe.com",
         phone: "929292",
         salary: "",
+        workDays: ["1", "2", "3", "4", "5"],
         birthday: "1970-10-10",
         isTeacherAssistant: false,
       },
       nameRules: [
-        v => !!v || "Name is required",
-        v => (v && v.length <= 10) || "Name must be less than 10 characters"
+        (v) => !!v || "Name is required",
+        (v) => (v && v.length <= 10) || "Name must be less than 10 characters",
       ],
       emailRules: [
-        v => !!v || "E-mail is required",
-        v => /.+@.+\..+/.test(v) || "E-mail must be valid"
+        (v) => !!v || "E-mail is required",
+        (v) => /.+@.+\..+/.test(v) || "E-mail must be valid",
       ],
-      phoneRules: [v => !!v || "Phone is required"],
-      salaryRules: [v => !!v || "Salary is required"],
-      birthdayRules: [v => !!v || "Birthday is required"],
+      phoneRules: [(v) => !!v || "Phone is required"],
+      salaryRules: [(v) => !!v || "Salary is required"],
+      birthdayRules: [(v) => !!v || "Birthday is required"],
     };
   },
   methods: {
     ...mapActions({
-      new: "teacher/new"
+      new: "teacher/new",
     }),
     ...mapMutations({
-      setSnack: "snackbar/setSnack"
+      setSnack: "snackbar/setSnack",
     }),
     save(date) {
       this.$refs.menu.save(date);
@@ -161,13 +220,13 @@ export default {
         this.setSnack(resp.data.msg);
         if (resp.data.code === 200) this.dialog = false;
       }
-    }
+    },
   },
   watch: {
     menu(val) {
       val && setTimeout(() => (this.$refs.picker.activePicker = "YEAR"));
-    }
-  }
+    },
+  },
 };
 </script>
 

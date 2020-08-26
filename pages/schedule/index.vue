@@ -166,9 +166,6 @@ export default {
   },
   watch: {
     school: async function (val) {
-      console.log('entrei qnd zerou');
-      console.log(this.school)
-      console.log('entrei qnd zerou');
       if (val) await this.handleFetchLessons();
     },
     date: async function (val) {
