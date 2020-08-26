@@ -46,34 +46,65 @@ module.exports = {
         };
         newItem.workDays = newItem.workDays.split(",");
         newItem.shiftArray = utils.drawShift(firstDay, lastDay, newItem);
-        console.log(newItem);
         return newItem;
       });
 
       searchList = searchList.map(teacher => {
-        teacher.Schedules = teacher.Schedules.map(lesson => {
+        let cpTeacher = { ...teacher };
+        cpTeacher.Schedules = cpTeacher.Schedules.map(lesson => {
           let day = utils.extractDate(lesson.start);
 
           let shiftLesson =
             lesson.start.getHours() < 13 ? "Morning" : "Afternoon";
 
-          teacher.shiftArray
+          cpTeacher.shiftArray
             .find(shifts => shifts.day === day && shifts.shift === shiftLesson)
             .lessons.push(lesson);
 
           return lesson;
         });
 
-        teacher.shiftArray = teacher.shiftArray.map(shift => {
-          shift.lessons = shift.lessons.reduce((acc, cur) => {
-            shift.textToDisplay += utils.lessonTextToDisplay(cur);
-            shift.totalMinutes += (cur.end - cur.start) / 1000 / 60;
+        cpTeacher.workedShifts = cpTeacher.shiftArray.filter(
+          shift => shift.lessons.length
+        ).length;
+
+        console.log("--worked");
+        console.log(cpTeacher.teacherID);
+        console.log(cpTeacher.workedShifts);
+        console.log("--worked");
+
+        // console.log("amountShift----");
+
+        // console.log(cpTeacher.salary);
+
+        // console.log(cpTeacher.shiftArray.length);
+
+        // cpTeacher.salaryPerShift =
+        //   cpTeacher.salary / cpTeacher.shiftArray.length;
+
+        // console.log(cpTeacher.salaryPerShift);
+        // console.log(cpTeacher.salaryPerShift * 22500);
+
+        // console.log(cpTeacher.salaryPerShift.toFixed(2));
+
+        // console.log(
+        //   ((Math.round(cpTeacher.salaryPerShift * 100) / 100) * 22500).toFixed(
+        //     2
+        //   )
+        // );
+        // console.log((cpTeacher.salaryPerShift * 22500).toFixed(2));
+        // console.log("amountShift----");
+        cpTeacher.shiftArray = cpTeacher.shiftArray.map(shift => {
+          let cpShift = { ...shift };
+          cpShift.lessons = cpShift.lessons.reduce((acc, cur) => {
+            cpShift.textToDisplay += utils.lessonTextToDisplay(cur);
+            cpShift.totalMinutes += (cur.end - cur.start) / 1000 / 60;
             acc.push(cur);
             return acc;
           }, []);
-          return shift;
+          return cpShift;
         });
-        return teacher;
+        return cpTeacher;
       });
 
       res.json({

@@ -28,6 +28,7 @@ module.exports = {
     );
   },
   drawShift(startDate, endDate, teacher) {
+    let copyTeacher = { ...teacher };
     let allDays = [];
     //to avoid modifying the original date
     const current = new Date(startDate);
@@ -55,7 +56,9 @@ module.exports = {
         totalMinutes: 0
       };
       if (
-        teacher.workDays.map(num => parseInt(num)).includes(current.getDay())
+        copyTeacher.workDays
+          .map(num => parseInt(num))
+          .includes(current.getDay())
       ) {
         allDays = [...allDays, morningShift, afternoonShift];
       }
