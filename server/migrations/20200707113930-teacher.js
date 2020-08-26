@@ -22,7 +22,10 @@ module.exports = {
         type: Sequelize.STRING
       },
       salary: {
-        type: Sequelize.DECIMAL(10,2)
+        type: Sequelize.DECIMAL(10, 2)
+      },
+      workDays: {
+        type: Sequelize.STRING
       },
       isTeacherAssistant: {
         type: Sequelize.BOOLEAN

@@ -9,6 +9,7 @@ module.exports = {
         birthday: "1990-03-07",
         phone: "0395122643",
         salary: 1200,
+        workDays: "123456",
         isTeacherAssistant: 0
       },
       {
@@ -17,6 +18,7 @@ module.exports = {
         birthday: "1991-03-06",
         phone: "8927382929",
         salary: 1200,
+        workDays: "12345",
         isTeacherAssistant: 0
       },
       {
@@ -25,6 +27,7 @@ module.exports = {
         birthday: "2000-03-07",
         phone: "81818181",
         salary: 400,
+        workDays: "123456",
         isTeacherAssistant: 1
       }
     ]);
