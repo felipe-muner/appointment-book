@@ -8,6 +8,7 @@
     <!-- <hr /> -->
     <!-- {{lessonsArray('indexList')}} -->
     <!-- {{ date }}-->
+    {{school}}
     <h1>Schedule</h1>
     <CopySchedule :date="date" />
     <br />
@@ -25,12 +26,13 @@
             type="date"
           />
         </v-col>
+        <!-- @click:clear="callItBack()" -->
         <v-col>
           <v-autocomplete
             clearable
             :rules="requiredRules"
             return-object
-            v-model="school"
+            v-model="school"            
             :items="schools"
             item-text="name"
             label="School"
@@ -113,6 +115,7 @@
 </template>
 
 <script>
+
 import { mapGetters, mapActions } from "vuex";
 import CopySchedule from "@/components/schedule/CopySchedule";
 
@@ -145,7 +148,6 @@ export default {
       if (!this.school || !this.date) {
         return [];
       }
-
       
       let lessons = this.school.Lessons.filter(
         (l) =>
@@ -158,14 +160,14 @@ export default {
         return {...l}
       })
 
-      console.log('sou lessons');
-      console.log(lessons);
-      console.log('sou lessons');
       return lessons
     },
   },
   watch: {
     school: async function (val) {
+      console.log('entrei qnd zerou');
+      console.log(this.school)
+      console.log('entrei qnd zerou');
       if (val) await this.handleFetchLessons();
     },
     date: async function (val) {
@@ -191,6 +193,13 @@ export default {
     },
     async removeLesson(scheduleID) {
       await this.deleteLesson({ scheduleID, list: "indexList" });
+    },
+    callItBack(){
+      // let _this = this
+      // this.$nextTick(() => {
+      //   console.log(_this);
+      //   _this.school.Lessons = []
+      // })
     },
     async submitForm() {
       if (this.$refs.form.validate()) {
