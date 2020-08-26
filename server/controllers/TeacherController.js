@@ -5,13 +5,21 @@ module.exports = {
   async getAll(req, res) {
     try {
       let teachers = await Teacher.findAll();
-      teachers.forEach(
-        t => (t.dataValues.formatBirthday = utils.formatDDMMYYYY(t.birthday))
-      );
-      teachers.forEach(
-        t => (t.dataValues.birthdayYYYYMMDD = utils.extractDate(t.birthday))
-      );
-      res.send(teachers);
+
+      const teachersUpdated = teachers.map(tea => {
+        tea.dataValues.formatBirthday = utils.formatDDMMYYYY(tea.birthday);
+        tea.dataValues.birthdayYYYYMMDD = utils.extractDate(tea.birthday);
+        tea.dataValues.workDays = tea.dataValues.workDays.split(",");
+        return tea;
+      });
+
+      // teachers.forEach(
+      //   t => (t.dataValues.formatBirthday = utils.formatDDMMYYYY(t.birthday))
+      // );
+      // teachers.forEach(
+      //   t => (t.dataValues.birthdayYYYYMMDD = utils.extractDate(t.birthday))
+      // );
+      res.send(teachersUpdated);
     } catch (error) {
       console.log(error);
       console.log("error teacher getall");
@@ -34,7 +42,7 @@ module.exports = {
         birthday: req.body.birthday,
         phone: req.body.phone,
         salary: req.body.salary,
-        workDays: req.body.workDays.sort().join(""), // sort it
+        workDays: req.body.workDays.sort().toString(), // sort it
         isTeacherAssistant: req.body.isTeacherAssistant
       });
       res.json({ code: 200, msg: "Teacher created", data: teacher });
@@ -67,6 +75,7 @@ module.exports = {
           phone: req.body.phone,
           isTeacherAssistant: req.body.isTeacherAssistant,
           salary: req.body.salary,
+          workDays: req.body.workDays.sort().toString(),
           active: req.body.active
         },
         {

@@ -1,5 +1,5 @@
 <template>
-  <v-dialog v-model="dialog" width="50%">
+  <v-dialog v-model="dialog" width="80%">
     <template v-slot:activator="{ on: menu, attrs }">
       <v-tooltip bottom>
         <template v-slot:activator="{ on: tooltip }">
@@ -88,6 +88,63 @@
                 dense
               />
             </v-row>
+            <v-container fluid class="pt-0 pb-5">
+              <v-row>
+                <v-col cols="12" class="pt-0">
+                  <v-row align="center" justify="space-around">
+                    <v-checkbox
+                      v-model="selectedToUpdate.workDays"
+                      label="Monday"
+                      value="1"
+                      hide-details
+                      class="mt-0"
+                    ></v-checkbox>
+                    <v-checkbox
+                      v-model="selectedToUpdate.workDays"
+                      label="Tuesday"
+                      value="2"
+                      hide-details
+                      class="mt-0"
+                    ></v-checkbox>
+                    <v-checkbox
+                      v-model="selectedToUpdate.workDays"
+                      label="Wednesday"
+                      value="3"
+                      hide-details
+                      class="mt-0"
+                    ></v-checkbox>
+                    <v-checkbox
+                      v-model="selectedToUpdate.workDays"
+                      label="Thursday"
+                      value="4"
+                      hide-details
+                      class="mt-0"
+                    ></v-checkbox>
+                    <v-checkbox
+                      v-model="selectedToUpdate.workDays"
+                      label="Friday"
+                      value="5"
+                      hide-details
+                      class="mt-0"
+                    ></v-checkbox>
+                    <v-checkbox
+                      v-model="selectedToUpdate.workDays"
+                      label="Saturday"
+                      value="6"
+                      hide-details
+                      class="mt-0"
+                    ></v-checkbox>
+                    <v-checkbox
+                      v-model="selectedToUpdate.workDays"
+                      label="Sunday"
+                      value="0"
+                      hide-details
+                      class="mt-0"
+                    ></v-checkbox>
+                  </v-row>
+                </v-col>
+              </v-row>
+            </v-container>
             <v-row>
               <v-text-field
                 prepend-icon="mdi-calendar"
