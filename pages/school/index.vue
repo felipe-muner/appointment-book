@@ -2,38 +2,40 @@
   <div>
     <h1>School List</h1>
     <New />
-    <v-data-table :headers="headers" :items="schools" item-key="schoolID" class="elevation-1">
-      <template v-slot:body="{ items }">
-        <tbody>
-          <tr v-for="item in items" :key="item.schoolID">
-            <td>{{ item.schoolID }}</td>
-            <td>{{ item.name }}</td>
-            <td>{{ item.neighborhood }}</td>
-            <td>
-              <v-tooltip bottom>
-                <template v-slot:activator="{ on, attrs }">
-                  <v-btn
-                    color="primary"
-                    dark
-                    v-bind="attrs"
-                    v-on="on"
-                    :href="item.address"
-                    target="_blank"
-                  >
-                    <v-icon dark>mdi-map</v-icon>
-                  </v-btn>
-                </template>
-                <span>Tooltip</span>
-              </v-tooltip>
-            </td>
-            <td>
-              <Update :school="item" :lessons="item.Lessons" />
-            </td>
-            <td>{{ item.active }}</td>
-          </tr>
-        </tbody>
-      </template>
-    </v-data-table>
+    <client-only>
+      <v-data-table :headers="headers" :items="schools" item-key="schoolID" class="elevation-1">
+        <template v-slot:body="{ items }">
+          <tbody>
+            <tr v-for="item in items" :key="item.schoolID">
+              <td>{{ item.schoolID }}</td>
+              <td>{{ item.name }}</td>
+              <td>{{ item.neighborhood }}</td>
+              <td>
+                <v-tooltip bottom>
+                  <template v-slot:activator="{ on, attrs }">
+                    <v-btn
+                      color="primary"
+                      dark
+                      v-bind="attrs"
+                      v-on="on"
+                      :href="item.address"
+                      target="_blank"
+                    >
+                      <v-icon dark>mdi-map</v-icon>
+                    </v-btn>
+                  </template>
+                  <span>Tooltip</span>
+                </v-tooltip>
+              </td>
+              <td>
+                <Update :school="item" :lessons="item.Lessons" />
+              </td>
+              <td>{{ item.active }}</td>
+            </tr>
+          </tbody>
+        </template>
+      </v-data-table>
+    </client-only>
   </div>
 </template>
 

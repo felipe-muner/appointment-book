@@ -4,9 +4,10 @@
     <New />
     <Update />
 
-    <template>
+    <client-only>
       <v-data-table :headers="headers" :items="teachers" item-key="teacherID" class="elevation-1"></v-data-table>
-    </template>
+    </client-only>
+    
   </div>
 </template>
 
