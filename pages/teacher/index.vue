@@ -1,13 +1,13 @@
 <template>
   <div>
-    <h1>Teacher List</h1>
-    <New />
-    <Update />
-
     <client-only>
+      <h1>Teacher List</h1>
+      <New />
+      <Update />
+
       <v-data-table :headers="headers" :items="teachers" item-key="teacherID" class="elevation-1"></v-data-table>
-    </client-only>
     
+    </client-only>
   </div>
 </template>
 

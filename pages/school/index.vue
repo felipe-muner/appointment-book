@@ -1,8 +1,9 @@
 <template>
+<client-only>
   <div>
     <h1>School List</h1>
     <New />
-    <client-only>
+    
       <v-data-table :headers="headers" :items="schools" item-key="schoolID" class="elevation-1">
         <template v-slot:body="{ items }">
           <tbody>
@@ -35,8 +36,9 @@
           </tbody>
         </template>
       </v-data-table>
-    </client-only>
+    
   </div>
+  </client-only>
 </template>
 
 <script>
