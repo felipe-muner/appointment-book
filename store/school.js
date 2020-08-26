@@ -1,3 +1,4 @@
+import Vue from "vue";
 import MyApi from "../api/MyApi";
 
 export const state = () => ({
@@ -23,14 +24,17 @@ export const getters = {
     return state.types;
   },
   getList: state => {
-    state.list.forEach(t => (t.textToDisplay = t.schoolID + " - " + t.name));
     return state.list;
   }
 };
 
 export const mutations = {
   getAll(state, payload) {
-    state.list = payload;
+    const schools = payload.map(school => {
+      school.textToDisplay = school.schoolID + " - " + school.name
+      return {...school}
+    })
+    Vue.set(state, "list", schools);
   }
 };
 

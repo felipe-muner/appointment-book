@@ -1,4 +1,7 @@
+
 <template>
+  <client-only>
+    
   <div>
     <!-- {{grade}} -->
     <!-- {{ grade }} -->
@@ -9,7 +12,7 @@
     <CopySchedule :date="date" />
     <br />
     {{ new Date(date).getDay() }}
-    {{ days.find(d => d.id === new Date(this.date).getDay()).name }}
+    <!-- {{ days.find(d => d.id === new Date(this.date).getDay()).name }} -->
     <v-form ref="form" v-model="valid" lazy-validation>
       <v-row>
         <v-col>
@@ -22,7 +25,6 @@
             type="date"
           />
         </v-col>
-
         <v-col>
           <v-autocomplete
             clearable
@@ -69,7 +71,7 @@
         </v-col>
       </v-row>
     </v-form>
-    <div>
+    <div>      
       <v-simple-table>
         <template v-slot:default>
           <thead>
@@ -104,9 +106,10 @@
             </tr>
           </tbody>
         </template>
-      </v-simple-table>
+      </v-simple-table>    
     </div>
   </div>
+  </client-only>
 </template>
 
 <script>
@@ -138,14 +141,27 @@ export default {
       return !this.school;
     },
     lessonMatchDay() {
-      if (!this.school) {
+
+      if (!this.school || !this.date) {
         return [];
       }
-      return this.school.Lessons.filter(
+
+      
+      let lessons = this.school.Lessons.filter(
         (l) =>
           l.day ===
           this.days.find((d) => d.id === new Date(this.date).getDay()).name
       );
+
+      lessons = lessons.map(l => {
+        l.textToDisplay = l.grade + " -> " + l.startTime + " - " + l.endTime
+        return {...l}
+      })
+
+      console.log('sou lessons');
+      console.log(lessons);
+      console.log('sou lessons');
+      return lessons
     },
   },
   watch: {
@@ -153,13 +169,7 @@ export default {
       if (val) await this.handleFetchLessons();
     },
     date: async function (val) {
-      await this.handleFetchLessons();
-    },
-    lessonMatchDay: function (val) {
-      val.forEach(
-        (v) =>
-          (v.textToDisplay = v.grade + " -> " + v.startTime + " - " + v.endTime)
-      );
+      await this.handleFetchLessons();  
     },
   },
   methods: {
@@ -171,12 +181,13 @@ export default {
       deleteLesson: "schedule/deleteLesson",
     }),
     async handleFetchLessons() {
-      console.log("chamei pra handleFetchLessons");
-      await this.fetchLessons({
-        date: this.date,
-        school: this.school,
-        list: "indexList",
-      });
+      if(this.date){
+        await this.fetchLessons({
+          date: this.date,
+          school: this.school,
+          list: "indexList",
+        });
+      }      
     },
     async removeLesson(scheduleID) {
       await this.deleteLesson({ scheduleID, list: "indexList" });
