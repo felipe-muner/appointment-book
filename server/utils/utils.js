@@ -27,11 +27,19 @@ module.exports = {
       "</div>"
     );
   },
-  drawShift(startDate, endDate, teacherID) {
+  drawShift(startDate, endDate, teacher) {
     let allDays = [];
     //to avoid modifying the original date
     const current = new Date(startDate);
+
     while (current <= endDate) {
+      // console.log("---workdays");
+      // console.log(current.getDay());
+      // console.log(teacher.workDays);
+      // console.log(
+      //   teacher.workDays.map(num => parseInt(num)).includes(current.getDay())
+      // );
+      // console.log("---workdays");
       let morningShift = {
         day: moment(current).format("YYYY-MM-DD"),
         shift: "Morning",
@@ -46,7 +54,12 @@ module.exports = {
         textToDisplay: "",
         totalMinutes: 0
       };
-      allDays = [...allDays, morningShift, afternoonShift];
+      if (
+        teacher.workDays.map(num => parseInt(num)).includes(current.getDay())
+      ) {
+        allDays = [...allDays, morningShift, afternoonShift];
+      }
+
       current.setDate(current.getDate() + 1);
     }
     return allDays;

@@ -33,7 +33,7 @@ module.exports = {
       {
         father_id: null,
         name: "Salary Calculator",
-        action: "/salary-calculator",
+        action: "/calculator",
         icon: "mdi-calculator",
         system_id: 1,
         priority: 3,

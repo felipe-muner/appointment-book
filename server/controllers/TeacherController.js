@@ -13,12 +13,6 @@ module.exports = {
         return tea;
       });
 
-      // teachers.forEach(
-      //   t => (t.dataValues.formatBirthday = utils.formatDDMMYYYY(t.birthday))
-      // );
-      // teachers.forEach(
-      //   t => (t.dataValues.birthdayYYYYMMDD = utils.extractDate(t.birthday))
-      // );
       res.send(teachersUpdated);
     } catch (error) {
       console.log(error);

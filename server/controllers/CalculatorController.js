@@ -31,6 +31,7 @@ module.exports = {
 
       let searchList = await Teacher.findAll({
         where,
+        order: [["teacherID", "ASC"]],
         include: [
           {
             model: Schedule,
@@ -40,10 +41,13 @@ module.exports = {
       });
 
       searchList = searchList.map(item => {
-        return {
-          ...item.dataValues,
-          shiftArray: utils.drawShift(firstDay, lastDay, item.teacherID)
+        let newItem = {
+          ...item.dataValues
         };
+        newItem.workDays = newItem.workDays.split(",");
+        newItem.shiftArray = utils.drawShift(firstDay, lastDay, newItem);
+        console.log(newItem);
+        return newItem;
       });
 
       searchList = searchList.map(teacher => {
