@@ -32,6 +32,7 @@
             clearable
             :rules="requiredRules"
             return-object
+            @click:clear="$nextTick(() => school = { Lessons: [] })"
             v-model="school"            
             :items="schools"
             item-text="name"
@@ -193,13 +194,6 @@ export default {
     },
     async removeLesson(scheduleID) {
       await this.deleteLesson({ scheduleID, list: "indexList" });
-    },
-    callItBack(){
-      // let _this = this
-      // this.$nextTick(() => {
-      //   console.log(_this);
-      //   _this.school.Lessons = []
-      // })
     },
     async submitForm() {
       if (this.$refs.form.validate()) {
