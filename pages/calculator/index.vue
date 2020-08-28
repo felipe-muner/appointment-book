@@ -19,7 +19,12 @@
       <v-row no-gutters>
         <v-expansion-panels :multiple="true" v-model="openPanel">
           <v-expansion-panel v-for="(item, i) in teachers" :key="i">
-            <v-expansion-panel-header class="header-style">{{ item.name }}</v-expansion-panel-header>
+            <v-expansion-panel-header class="header-style">
+              <span>{{ item.name }}</span>
+              <span>Salary:{{item.finalSalary}}</span>
+              <span>Worked Shifts:{{item.workedShifts}}</span>
+              <span>Total Shifts:{{item.totalShifts}}</span>
+            </v-expansion-panel-header>
             <v-expansion-panel-content>
               <v-data-table
                 :items="item.shiftArray"
@@ -69,7 +74,7 @@ export default {
   },
   data() {
     return {
-      monthYear: "2020-09",
+      monthYear: "2020-10",
       valid: true,
       requiredRule: [(v) => !!v || "Month is required"],
     };

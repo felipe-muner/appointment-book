@@ -13,7 +13,7 @@ module.exports = {
       },
       {
         name: "Default Minutes Shift",
-        value: "140"
+        value: "220"
       }
     ]);
   },

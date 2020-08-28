@@ -46,14 +46,16 @@ module.exports = {
         shift: "Morning",
         lessons: [],
         textToDisplay: "",
-        totalMinutes: 0
+        totalMinutes: 0,
+        value: ""
       };
       let afternoonShift = {
         day: moment(current).format("YYYY-MM-DD"),
         shift: "Afternoon",
         lessons: [],
         textToDisplay: "",
-        totalMinutes: 0
+        totalMinutes: 0,
+        value: ""
       };
       if (
         copyTeacher.workDays
