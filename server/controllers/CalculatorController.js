@@ -60,8 +60,6 @@ module.exports = {
         ).value
       );
 
-      console.log(typeof defaultMinutesShift);
-
       searchList = searchList.map(teacher => {
         let cpTeacher = { ...teacher };
         cpTeacher.Schedules = cpTeacher.Schedules.map(lesson => {
@@ -89,13 +87,14 @@ module.exports = {
         cpTeacher.shiftArray = cpTeacher.shiftArray.map(shift => {
           let cpShift = { ...shift };
           cpShift.lessons = cpShift.lessons.reduce((acc, cur) => {
+            //CALCULATE MINUTES PER SHIFT TEST EXTRA MINUTES
             cpShift.textToDisplay += utils.lessonTextToDisplay(cur);
             cpShift.totalMinutes += (cur.end - cur.start) / 1000 / 60;
 
-            // if (cpShift.totalMinutes > parseInt(Constant.defaultMinutesShift)) {
-            //   cpTeacher.extraMinutesSalary +=
-            //     cpShift.totalMinutes - parseInt(Constant.defaultMinutesShift);
-            // }
+            if (cpShift.totalMinutes > defaultMinutesShift) {
+              cpTeacher.extraMinutesSalary +=
+                cpShift.totalMinutes - defaultMinutesShift;
+            }
 
             acc.push(cur);
             return acc;
@@ -124,10 +123,65 @@ module.exports = {
         // );
         // console.log((cpTeacher.salaryPerShift * 22500).toFixed(2));
         // console.log("amountShift----");
-        console.log("--worked");
-        console.log(cpTeacher.teacherID);
-        console.log(cpTeacher.workedShifts);
-        console.log("--worked");
+        cpTeacher.salary = cpTeacher.salary * 22500;
+
+        console.log("\n");
+        console.log("------------------------");
+        console.log("--teacher worked log");
+        console.log("teacher id: " + cpTeacher.teacherID);
+        console.log("maximum minutes per shift: " + defaultMinutesShift);
+        console.log("worked shifts: " + cpTeacher.workedShifts);
+        console.log("total shifts: " + cpTeacher.totalShifts);
+
+        const shiftValue = cpTeacher.salary / cpTeacher.totalShifts;
+        console.log("shift Value: " + shiftValue);
+
+        const percWorkedShifts = cpTeacher.workedShifts / cpTeacher.totalShifts;
+        console.log("  %  percent worked shifts : " + percWorkedShifts);
+
+        console.log(
+          "base salary: " + new Intl.NumberFormat().format(cpTeacher.salary)
+        );
+        console.log(" % salary : " + percWorkedShifts * cpTeacher.salary);
+
+        const totalShiftValue = percWorkedShifts * cpTeacher.salary;
+        console.log(
+          "   salary : " +
+            new Intl.NumberFormat("vi", {
+              style: "currency",
+              currency: "DNG",
+              minimumFractionDigits: 3,
+              currencyDisplay: "symbol"
+            }).format(totalShiftValue)
+        );
+        console.log(
+          "   salary ROUNDED : " +
+            new Intl.NumberFormat("vi", {
+              style: "currency",
+              currency: "DNG",
+              minimumFractionDigits: 0,
+              currencyDisplay: "symbol"
+            }).format(Math.round(totalShiftValue)) +
+            " - " +
+            Math.round(totalShiftValue)
+              .toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+        );
+
+        console.log("extra minutes shifts: " + cpTeacher.extraMinutesSalary);
+
+        const extraMoney =
+          (cpTeacher.extraMinutesSalary / defaultMinutesShift) * shiftValue;
+        console.log("extra money shifts: " + extraMoney);
+
+        cpTeacher.finalSalary = totalShiftValue + extraMoney;
+        console.log("final salary: " + cpTeacher.finalSalary);
+        console.log(
+          "final salary ROUNDED : " +
+            Math.round(cpTeacher.finalSalary)
+              .toString()
+              .replace(/\B(?=(\d{3})+(?!\d))/g, ".")
+        );
 
         return cpTeacher;
       });
