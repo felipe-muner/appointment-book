@@ -5,7 +5,6 @@ class Calculator {
     this.server = server;
   }
   async search(payload) {
-    console.log("to aqui api");
     return await axios.get(this.server + "/calculator", {
       params: {
         ...payload

@@ -17,11 +17,12 @@
         </v-col>
       </v-row>
       <v-row no-gutters>
+        {{openPanel}}
         <v-expansion-panels :multiple="true" v-model="openPanel">
-          <v-expansion-panel v-for="(item, i) in teachers" :key="i">
+          <v-expansion-panel v-for="(item, i) in teachers" :key="i" @click="closePanel(i)">
             <v-expansion-panel-header class="header-style">
               <span>{{ item.name }}</span>
-              <span>Salary:{{item.finalSalary}}</span>
+              <span>Salary: {{item.finalSalaryFormatted}} DNG</span>
               <span>Worked Shifts:{{item.workedShifts}}</span>
               <span>Total Shifts:{{item.totalShifts}}</span>
             </v-expansion-panel-header>
@@ -77,31 +78,24 @@ export default {
       monthYear: "2020-10",
       valid: true,
       requiredRule: [(v) => !!v || "Month is required"],
+      openPanel: [],
     };
   },
   computed: {
     ...mapGetters({
       teachers: "calculator/getList",
-      openPanel: "calculator/openPanel",
     }),
-    setHeader() {
-      return [
-        {
-          text: "Day",
-          align: "start",
-          sortable: false,
-          value: "day",
-        },
-        { text: "Shift", value: "shift" },
-        { text: "Lessons", value: "textToDisplay" },
-        { text: "Total minutes", value: "totalMinutes" },
-      ];
+  },
+  watch: {
+    teachers(newVal) {
+      this.openPanel = [...Array(newVal.length).keys()];
     },
   },
   methods: {
     ...mapActions({
       search: "calculator/search",
     }),
+
     async handleSearch() {
       if (this.$refs.form.validate()) {
         const resp = await this.search({

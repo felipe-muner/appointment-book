@@ -20,13 +20,18 @@ export const mutations = {
   },
   initCalculator(state) {
     Vue.set(state, "list", []);
+  },
+  closePanel(state, payload) {
+    console.log("to no close panel");
   }
 };
 
 export const actions = {
+  closePanel({ commit, dispatch, state }, payload) {
+    commit("closePanel", payload);
+  },
   async search({ commit, dispatch, state }, payload) {
     const resp = await MyApi.calculator.search(payload);
-    console.log(resp.data.teachers);
     commit("search", resp.data.teachers);
   },
   async initCalculator({ commit, dispatch, state }, payload) {
