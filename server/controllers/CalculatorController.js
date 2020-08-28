@@ -102,27 +102,6 @@ module.exports = {
           return cpShift;
         });
 
-        // console.log("amountShift----");
-
-        // console.log(cpTeacher.salary);
-
-        // console.log(cpTeacher.shiftArray.length);
-
-        // cpTeacher.salaryPerShift =
-        //   cpTeacher.salary / cpTeacher.shiftArray.length;
-
-        // console.log(cpTeacher.salaryPerShift);
-        // console.log(cpTeacher.salaryPerShift * 22500);
-
-        // console.log(cpTeacher.salaryPerShift.toFixed(2));
-
-        // console.log(
-        //   ((Math.round(cpTeacher.salaryPerShift * 100) / 100) * 22500).toFixed(
-        //     2
-        //   )
-        // );
-        // console.log((cpTeacher.salaryPerShift * 22500).toFixed(2));
-        // console.log("amountShift----");
         cpTeacher.salary = cpTeacher.salary * 22500;
 
         console.log("\n");
