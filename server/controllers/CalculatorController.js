@@ -82,6 +82,7 @@ module.exports = {
         cpTeacher.totalShifts = cpTeacher.shiftArray.length;
 
         cpTeacher.finalSalary = 0;
+        cpTeacher.finalSalaryFormatted = 0;
         cpTeacher.extraMinutesSalary = 0;
 
         cpTeacher.shiftArray = cpTeacher.shiftArray.map(shift => {
@@ -154,6 +155,9 @@ module.exports = {
         console.log("extra money shifts: " + extraMoney);
 
         cpTeacher.finalSalary = totalShiftValue + extraMoney;
+        cpTeacher.finalSalaryFormatted = Math.round(cpTeacher.finalSalary)
+          .toString()
+          .replace(/\B(?=(\d{3})+(?!\d))/g, ".");
         console.log("final salary: " + cpTeacher.finalSalary);
         console.log(
           "final salary ROUNDED : " +
