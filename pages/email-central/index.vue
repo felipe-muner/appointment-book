@@ -29,7 +29,7 @@
     <!-- {{selected.length}}
     {{selected}}-->
     <hr />
-    {{searchedItems}}
+    <!-- {{searchedItems}} -->
     <v-row no-gutters>
       <v-expansion-panels :multiple="true" v-model="openPanel">
         <v-expansion-panel v-for="(item, i) in searchedItems" :key="i">
@@ -63,6 +63,7 @@ export default {
       startDate: "2020-10-13",
       endDate: "2020-10-13",
       groupBySearch: "teacher",
+      openPanel: [],
     };
   },
   computed: {
@@ -81,7 +82,6 @@ export default {
     },
     ...mapGetters({
       searchedItems: "email/getList",
-      openPanel: "email/openPanel",
     }),
     selected: {
       get() {
@@ -90,6 +90,11 @@ export default {
       set(value) {
         this.updateSelected(value);
       },
+    },
+  },
+  watch: {
+    searchedItems(newVal) {
+      this.openPanel = [...Array(newVal.length).keys()];
     },
   },
   methods: {

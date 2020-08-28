@@ -17,7 +17,6 @@
         </v-col>
       </v-row>
       <v-row no-gutters>
-        {{openPanel}}
         <v-expansion-panels :multiple="true" v-model="openPanel">
           <v-expansion-panel v-for="(item, i) in teachers" :key="i" @click="closePanel(i)">
             <v-expansion-panel-header class="header-style">
